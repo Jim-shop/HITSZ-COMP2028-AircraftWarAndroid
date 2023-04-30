@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">飞机大战</string>
+    <string name="app_name" >飞机大战</string>
     <string name="app_description">你深的 OOP 实践作业。</string>
-    <string name="label_activity_main" translatable="false">@string/app_name</string>
     <string name="label_activity_game">游戏界面</string>
-    <string name="label_activity_scoreboard">排行榜</string>
     <string name="mode_easy">简单模式</string>
     <string name="mode_medium">普通模式</string>
     <string name="mode_hard">困难模式</string>
     <string name="sound">音效</string>
+    <string name="label_activity_scoreboard">排行榜</string>
     <string name="about">关于</string>
 
 </resources>
