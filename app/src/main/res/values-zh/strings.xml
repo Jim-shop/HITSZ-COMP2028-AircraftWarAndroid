@@ -9,5 +9,6 @@
     <string name="sound">音效</string>
     <string name="label_activity_scoreboard">排行榜</string>
     <string name="about">关于</string>
+    <string name="ok">好</string>
 
 </resources>

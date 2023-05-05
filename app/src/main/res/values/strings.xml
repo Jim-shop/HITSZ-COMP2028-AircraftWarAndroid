@@ -10,5 +10,7 @@
     <string name="mode_hard">困难模式</string>
     <string name="sound">音效</string>
     <string name="about">关于</string>
+    <string name="app_about" translatable="false">@string/app_description</string>
+    <string name="ok">好</string>
 
 </resources>

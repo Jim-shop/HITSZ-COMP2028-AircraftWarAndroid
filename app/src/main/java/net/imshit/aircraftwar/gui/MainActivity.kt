@@ -1,10 +1,9 @@
-package net.imshit.aircraftwar
+package net.imshit.aircraftwar.gui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import net.imshit.aircraftwar.Difficulty
+import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,6 +12,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val toolbar = binding.toolbar
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.item_about -> AboutDialogFragment().show(
+                    supportFragmentManager,
+                    "about_dialog"
+                )
+            }
+            return@setOnMenuItemClickListener true
+        }
 
         // setup listener
         binding.buttonEasy.setOnClickListener {
@@ -25,17 +35,4 @@ class MainActivity : AppCompatActivity() {
             GameActivity.actionStart(this, Difficulty.HARD, binding.switchSound.isChecked)
         }
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_about -> Toast.makeText(this, "哈哈哈", Toast.LENGTH_SHORT).show()
-        }
-        return true
-    }
-
 }

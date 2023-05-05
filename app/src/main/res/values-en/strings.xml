@@ -9,5 +9,6 @@
     <string name="sound">Sound</string>
     <string name="label_activity_scoreboard">Scoreboard</string>
     <string name="about">About</string>
+    <string name="ok">OK</string>
 
 </resources>

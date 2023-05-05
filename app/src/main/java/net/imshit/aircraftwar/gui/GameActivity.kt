@@ -1,9 +1,10 @@
-package net.imshit.aircraftwar
+package net.imshit.aircraftwar.gui
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import net.imshit.aircraftwar.Difficulty
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
 
 class GameActivity : AppCompatActivity() {
@@ -20,5 +21,6 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//        Param.WINDOW_WIDTH = TODO()
     }
 }
