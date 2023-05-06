@@ -13,8 +13,7 @@ class AboutDialogFragment : DialogFragment() {
             builder
                 .setTitle(R.string.about)
                 .setMessage(R.string.app_about)
-                .setPositiveButton(R.string.ok) { _, _ ->
-                }
+                .setPositiveButton(R.string.ok) { _, _ -> }
                 .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
