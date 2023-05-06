@@ -25,9 +25,9 @@
         android:killAfterRestore="true"
         android:label="@string/app_name"
         android:largeHeap="false"
-        android:logo="@mipmap/ic_launcher"
         android:localeConfig="@xml/locales_config"
-        android:manageSpaceActivity=".ManageSpaceActivity"
+        android:logo="@mipmap/ic_launcher"
+        android:manageSpaceActivity=".gui.ManageSpaceActivity"
         android:networkSecurityConfig="@xml/network_security_config"
         android:permission=""
         android:requestLegacyExternalStorage="false"
@@ -121,7 +121,7 @@
             android:uiOptions="none"
             android:windowSoftInputMode="stateUnspecified|adjustUnspecified" />
         <activity
-            android:name=".ScoreboardActivity"
+            android:name=".gui.ScoreboardActivity"
             android:allowEmbedded="true"
             android:allowTaskReparenting="false"
             android:alwaysRetainTaskState="false"

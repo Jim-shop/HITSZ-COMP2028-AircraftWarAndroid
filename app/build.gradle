@@ -35,6 +35,10 @@ android {
         // Defines a user-friendly version name for your app.
         versionName "1.0"
 
+        // 确保正确解析语言
+        resConfigs("zh", "en")
+        resourceConfigurations += ["zh", "en"]
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     /**
@@ -51,6 +55,7 @@ android {
             // Enables code shrinking for the release build type.
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
 //    /**

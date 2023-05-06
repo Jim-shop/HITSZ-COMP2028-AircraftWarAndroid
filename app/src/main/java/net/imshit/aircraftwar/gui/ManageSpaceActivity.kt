@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar
+package net.imshit.aircraftwar.gui
 
 import android.os.Bundle
 import android.os.PersistableBundle
