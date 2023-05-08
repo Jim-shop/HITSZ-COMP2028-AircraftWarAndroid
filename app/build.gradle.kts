@@ -14,7 +14,7 @@ android {
     namespace = "net.imshit.aircraftwar"
     compileSdk = 33
     defaultConfig {
-        applicationId = namespace
+        applicationId = "net.imshit.aircraftwar"
         minSdk = 33
         targetSdk = 33
         versionCode = 1
@@ -46,29 +46,6 @@ android {
             signingConfig = signingConfigs["js"]
         }
     }
-//    /**
-//     * The productFlavors block is where you can configure multiple product flavors.
-//     * This lets you create different versions of your app that can
-//     * override the defaultConfig block with their own settings. Product flavors
-//     * are optional, and the build system does not create them by default.
-//     *
-//     * This example creates a free and paid product flavor. Each product flavor
-//     * then specifies its own application ID, so that they can exist on the Google
-//     * Play Store, or an Android device, simultaneously.
-//     *
-//     * If you declare product flavors, you must also declare flavor dimensions
-//     * and assign each flavor to a flavor dimension.*/
-//    flavorDimensions "name"
-//    productFlavors {
-//        trial {
-//            dimension "name"
-//            versionNameSuffix "trial"
-//        }
-//        normal {
-//            dimension "name"
-//            versionNameSuffix ""
-//        }
-//    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
