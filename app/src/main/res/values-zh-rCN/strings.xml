@@ -2,12 +2,12 @@
 <resources>
     <string name="app_name">飞机大战</string>
     <string name="app_description">你深的 OOP 实践作业。</string>
-    <string name="label_activity_game">游戏界面</string>
-    <string name="mode_easy">简单模式</string>
-    <string name="mode_medium">普通模式</string>
-    <string name="mode_hard">困难模式</string>
-    <string name="sound">音效</string>
-    <string name="label_activity_scoreboard">排行榜</string>
-    <string name="about">关于</string>
-    <string name="ok">好</string>
+    <string name="game_label">游戏界面</string>
+    <string name="button_easy">简单模式</string>
+    <string name="button_medium">普通模式</string>
+    <string name="button_hard">困难模式</string>
+    <string name="checkbox_sound">音效</string>
+    <string name="scoreboard_label">排行榜</string>
+    <string name="item_about">关于</string>
+    <string name="dialog_ok">好</string>
 </resources>

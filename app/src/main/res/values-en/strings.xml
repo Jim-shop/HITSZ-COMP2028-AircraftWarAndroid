@@ -2,13 +2,13 @@
 <resources>
     <string name="app_name">Aircraft War</string>
     <string name="app_description">HITSZ COMP2028 experiment.</string>
-    <string name="label_activity_game">Gaming</string>
-    <string name="mode_easy">Easy Mode</string>
-    <string name="mode_medium">Medium Mode</string>
-    <string name="mode_hard">Hard Mode</string>
-    <string name="sound">Sound</string>
-    <string name="label_activity_scoreboard">Scoreboard</string>
-    <string name="about">About</string>
-    <string name="ok">OK</string>
+    <string name="game_label">Gaming</string>
+    <string name="button_easy">Easy Mode</string>
+    <string name="button_medium">Medium Mode</string>
+    <string name="button_hard">Hard Mode</string>
+    <string name="checkbox_sound">Sound</string>
+    <string name="scoreboard_label">Scoreboard</string>
+    <string name="item_about">About</string>
+    <string name="dialog_ok">OK</string>
 
 </resources>

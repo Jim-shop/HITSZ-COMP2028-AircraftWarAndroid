@@ -15,5 +15,5 @@ object HeroAircraft : AbstractAircraft(
     strategyFactory = AbstractShootStrategyFactory(),
     shootNum = 1
 ) {
-    override val image = R.drawable.aircraft_hero
+    override val image = R.drawable.game_aircraft_hero
 }

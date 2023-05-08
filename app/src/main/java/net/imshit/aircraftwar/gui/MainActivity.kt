@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar = binding.toolbar
+        val toolbar = binding.amTb
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.item_about -> AboutDialogFragment().show(
@@ -25,14 +25,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         // setup listener
-        binding.buttonEasy.setOnClickListener {
-            GameActivity.actionStart(this, Difficulty.EASY, binding.switchSound.isChecked)
+        binding.amBtnEasy.setOnClickListener {
+            GameActivity.actionStart(this, Difficulty.EASY, binding.amCbSound.isChecked)
         }
-        binding.buttonMedium.setOnClickListener {
-            GameActivity.actionStart(this, Difficulty.MEDIUM, binding.switchSound.isChecked)
+        binding.amBtnMedium.setOnClickListener {
+            GameActivity.actionStart(this, Difficulty.MEDIUM, binding.amCbSound.isChecked)
         }
-        binding.buttonHard.setOnClickListener {
-            GameActivity.actionStart(this, Difficulty.HARD, binding.switchSound.isChecked)
+        binding.amBtnHard.setOnClickListener {
+            GameActivity.actionStart(this, Difficulty.HARD, binding.amCbSound.isChecked)
         }
     }
 }

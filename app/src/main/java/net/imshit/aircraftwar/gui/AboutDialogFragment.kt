@@ -11,9 +11,9 @@ class AboutDialogFragment : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             builder
-                .setTitle(R.string.about)
+                .setTitle(R.string.item_about)
                 .setMessage(R.string.app_about)
-                .setPositiveButton(R.string.ok) { _, _ -> }
+                .setPositiveButton(R.string.dialog_ok) { _, _ -> }
                 .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }

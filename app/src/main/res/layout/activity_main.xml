@@ -6,13 +6,13 @@
     android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/am_tb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:fitsSystemWindows="true"
         app:menu="@menu/main"
-        app:title="@string/label_activity_main" />
+        app:title="@string/main_label" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:fitsSystemWindows="true">
 
         <LinearLayout
-            android:id="@+id/linearLayout_buttons"
+            android:id="@+id/am_ll_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -30,37 +30,37 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/button_easy"
+                android:id="@+id/am_btn_easy"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/mode_easy" />
+                android:text="@string/button_easy" />
 
             <Button
-                android:id="@+id/button_medium"
+                android:id="@+id/am_btn_medium"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/mode_medium" />
+                android:text="@string/button_medium" />
 
             <Button
-                android:id="@+id/button_hard"
+                android:id="@+id/am_btn_hard"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/mode_hard" />
+                android:text="@string/button_hard" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/switch_sound"
+            android:id="@+id/am_cb_sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/sound"
+            android:text="@string/checkbox_sound"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout_buttons" />
+            app:layout_constraintTop_toBottomOf="@+id/am_ll_buttons" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
