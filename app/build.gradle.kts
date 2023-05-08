@@ -1,7 +1,14 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "net.imshit.aircraftwar"
@@ -15,7 +22,20 @@ android {
         resourceConfigurations.addAll(listOf("zh", "en"))
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        create("js") {
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+        }
+    }
     buildTypes {
+        getByName("debug") {
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+            signingConfig = signingConfigs["debug"]
+        }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -23,7 +43,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs["debug"]
+            signingConfig = signingConfigs["js"]
         }
     }
 //    /**
