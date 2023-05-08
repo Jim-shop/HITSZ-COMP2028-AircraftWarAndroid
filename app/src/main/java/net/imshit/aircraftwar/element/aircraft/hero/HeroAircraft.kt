@@ -1,7 +1,5 @@
 package net.imshit.aircraftwar.element.aircraft.hero
 
-import android.content.res.Resources
-import android.graphics.BitmapFactory
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.element.AbstractShootStrategyFactory
 import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
@@ -17,5 +15,5 @@ object HeroAircraft : AbstractAircraft(
     strategyFactory = AbstractShootStrategyFactory(),
     shootNum = 1
 ) {
-    override val image = BitmapFactory.decodeResource(Resources.getSystem() ,R.drawable.aircraft_hero)
+    override val image = R.drawable.aircraft_hero
 }

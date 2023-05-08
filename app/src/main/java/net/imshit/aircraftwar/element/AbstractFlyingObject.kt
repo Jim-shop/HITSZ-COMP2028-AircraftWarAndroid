@@ -4,7 +4,7 @@ import net.imshit.aircraftwar.Param
 import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
 import kotlin.math.abs
 
-sealed class AbstractFlyingObject(
+abstract class AbstractFlyingObject(
     protected var locationX: Float,
     protected var locationY: Float,
     protected var speedX: Float,
@@ -12,8 +12,8 @@ sealed class AbstractFlyingObject(
 ) {
     protected abstract val image: Int
     private var isValid: Boolean = true
-    private val width = image.width
-    private val height = image.height
+    private var width: Int = 0
+    private var height: Int = 0
 
     fun forward() {
         locationX += speedX * Param.REFRESH_INTERVAL
