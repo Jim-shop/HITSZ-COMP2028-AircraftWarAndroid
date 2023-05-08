@@ -1,18 +1,17 @@
 package net.imshit.aircraftwar.element
 
-import android.graphics.Bitmap
 import net.imshit.aircraftwar.Param
 import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
 import kotlin.math.abs
 
-abstract class AbstractFlyingObject(
-    var locationX: Float,
-    var locationY: Float,
-    val speedX: Float,
-    val speedY: Float
+sealed class AbstractFlyingObject(
+    protected var locationX: Float,
+    protected var locationY: Float,
+    protected var speedX: Float,
+    protected var speedY: Float
 ) {
+    protected abstract val image: Int
     private var isValid: Boolean = true
-    protected abstract val image: Bitmap
     private val width = image.width
     private val height = image.height
 
