@@ -17,13 +17,15 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:menu="@menu/main"
-            app:title="@string/main_label" />
+            app:subtitle="@string/main_subtitle"
+            app:subtitleCentered="true"
+            app:title="@string/main_label"
+            app:titleCentered="true" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/am_ll_buttons"
