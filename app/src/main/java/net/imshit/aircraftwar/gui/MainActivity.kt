@@ -3,7 +3,6 @@ package net.imshit.aircraftwar.gui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.shape.MaterialShapeDrawable
 import net.imshit.aircraftwar.Difficulty
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.ActivityMainBinding
@@ -11,11 +10,9 @@ import net.imshit.aircraftwar.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         with(ActivityMainBinding.inflate((layoutInflater))) {
             setContentView(root)
-
-            amAbl.statusBarForeground =
-                MaterialShapeDrawable.createWithElevationOverlay(this@MainActivity)
 
             amTb.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
