@@ -24,6 +24,9 @@ class GameActivity : AppCompatActivity() {
 
     val refreshInterval = 10
 
+    var gameMode = Difficulty.EASY
+    var soundMode = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(windowManager.currentWindowMetrics.bounds) {
@@ -32,6 +35,11 @@ class GameActivity : AppCompatActivity() {
         }
         with(ActivityGameBinding.inflate(layoutInflater)) {
             setContentView(root)
+            // handle input string
+            intent.extras?.apply {
+                gameMode = getSerializable("gameMode", Difficulty::class.java) ?: Difficulty.EASY
+                soundMode = getBoolean("soundMode", true)
+            }
         }
     }
 }
