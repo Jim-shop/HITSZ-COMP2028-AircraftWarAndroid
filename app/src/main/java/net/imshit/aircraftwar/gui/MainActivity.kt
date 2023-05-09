@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                             .setTitle(R.string.item_about)
                             .setIcon(R.drawable.ic_about_24)
                             .setMessage(R.string.app_about)
-                            .setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                            .setPositiveButton(android.R.string.ok) { _, _ -> }
                             .show()
                 }
                 return@setOnMenuItemClickListener true
