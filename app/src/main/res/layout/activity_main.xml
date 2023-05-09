@@ -5,14 +5,20 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/am_tb"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/am_abl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/main"
-        app:title="@string/main_label" />
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/am_tb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/main"
+            app:title="@string/main_label" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,21 +40,24 @@
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/button_easy" />
+                android:text="@string/button_easy"
+                app:icon="@drawable/ic_brightness_low_24" />
 
             <Button
                 android:id="@+id/am_btn_medium"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/button_medium" />
+                android:text="@string/button_medium"
+                app:icon="@drawable/ic_brightness_medium_24" />
 
             <Button
                 android:id="@+id/am_btn_hard"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/button_hard" />
+                android:text="@string/button_hard"
+                app:icon="@drawable/ic_brightness_high_24" />
         </LinearLayout>
 
         <com.google.android.material.materialswitch.MaterialSwitch
@@ -57,6 +66,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/checkbox_sound"
+            app:thumbIcon="@drawable/ic_music_note_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
