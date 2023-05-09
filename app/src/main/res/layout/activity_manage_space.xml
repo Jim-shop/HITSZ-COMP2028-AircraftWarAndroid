@@ -5,20 +5,25 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ams_tb"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ams_abl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/main"
-        app:title="@string/manage_space_label" />
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/ams_tb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/main"
+            app:title="@string/manage_space_label"
+            app:titleCentered="true" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:fitsSystemWindows="true" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
