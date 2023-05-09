@@ -2,11 +2,23 @@ package net.imshit.aircraftwar.element.aircraft
 
 import net.imshit.aircraftwar.element.AbstractFlyingObject
 import net.imshit.aircraftwar.element.AbstractShootStrategyFactory
+import net.imshit.aircraftwar.gui.GameActivity
 
-abstract class AbstractAircraft(locationX: Float, locationY: Float, speedX: Float, speedY: Float, protected var hp: Int, val power: Int, val strategyFactory: AbstractShootStrategyFactory, val shootNum: Int) :
+abstract class AbstractAircraft(
+    game: GameActivity,
+    initialLocationX: Float,
+    initialLocationY: Float,
+    speedX: Float,
+    speedY: Float,
+    protected var hp: Int,
+    val power: Int,
+    val strategyFactory: AbstractShootStrategyFactory,
+    val shootNum: Int
+) :
     AbstractFlyingObject(
-        locationX = locationX,
-        locationY = locationY,
+        game = game,
+        initialLocationX = initialLocationX,
+        initialLocationY = initialLocationY,
         speedX = speedX,
         speedY = speedY
     ) {

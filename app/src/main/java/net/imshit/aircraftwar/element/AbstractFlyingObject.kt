@@ -5,16 +5,20 @@ import net.imshit.aircraftwar.gui.GameActivity
 import kotlin.math.abs
 
 abstract class AbstractFlyingObject(
-    val game: GameActivity,
-    protected var locationX: Float,
-    protected var locationY: Float,
-    protected var speedX: Float,
-    protected var speedY: Float
+    private val game: GameActivity,
+    initialLocationX: Float,
+    initialLocationY: Float,
+    protected val speedX: Float,
+    protected val speedY: Float
 ) {
+    var locationX = initialLocationX
+        protected set
+    var locationY = initialLocationY
+        protected set
     protected abstract val image: Int
+    protected abstract val width: Int
+    protected abstract var height: Int
     private var isValid: Boolean = true
-    private var width: Int = 0
-    private var height: Int = 0
 
     fun forward() {
         locationX += speedX * game.refreshInterval
@@ -29,6 +33,7 @@ abstract class AbstractFlyingObject(
     }
 
     fun crash(flyingObject: AbstractFlyingObject): Boolean {
+        // TODO: 这里太丑了，改成每个object维护一个boundingBox
         val thisHeight = if (this is AbstractAircraft) height / 2 else height
         val fHeight =
             if (flyingObject is AbstractAircraft) flyingObject.height / 2 else flyingObject.height

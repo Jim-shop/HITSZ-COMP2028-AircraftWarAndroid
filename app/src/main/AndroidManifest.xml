@@ -3,7 +3,17 @@
     android:installLocation="auto"
     android:targetSandboxVersion="2">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature
+        android:name="android.hardware.screen.portrait"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.audio.output"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.faketouch"
+        android:required="true" />
+
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
     <application
         android:allowAudioPlaybackCapture="true"
@@ -38,34 +48,24 @@
         <activity
             android:name=".gui.MainActivity"
             android:allowEmbedded="true"
-            android:allowTaskReparenting="false"
             android:alwaysRetainTaskState="false"
             android:autoRemoveFromRecents="true"
             android:clearTaskOnLaunch="false"
             android:colorMode="wideColorGamut"
-            android:configChanges=""
-            android:directBootAware="false"
             android:documentLaunchMode="none"
-            android:enabled="true"
             android:excludeFromRecents="false"
             android:exported="true"
             android:finishOnTaskLaunch="false"
-            android:hardwareAccelerated="true"
             android:immersive="true"
             android:label="@string/main_label"
             android:launchMode="standard"
-            android:lockTaskMode="normal"
-            android:maxAspectRatio="1.33"
-            android:maxRecents="16"
-            android:multiprocess="false"
             android:noHistory="false"
             android:permission=""
             android:persistableMode="persistRootOnly"
             android:relinquishTaskIdentity="false"
-            android:resizeableActivity="true"
             android:screenOrientation="unspecified"
             android:showForAllUsers="false"
-            android:stateNotNeeded="false"
+            android:stateNotNeeded="true"
             android:supportsPictureInPicture="true"
             android:windowSoftInputMode="stateUnspecified|adjustUnspecified">
             <intent-filter>
@@ -77,77 +77,61 @@
         <activity
             android:name=".gui.GameActivity"
             android:allowEmbedded="true"
-            android:allowTaskReparenting="false"
-            android:alwaysRetainTaskState="false"
             android:autoRemoveFromRecents="true"
-            android:banner="@mipmap/ic_banner"
-            android:clearTaskOnLaunch="false"
-            android:colorMode="default"
-            android:configChanges=""
-            android:directBootAware="false"
+            android:colorMode="wideColorGamut"
             android:documentLaunchMode="none"
-            android:enabled="true"
-            android:excludeFromRecents="false"
-            android:exported="false"
             android:finishOnTaskLaunch="false"
-            android:hardwareAccelerated="true"
-            android:icon="@mipmap/ic_launcher"
             android:immersive="true"
             android:label="@string/game_label"
             android:launchMode="standard"
             android:lockTaskMode="normal"
-            android:maxAspectRatio="1.33"
-            android:maxRecents="16"
-            android:multiprocess="false"
             android:noHistory="false"
             android:permission=""
-            android:persistableMode="persistRootOnly"
-            android:relinquishTaskIdentity="false"
-            android:resizeableActivity="true"
-            android:screenOrientation="unspecified"
+            android:screenOrientation="userPortrait"
             android:showForAllUsers="false"
             android:stateNotNeeded="false"
             android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.AircraftWar"
-            android:uiOptions="none"
             android:windowSoftInputMode="stateUnspecified|adjustUnspecified" />
         <activity
             android:name=".gui.ScoreboardActivity"
             android:allowEmbedded="true"
-            android:allowTaskReparenting="false"
-            android:alwaysRetainTaskState="false"
             android:autoRemoveFromRecents="true"
-            android:banner="@mipmap/ic_banner"
-            android:clearTaskOnLaunch="false"
-            android:colorMode="default"
-            android:configChanges=""
-            android:directBootAware="false"
+            android:colorMode="wideColorGamut"
             android:documentLaunchMode="none"
-            android:enabled="true"
-            android:excludeFromRecents="false"
-            android:exported="false"
             android:finishOnTaskLaunch="false"
-            android:hardwareAccelerated="true"
-            android:icon="@mipmap/ic_launcher"
             android:immersive="true"
             android:label="@string/scoreboard_label"
             android:launchMode="standard"
             android:lockTaskMode="normal"
-            android:maxAspectRatio="1.33"
-            android:maxRecents="16"
-            android:multiprocess="false"
             android:noHistory="false"
             android:permission=""
-            android:persistableMode="persistRootOnly"
-            android:relinquishTaskIdentity="false"
-            android:resizeableActivity="true"
             android:screenOrientation="unspecified"
             android:showForAllUsers="false"
-            android:stateNotNeeded="false"
+            android:stateNotNeeded="true"
             android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.AircraftWar"
-            android:uiOptions="none"
             android:windowSoftInputMode="stateUnspecified|adjustUnspecified" />
+        <activity
+            android:name=".gui.ManageSpaceActivity"
+            android:allowEmbedded="true"
+            android:autoRemoveFromRecents="true"
+            android:colorMode="wideColorGamut"
+            android:documentLaunchMode="none"
+            android:finishOnTaskLaunch="false"
+            android:immersive="true"
+            android:label="@string/manage_space_label"
+            android:launchMode="standard"
+            android:lockTaskMode="normal"
+            android:noHistory="false"
+            android:permission=""
+            android:screenOrientation="unspecified"
+            android:showForAllUsers="false"
+            android:stateNotNeeded="true"
+            android:supportsPictureInPicture="true"
+            android:windowSoftInputMode="stateUnspecified|adjustUnspecified" />
+
+        <profileable
+            android:enabled="true"
+            android:shell="false" />
     </application>
 
 </manifest>

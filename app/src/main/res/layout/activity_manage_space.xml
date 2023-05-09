@@ -12,7 +12,7 @@
         android:background="?attr/colorPrimary"
         android:fitsSystemWindows="true"
         app:menu="@menu/main"
-        app:title="@string/main_label" />
+        app:title="@string/manage_space_label" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

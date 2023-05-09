@@ -10,4 +10,5 @@
     <string name="scoreboard_label">排行榜</string>
     <string name="item_about">关于</string>
     <string name="dialog_ok">好</string>
+    <string name="manage_space_label">管理空间</string>
 </resources>
