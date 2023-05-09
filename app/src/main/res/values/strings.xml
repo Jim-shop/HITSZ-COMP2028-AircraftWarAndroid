@@ -12,4 +12,5 @@
     <string name="button_hard">困难模式</string>
     <string name="checkbox_sound">音效</string>
     <string name="item_about">关于</string>
+    <string name="main_subtitle">难度选择</string>
 </resources>
