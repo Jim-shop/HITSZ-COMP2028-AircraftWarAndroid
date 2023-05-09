@@ -34,6 +34,7 @@ android {
         getByName("debug") {
             isDebuggable = true
             applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
             signingConfig = signingConfigs["debug"]
         }
         getByName("release") {

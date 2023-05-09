@@ -24,13 +24,13 @@ class MainActivity : AppCompatActivity() {
 
             // setup listener
             amBtnEasy.setOnClickListener {
-                GameActivity.actionStart(this@MainActivity, Difficulty.EASY, amCbSound.isChecked)
+                GameActivity.actionStart(this@MainActivity, Difficulty.EASY, amSwSound.isChecked)
             }
             amBtnMedium.setOnClickListener {
-                GameActivity.actionStart(this@MainActivity, Difficulty.MEDIUM, amCbSound.isChecked)
+                GameActivity.actionStart(this@MainActivity, Difficulty.MEDIUM, amSwSound.isChecked)
             }
             amBtnHard.setOnClickListener {
-                GameActivity.actionStart(this@MainActivity, Difficulty.HARD, amCbSound.isChecked)
+                GameActivity.actionStart(this@MainActivity, Difficulty.HARD, amSwSound.isChecked)
             }
         }
     }

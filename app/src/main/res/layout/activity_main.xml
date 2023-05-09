@@ -51,8 +51,8 @@
                 android:text="@string/button_hard" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/am_cb_sound"
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/am_sw_sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
