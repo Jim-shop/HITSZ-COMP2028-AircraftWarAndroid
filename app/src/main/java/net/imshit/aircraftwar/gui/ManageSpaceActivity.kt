@@ -1,15 +1,15 @@
 package net.imshit.aircraftwar.gui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import net.imshit.aircraftwar.databinding.ActivityMainBinding
+import net.imshit.aircraftwar.databinding.ActivityManageSpaceBinding
 
 class ManageSpaceActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        with(ActivityMainBinding.inflate(layoutInflater)) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        with(ActivityManageSpaceBinding.inflate(layoutInflater)) {
             setContentView(root)
+            // TODO 有了存储逻辑之后记得加入
         }
     }
 }
