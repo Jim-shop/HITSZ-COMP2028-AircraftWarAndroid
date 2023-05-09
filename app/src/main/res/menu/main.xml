@@ -10,6 +10,7 @@
         android:title="@string/item_about"
         android:titleCondensed="@string/item_about"
         android:visible="true"
+        android:tooltipText="@string/item_about"
         android:icon="@drawable/ic_about_24"
         app:showAsAction="ifRoom|withText|collapseActionView" />
 </menu>
