@@ -1,10 +1,11 @@
 package net.imshit.aircraftwar.element
 
-import net.imshit.aircraftwar.Param
 import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
+import net.imshit.aircraftwar.gui.GameActivity
 import kotlin.math.abs
 
 abstract class AbstractFlyingObject(
+    val game: GameActivity,
     protected var locationX: Float,
     protected var locationY: Float,
     protected var speedX: Float,
@@ -16,9 +17,9 @@ abstract class AbstractFlyingObject(
     private var height: Int = 0
 
     fun forward() {
-        locationX += speedX * Param.REFRESH_INTERVAL
-        locationY += speedY * Param.REFRESH_INTERVAL
-        if (locationX < 0 || locationX >= Param.WINDOW_WIDTH || locationY >= Param.WINDOW_HEIGHT) {
+        locationX += speedX * game.refreshInterval
+        locationY += speedY * game.refreshInterval
+        if (locationX < 0 || locationX >= game.width || locationY >= game.height) {
             vanish()
         }
     }

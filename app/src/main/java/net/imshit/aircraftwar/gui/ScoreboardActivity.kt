@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import net.imshit.aircraftwar.Difficulty
-import net.imshit.aircraftwar.databinding.ActivityScoreboardBinding
+import net.imshit.aircraftwar.databinding.ActivityMainBinding
 
 class ScoreboardActivity : AppCompatActivity() {
     companion object {
@@ -19,7 +19,8 @@ class ScoreboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityScoreboardBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        with(ActivityMainBinding.inflate(layoutInflater)) {
+            setContentView(root)
+        }
     }
 }

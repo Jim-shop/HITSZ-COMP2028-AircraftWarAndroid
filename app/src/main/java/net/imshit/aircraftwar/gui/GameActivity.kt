@@ -17,10 +17,21 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    var width: Int = 0
+        private set
+    var height: Int = 0
+        private set
+
+    val refreshInterval = 10
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityGameBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-//        Param.WINDOW_WIDTH = TODO()
+        with(windowManager.currentWindowMetrics.bounds) {
+            width = right - left
+            height = bottom - top
+        }
+        with(ActivityGameBinding.inflate(layoutInflater)) {
+            setContentView(root)
+        }
     }
 }
