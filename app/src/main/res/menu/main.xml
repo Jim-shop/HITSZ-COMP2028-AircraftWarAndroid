@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/item_about"
-        android:enabled="true"
         android:contentDescription="@null"
+        android:enabled="true"
+        android:icon="@drawable/ic_about_24"
         android:menuCategory="secondary"
         android:orderInCategory="0"
         android:title="@string/item_about"
         android:titleCondensed="@string/item_about"
-        android:visible="true"
         android:tooltipText="@string/item_about"
-        android:icon="@drawable/ic_about_24"
+        android:visible="true"
         app:showAsAction="ifRoom|withText|collapseActionView" />
 </menu>
