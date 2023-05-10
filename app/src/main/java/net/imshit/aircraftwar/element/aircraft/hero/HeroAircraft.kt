@@ -1,25 +1,37 @@
 package net.imshit.aircraftwar.element.aircraft.hero
 
-import net.imshit.aircraftwar.R
-import net.imshit.aircraftwar.element.AbstractShootStrategyFactory
 import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
+import net.imshit.aircraftwar.element.shoot.AbstractShootStrategyFactory
+import net.imshit.aircraftwar.logic.Games
 
-object HeroAircraft : AbstractAircraft(
-    game = TODO(),
-    initialLocationX = 0f,
-    initialLocationY = 0f,
+class HeroAircraft private constructor(
+    game: Games,
+    maxHp: Int,
+    power: Int,
+    shootStrategyFactory: AbstractShootStrategyFactory,
+    shootNum: Int
+) : AbstractAircraft(
+    game = game,
+    initialX = game.screenWidth / 2f,
+    initialY = game.screenHeight / 2f,
     speedX = 0f,
     speedY = 0f,
-    hp = 1000,
-    power = 30,
-//    strategyFactory = HeroShootStrategyFactory(),
-    strategyFactory = AbstractShootStrategyFactory(),
-    shootNum = 1
+    maxHp = maxHp,
+    power = power,
+    shootStrategyFactory = shootStrategyFactory,
+    shootNum = shootNum
 ) {
-    override val image = R.drawable.game_aircraft_hero
-    override val width: Int
-        get() = TODO("Not yet implemented")
-    override var height: Int
-        get() = TODO("Not yet implemented")
-        set(_) {}
+    override val image = game.images.aircraftHero
+    override fun forward(timeMs: Int) {
+        // 英雄机由触控控制，不通过forward函数移动
+    }
+
+    fun increaseHp(increment: Int) {
+        if (increment > 0) {
+            this.hp += increment
+            if (this.hp > this.maxHp || this.hp < 0) {
+                this.hp = this.maxHp
+            }
+        }
+    }
 }
