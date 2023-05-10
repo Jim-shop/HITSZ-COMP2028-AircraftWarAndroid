@@ -6,7 +6,7 @@ import net.imshit.aircraftwar.util.listener.GameEvents
 
 class EnemyBullet(
     game: Games, initialX: Float, initialY: Float, speedX: Float, speedY: Float, power: Int
-) : AbstractBullet(
+) : Bullets(
     game = game,
     initialX = initialX,
     initialY = initialY,

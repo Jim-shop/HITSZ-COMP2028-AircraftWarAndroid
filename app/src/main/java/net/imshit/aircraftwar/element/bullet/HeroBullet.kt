@@ -4,7 +4,7 @@ import net.imshit.aircraftwar.logic.Games
 
 class HeroBullet(
     game: Games, initialX: Float, initialY: Float, speedX: Float, speedY: Float, power: Int
-) : AbstractBullet(
+) : Bullets(
     game = game,
     initialX = initialX,
     initialY = initialY,
