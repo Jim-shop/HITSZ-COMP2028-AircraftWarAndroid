@@ -17,7 +17,7 @@ class HeroAircraft private constructor(
     speedY = 0f,
     maxHp = maxHp,
     power = power,
-    shootStrategyFactory = HeroShootStrategyFactory(),
+    shootStrategyFactory = HeroShootStrategyFactory(game),
     shootNum = shootNum
 ) {
     override val image = game.images.aircraftHero
