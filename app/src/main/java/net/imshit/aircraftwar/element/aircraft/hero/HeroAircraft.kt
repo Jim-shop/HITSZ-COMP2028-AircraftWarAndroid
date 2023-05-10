@@ -1,14 +1,13 @@
 package net.imshit.aircraftwar.element.aircraft.hero
 
 import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
-import net.imshit.aircraftwar.element.shoot.AbstractShootStrategyFactory
+import net.imshit.aircraftwar.element.shoot.hero.HeroShootStrategyFactory
 import net.imshit.aircraftwar.logic.Games
 
 class HeroAircraft private constructor(
     game: Games,
     maxHp: Int,
     power: Int,
-    shootStrategyFactory: AbstractShootStrategyFactory,
     shootNum: Int
 ) : AbstractAircraft(
     game = game,
@@ -18,7 +17,7 @@ class HeroAircraft private constructor(
     speedY = 0f,
     maxHp = maxHp,
     power = power,
-    shootStrategyFactory = shootStrategyFactory,
+    shootStrategyFactory = HeroShootStrategyFactory(),
     shootNum = shootNum
 ) {
     override val image = game.images.aircraftHero
