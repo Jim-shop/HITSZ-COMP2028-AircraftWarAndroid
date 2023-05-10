@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.util
+package net.imshit.aircraftwar.logic
 
 import android.content.Context
 import android.graphics.Bitmap
