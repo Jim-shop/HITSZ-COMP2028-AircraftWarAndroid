@@ -1,34 +1,37 @@
 package net.imshit.aircraftwar.element.aircraft
 
 import net.imshit.aircraftwar.element.AbstractFlyingObject
-import net.imshit.aircraftwar.element.AbstractShootStrategyFactory
-import net.imshit.aircraftwar.gui.GameActivity
+import net.imshit.aircraftwar.element.animation.DyingAnimation
+import net.imshit.aircraftwar.element.bullet.AbstractBullet
+import net.imshit.aircraftwar.element.shoot.AbstractShootStrategyFactory
+import net.imshit.aircraftwar.logic.Games
 
 abstract class AbstractAircraft(
-    game: GameActivity,
-    initialLocationX: Float,
-    initialLocationY: Float,
+    game: Games,
+    initialX: Float,
+    initialY: Float,
     speedX: Float,
     speedY: Float,
-    protected var hp: Int,
+    val maxHp: Int,
     val power: Int,
-    val strategyFactory: AbstractShootStrategyFactory,
-    val shootNum: Int
-) :
-    AbstractFlyingObject(
-        game = game,
-        initialLocationX = initialLocationX,
-        initialLocationY = initialLocationY,
-        speedX = speedX,
-        speedY = speedY
-    ) {
+    val shootStrategyFactory: AbstractShootStrategyFactory,
+    shootNum: Int
+) : AbstractFlyingObject(
+    game = game,
+    initialX = initialX,
+    initialY = initialY,
+    speedX = speedX,
+    speedY = speedY
+) {
 
-    protected val maxHp = hp
-//    protected var shootStrategy = this.strategyFactory.getStrategy(shootNum)
+    var hp: Int = this.maxHp
+        protected set
+    protected var shootStrategy = this.shootStrategyFactory.getStrategy(shootNum)
+        private set
 
-//    fun setShootNum(shootNum: Int) {
-//        this.shootStrategy = this.shootStrategy.getStrategy(shootNum)
-//    }
+    fun setShootNum(shootNum: Int) {
+        this.shootStrategy = this.shootStrategyFactory.getStrategy(shootNum)
+    }
 
     fun decreaseHp(decrease: Int) {
         if (decrease > 0) {
@@ -40,9 +43,9 @@ abstract class AbstractAircraft(
         }
     }
 
-//    fun shoot() = this.shootStrategy.shoot(this.locationX, this.locationY, this.speedY, this.power)
+    fun shoot(): List<AbstractBullet> =
+        this.shootStrategy.shoot(this.x, this.y, this.speedY, this.power)
 
-//    fun getAnimation() = DyingAnimation(this)
-
-    // TODO:
+    val animation: DyingAnimation
+        get() = DyingAnimation(this)
 }
