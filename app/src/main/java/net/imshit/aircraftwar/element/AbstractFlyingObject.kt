@@ -8,7 +8,7 @@ abstract class AbstractFlyingObject(
     val game: Games,
     initialX: Float,
     initialY: Float,
-    protected val speedX: Float,
+    protected var speedX: Float,
     protected val speedY: Float
 ) {
     var x: Float = initialX

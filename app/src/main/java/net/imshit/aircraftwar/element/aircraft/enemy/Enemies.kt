@@ -27,9 +27,9 @@ sealed class Enemies(
     shootStrategyFactory = EnemyShootStrategyFactory(game),
     shootNum = shootNum
 ), EnemyListener {
-    val credits: Int = 0
+    open val credits: Int = 0
 
-    fun prop(): List<Props> {
+    open fun prop(): List<Props> {
         return listOf()
     }
 
