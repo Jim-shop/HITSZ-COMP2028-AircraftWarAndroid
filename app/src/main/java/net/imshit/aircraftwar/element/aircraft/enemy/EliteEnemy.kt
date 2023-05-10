@@ -12,7 +12,6 @@ class EliteEnemy(
     speedY: Float,
     maxHp: Int,
     power: Int,
-    shootNum: Int,
     val propGenerateStrategy: PropGenerateStrategies
 ) : Enemies(
     game = game,
@@ -22,7 +21,7 @@ class EliteEnemy(
     speedY = speedY,
     maxHp = maxHp,
     power = power,
-    shootNum = shootNum
+    shootNum = 1
 ) {
     override val image = game.images.aircraftElite
 
