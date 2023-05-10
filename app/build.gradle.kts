@@ -57,11 +57,7 @@ android {
         viewBinding = true
     }
 }
-/**
- * The dependencies block in the module-level build configuration file
- * specifies dependencies required to build only the module itself.
- * To learn more, go to Add build dependencies.
- */
+
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.core:core-ktx:1.10.0")
