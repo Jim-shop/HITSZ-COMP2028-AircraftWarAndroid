@@ -5,4 +5,5 @@
     <color name="gray">#FF7488A1</color>
     <color name="ic_banner_background">@color/gray</color>
     <color name="ic_launcher_background">@color/gray</color>
+    <color name="ic_scoreboard_background">@color/gray</color>
 </resources>
