@@ -1,44 +1,41 @@
 package net.imshit.aircraftwar.element
 
-import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
-import net.imshit.aircraftwar.gui.GameActivity
+import android.graphics.Bitmap
+import net.imshit.aircraftwar.logic.Games
 import kotlin.math.abs
 
 abstract class AbstractFlyingObject(
-    private val game: GameActivity,
-    initialLocationX: Float,
-    initialLocationY: Float,
+    val game: Games,
+    initialX: Float,
+    initialY: Float,
     protected val speedX: Float,
     protected val speedY: Float
 ) {
-    var locationX = initialLocationX
+    var x: Float = initialX
         protected set
-    var locationY = initialLocationY
+    var y: Float = initialY
         protected set
-    protected abstract val image: Int
-    protected abstract val width: Int
-    protected abstract var height: Int
+    abstract val image: Bitmap
+    val width: Float by lazy { this.image.width.toFloat() }
+    val height: Float by lazy { this.image.height.toFloat() }
+    protected val boundingHeight: Float by lazy { this.height }
     private var isValid: Boolean = true
 
-    fun forward() {
-        locationX += speedX * game.refreshInterval
-        locationY += speedY * game.refreshInterval
-        if (locationX < 0 || locationX >= game.width || locationY >= game.height) {
+    open fun forward(timeMs: Int) {
+        this.x += this.speedX * timeMs
+        this.y += this.speedY * timeMs
+        if (this.x < 0 || this.x >= this.game.width || y >= this.game.height) {
             vanish()
         }
     }
 
     fun vanish() {
-        isValid = false
+        this.isValid = false
     }
 
     fun crash(flyingObject: AbstractFlyingObject): Boolean {
-        // TODO: 这里太丑了，改成每个object维护一个boundingBox
-        val thisHeight = if (this is AbstractAircraft) height / 2 else height
-        val fHeight =
-            if (flyingObject is AbstractAircraft) flyingObject.height / 2 else flyingObject.height
-        val xLimit = (width + flyingObject.width) / 2f
-        val yLimit = (thisHeight + fHeight) / 2f
-        return abs(locationX - flyingObject.locationX) < xLimit && abs(locationY - flyingObject.locationY) < yLimit
+        val xLimit = (this.width + flyingObject.width) / 2
+        val yLimit = (this.boundingHeight + flyingObject.boundingHeight) / 2
+        return abs(this.x - flyingObject.x) < xLimit && abs(this.y - flyingObject.y) < yLimit
     }
 }
