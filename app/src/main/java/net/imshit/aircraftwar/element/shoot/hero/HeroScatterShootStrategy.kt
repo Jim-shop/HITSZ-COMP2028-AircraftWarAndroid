@@ -3,9 +3,9 @@ package net.imshit.aircraftwar.element.shoot.hero
 import net.imshit.aircraftwar.element.bullet.HeroBullet
 import net.imshit.aircraftwar.logic.Games
 
-class HeroScatterShootStrategy : HeroShootStrategy {
+class HeroScatterShootStrategy(game: Games) : HeroShootStrategies(game = game) {
     override fun shoot(
-        game: Games, x: Float, y: Float, speedY: Float, power: Int
+        x: Float, y: Float, speedY: Float, power: Int
     ): List<HeroBullet> {
         val direction = -1
         val shootNum = 3
@@ -16,7 +16,7 @@ class HeroScatterShootStrategy : HeroShootStrategy {
             for (i in 0 until shootNum) {
                 add(
                     HeroBullet(
-                        game,
+                        this@HeroScatterShootStrategy.game,
                         x + (i * 2 - shootNum + 1) * 10,
                         bulletY,
                         bulletCenterSpeedX + (i * 2 - shootNum + 1) * 0.01f,

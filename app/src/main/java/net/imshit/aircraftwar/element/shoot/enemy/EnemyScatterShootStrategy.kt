@@ -3,10 +3,8 @@ package net.imshit.aircraftwar.element.shoot.enemy
 import net.imshit.aircraftwar.element.bullet.EnemyBullet
 import net.imshit.aircraftwar.logic.Games
 
-class EnemyScatterShootStrategy : EnemyShootStrategy {
-    override fun shoot(
-        game: Games, x: Float, y: Float, speedY: Float, power: Int
-    ): List<EnemyBullet> {
+class EnemyScatterShootStrategy(game: Games) : EnemyShootStrategies(game = game) {
+    override fun shoot(x: Float, y: Float, speedY: Float, power: Int): List<EnemyBullet> {
         val direction = 1
         val shootNum = 3
         val bulletY = y + direction * 2
@@ -16,7 +14,7 @@ class EnemyScatterShootStrategy : EnemyShootStrategy {
             for (i in 0 until shootNum) {
                 add(
                     EnemyBullet(
-                        game,
+                        this@EnemyScatterShootStrategy.game,
                         x + (i * 2 - shootNum + 1) * 10,
                         bulletY,
                         bulletCenterSpeedX + (i * 2 - shootNum + 1) * 0.01f,

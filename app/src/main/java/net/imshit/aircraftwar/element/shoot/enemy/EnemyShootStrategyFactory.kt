@@ -1,14 +1,15 @@
 package net.imshit.aircraftwar.element.shoot.enemy
 
-import net.imshit.aircraftwar.element.shoot.AbstractShootStrategyFactory
+import net.imshit.aircraftwar.element.shoot.ShootStrategyFactories
+import net.imshit.aircraftwar.logic.Games
 
-class EnemyShootStrategyFactory : AbstractShootStrategyFactory() {
-    override fun getStrategy(shootNum: Int): EnemyShootStrategy {
+class EnemyShootStrategyFactory(game: Games) : ShootStrategyFactories(game = game) {
+    override fun getStrategy(shootNum: Int): EnemyShootStrategies {
         return when (shootNum) {
-            0 -> EnemyNoShootStrategy()
-            1 -> EnemyDirectShootStrategy()
-            3 -> EnemyScatterShootStrategy()
-            else -> EnemyNoShootStrategy()
+            0 -> EnemyNoShootStrategy(this.game)
+            1 -> EnemyDirectShootStrategy(this.game)
+            3 -> EnemyScatterShootStrategy(this.game)
+            else -> EnemyNoShootStrategy(this.game)
         }
     }
 }
