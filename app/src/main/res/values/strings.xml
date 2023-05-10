@@ -13,4 +13,7 @@
     <string name="checkbox_sound">音效</string>
     <string name="item_about">关于</string>
     <string name="main_subtitle">难度选择</string>
+    <string name="shortcut_scoreboard_short_label" translatable="false">@string/scoreboard_label</string>
+    <string name="shortcut_scoreboard_long_label" translatable="false">@string/scoreboard_label</string>
+    <string name="shortcut_scoreboard_disabled_message">暂时无法打开排行榜</string>
 </resources>

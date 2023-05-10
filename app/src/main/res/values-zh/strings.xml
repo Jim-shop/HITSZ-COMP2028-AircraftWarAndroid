@@ -11,4 +11,5 @@
     <string name="item_about">关于</string>
     <string name="manage_space_label">管理空间</string>
     <string name="main_subtitle">难度选择</string>
+    <string name="shortcut_scoreboard_disabled_message">暂时无法打开排行榜</string>
 </resources>
