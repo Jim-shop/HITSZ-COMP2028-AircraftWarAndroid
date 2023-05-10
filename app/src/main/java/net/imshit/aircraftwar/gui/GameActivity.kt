@@ -9,10 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import net.imshit.aircraftwar.Difficulty
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
-import net.imshit.aircraftwar.logic.AbstractGame
-import net.imshit.aircraftwar.logic.EasyGame
-import net.imshit.aircraftwar.logic.HardGame
-import net.imshit.aircraftwar.logic.MediumGame
+import net.imshit.aircraftwar.logic.Games
 
 class GameActivity : AppCompatActivity() {
     companion object {
@@ -29,13 +26,6 @@ class GameActivity : AppCompatActivity() {
     var height: Int = 0
         private set
 
-    val refreshInterval = 10
-
-    var gameMode = Difficulty.EASY
-        private set
-    var soundMode = true
-        private set
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 获取配置
@@ -43,19 +33,16 @@ class GameActivity : AppCompatActivity() {
             width = right - left
             height = bottom - top
         }
+        val soundMode: Boolean
+        val gameMode: Difficulty
         intent.apply {
             gameMode = getSerializableExtra("gameMode", Difficulty::class.java) ?: Difficulty.EASY
             soundMode = getBooleanExtra("soundMode", true)
         }
-        val game: AbstractGame = when (gameMode) {
-            Difficulty.EASY -> EasyGame(this)
-            Difficulty.MEDIUM -> MediumGame(this)
-            Difficulty.HARD -> HardGame(this)
-        }
+        val game: Games = Games.getGames(this, gameMode, soundMode)
         with(ActivityGameBinding.inflate(layoutInflater)) {
-            setContentView(root.apply {
-                addView(game, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
-            })
+            root.addView(game, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
+            setContentView(root)
         }
         // 隐藏任务栏、导航栏
         WindowInsetsControllerCompat(window, window.decorView).apply {
