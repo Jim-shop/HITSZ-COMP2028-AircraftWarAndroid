@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import net.imshit.aircraftwar.Difficulty
 import net.imshit.aircraftwar.databinding.ActivityScoreboardBinding
+import net.imshit.aircraftwar.logic.Difficulty
 
 class ScoreboardActivity : AppCompatActivity() {
     companion object {

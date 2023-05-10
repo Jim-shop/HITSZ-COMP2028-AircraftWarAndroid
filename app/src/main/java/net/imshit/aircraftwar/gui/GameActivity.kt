@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import net.imshit.aircraftwar.Difficulty
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
+import net.imshit.aircraftwar.logic.Difficulty
 import net.imshit.aircraftwar.logic.Games
 
 class GameActivity : AppCompatActivity() {

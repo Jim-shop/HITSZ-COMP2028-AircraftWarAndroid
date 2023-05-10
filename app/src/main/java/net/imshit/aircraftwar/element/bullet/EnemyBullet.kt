@@ -1,8 +1,8 @@
 package net.imshit.aircraftwar.element.bullet
 
+import net.imshit.aircraftwar.logic.EnemyListener
+import net.imshit.aircraftwar.logic.GameEvents
 import net.imshit.aircraftwar.logic.Games
-import net.imshit.aircraftwar.util.listener.EnemyListener
-import net.imshit.aircraftwar.util.listener.GameEvents
 
 class EnemyBullet(
     game: Games, initialX: Float, initialY: Float, speedX: Float, speedY: Float, power: Int

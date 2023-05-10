@@ -7,8 +7,7 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.ViewTreeObserver
-import net.imshit.aircraftwar.Difficulty
-import net.imshit.aircraftwar.util.ImageManager
+import net.imshit.aircraftwar.element.aircraft.hero.HeroAircraft
 
 sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     SurfaceView(context, attrs), SurfaceHolder.Callback, Runnable {
@@ -35,6 +34,8 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         private set
     var screenHeight = 0
         private set
+
+    lateinit var heroAircraft: HeroAircraft
 
     init {
         viewTreeObserver.addOnGlobalLayoutListener(object :
@@ -65,5 +66,13 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     override fun run() {
         Log.e("FFFFF", "RUN")
+    }
+
+    fun notify(e: GameEvents) {
+        when (e) {
+            GameEvents.BOMB_ACTIVATE -> {
+                TODO()
+            }
+        }
     }
 }
