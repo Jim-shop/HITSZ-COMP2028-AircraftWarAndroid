@@ -2,7 +2,7 @@ package net.imshit.aircraftwar.element.aircraft
 
 import net.imshit.aircraftwar.element.AbstractFlyingObject
 import net.imshit.aircraftwar.element.animation.DyingAnimation
-import net.imshit.aircraftwar.element.bullet.AbstractBullet
+import net.imshit.aircraftwar.element.bullet.Bullets
 import net.imshit.aircraftwar.element.shoot.AbstractShootStrategyFactory
 import net.imshit.aircraftwar.logic.Games
 
@@ -43,8 +43,8 @@ abstract class AbstractAircraft(
         }
     }
 
-    fun shoot(): List<AbstractBullet> =
-        this.shootStrategy.shoot(this.x, this.y, this.speedY, this.power)
+    fun shoot(): List<Bullets> =
+        this.shootStrategy.shoot(game, this.x, this.y, this.speedY, this.power)
 
     val animation: DyingAnimation
         get() = DyingAnimation(this)
