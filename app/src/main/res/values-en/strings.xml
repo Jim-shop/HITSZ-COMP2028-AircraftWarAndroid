@@ -3,6 +3,7 @@
     <string name="app_name">Aircraft War</string>
     <string name="app_description">HITSZ COMP2028 experiment.</string>
     <string name="game_label">Gaming</string>
+    <string name="game_canvas_text_score">Score: %d</string>
     <string name="button_easy">Easy Mode</string>
     <string name="button_medium">Medium Mode</string>
     <string name="button_hard">Hard Mode</string>

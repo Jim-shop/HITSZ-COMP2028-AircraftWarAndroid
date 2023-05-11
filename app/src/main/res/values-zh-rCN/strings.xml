@@ -7,6 +7,7 @@
     <string name="button_medium">普通模式</string>
     <string name="button_hard">困难模式</string>
     <string name="checkbox_sound">音效</string>
+    <string name="game_canvas_text_score">得分：%d</string>
     <string name="scoreboard_label">排行榜</string>
     <string name="item_about">关于</string>
     <string name="manage_space_label">管理空间</string>

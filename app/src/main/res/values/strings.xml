@@ -5,6 +5,7 @@
     <string name="app_about" translatable="false">@string/app_description</string>
     <string name="main_label" translatable="false">@string/app_name</string>
     <string name="game_label">游戏界面</string>
+    <string name="game_canvas_text_score">得分：%d</string>
     <string name="scoreboard_label">排行榜</string>
     <string name="manage_space_label">管理空间</string>
     <string name="button_easy">简单模式</string>
