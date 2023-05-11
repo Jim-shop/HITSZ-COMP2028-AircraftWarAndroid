@@ -11,39 +11,38 @@ class DyingAnimation(
     game = aircraft.game, initialX = aircraft.x, initialY = aircraft.y, speedX = 0f, speedY = 0f
 ) {
 
-    val alpha = 0x80
-    val liveMs = 500
-    val flashMs = 100
+    val ALPHA = 0x80
+    val LIVE_MS = 500
+    val FLASH_MS = 100
 
     fun makeLightImage(image: Bitmap): Bitmap {
-        return image.run {
-            IntArray(width * height).also {
-                getPixels(it, 0, width, 0, 0, width, height)
-            }.map { color ->
-                Color.argb(
-                    this@DyingAnimation.alpha,
-                    Color.red(color),
-                    Color.green(color),
-                    Color.blue(color)
-                )
-            }.toIntArray().run {
-                Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-                    .also { setPixels(this, 0, width, 0, 0, width, height) }
-            }
-        }
+        val width = image.width
+        val height = image.height
+        val pixels =
+            IntArray(width * height).also { image.getPixels(it, 0, width, 0, 0, width, height) }
+        val lightPixels = pixels.map { color ->
+            Color.argb(
+                Color.TRANSPARENT,
+                Color.red(color) * this.ALPHA,
+                Color.green(color) * this.ALPHA,
+                Color.blue(color) * this.ALPHA
+            )
+        }.toIntArray()
+        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            .apply { setPixels(lightPixels, 0, width, 0, 0, width, height) }
     }
 
     val baseImage = aircraft.image
     val lightImage = makeLightImage(this.baseImage)
     override var image = this.baseImage
 
-    var life = this.liveMs
+    var life = this.LIVE_MS
     override fun forward(timeMs: Int) {
         this.life -= timeMs
         if (this.life <= 0) {
             this.vanish()
         }
-        this.image = if ((this.life / flashMs) % 2 == 1) {
+        this.image = if ((this.life / FLASH_MS) % 2 == 1) {
             this.baseImage
         } else {
             this.lightImage
