@@ -8,7 +8,7 @@ import android.graphics.Matrix
 class ImageManager(context: Context, width: Int) {
     val scaleMatrix = (width / 512f).let { Matrix().apply { postScale(it, it) } }
     val readImage: (String) -> Bitmap = { fileName ->
-        BitmapFactory.decodeStream(context.assets.open(fileName)).run {
+        BitmapFactory.decodeStream(context.assets.open("img/$fileName")).run {
             Bitmap.createBitmap(this, 0, 0, this.width, this.height, scaleMatrix, true)
         }
     }
