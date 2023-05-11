@@ -3,7 +3,7 @@ package net.imshit.aircraftwar.util.resource
 import android.content.Context
 import android.content.res.AssetFileDescriptor
 
-class AudioManager(context: Context) {
+class MusicManager(context: Context) {
     private val getAfd: (String) -> AssetFileDescriptor = { fileName ->
         context.assets.openFd("audio/$fileName")
     }
