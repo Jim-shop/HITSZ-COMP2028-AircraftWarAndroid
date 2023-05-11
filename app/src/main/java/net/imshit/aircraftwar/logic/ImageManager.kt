@@ -3,10 +3,14 @@ package net.imshit.aircraftwar.logic
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 
-class ImageManager(context: Context) {
+class ImageManager(context: Context, width: Int) {
+    val scaleMatrix = (width / 512f).let { Matrix().apply { postScale(it, it) } }
     val readImage: (String) -> Bitmap = { fileName ->
-        BitmapFactory.decodeStream(context.assets.open(fileName))
+        BitmapFactory.decodeStream(context.assets.open(fileName)).run {
+            Bitmap.createBitmap(this, 0, 0, this.width, this.height, scaleMatrix, true)
+        }
     }
 
     val backgroundEasy: Bitmap = readImage("game_bg_easy.webp")
