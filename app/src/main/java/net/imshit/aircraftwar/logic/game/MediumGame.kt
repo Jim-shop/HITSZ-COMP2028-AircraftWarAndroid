@@ -2,6 +2,7 @@ package net.imshit.aircraftwar.logic.game
 
 import android.content.Context
 import android.util.AttributeSet
+import net.imshit.aircraftwar.logic.generate.enemy.EasyEnemyGenerateStrategy
 
 class MediumGame(context: Context, attrs: AttributeSet?, soundMode: Boolean) : Games(
     context = context, attrs = attrs, soundMode = soundMode
@@ -16,5 +17,7 @@ class MediumGame(context: Context, attrs: AttributeSet?, soundMode: Boolean) : G
     )
 
     override val background = images.backgroundMedium
+    override val generateStrategy = EasyEnemyGenerateStrategy(this)
+
     //TODO
 }
