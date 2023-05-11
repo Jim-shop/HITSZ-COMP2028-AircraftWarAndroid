@@ -23,6 +23,10 @@ import net.imshit.aircraftwar.logic.Difficulty
 import net.imshit.aircraftwar.logic.EnemyListener
 import net.imshit.aircraftwar.logic.GameEvents
 import net.imshit.aircraftwar.logic.generate.enemy.EnemyGenerateStrategies
+import net.imshit.aircraftwar.util.music.BasicMusicStrategy
+import net.imshit.aircraftwar.util.music.BgmType
+import net.imshit.aircraftwar.util.music.MusicStrategies
+import net.imshit.aircraftwar.util.music.MuteMusicStrategy
 import net.imshit.aircraftwar.util.resource.ImageManager
 
 sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
@@ -44,6 +48,8 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     // utils
     lateinit var images: ImageManager
+    private val musicStrategy: MusicStrategies =
+        if (soundMode) BasicMusicStrategy(context) else MuteMusicStrategy()
     private val logicThread = Thread {
         try {
             while (!this.isStopped) {
@@ -72,12 +78,12 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     // variables
     lateinit var heroAircraft: HeroAircraft
-    val enemyAircrafts = mutableListOf<Enemies>()
-    val heroBullets = mutableListOf<HeroBullet>()
-    val enemyBullets = mutableListOf<EnemyBullet>()
-    val props = mutableListOf<Props>()
-    val animations = mutableListOf<DyingAnimation>()
-    var boss: BossEnemy? = null
+    private val enemyAircrafts = mutableListOf<Enemies>()
+    private val heroBullets = mutableListOf<HeroBullet>()
+    private val enemyBullets = mutableListOf<EnemyBullet>()
+    private val props = mutableListOf<Props>()
+    private val animations = mutableListOf<DyingAnimation>()
+    private var boss: BossEnemy? = null
 
     // bundle of variables
     private val autoElementLists =
@@ -86,7 +92,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     private val heroList = mutableListOf<HeroAircraft>()
     private val drawingElementLists =
         listOf(heroList, animations, props, enemyBullets, heroBullets, enemyAircrafts)
-    private val lifebarElementLists = listOf(heroList, enemyAircrafts)
+    private val lifeBarElementLists = listOf(heroList, enemyAircrafts)
 
     init {
         // 等布局完成就开始获取图片等初始化工作
@@ -113,8 +119,12 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     fun notify(e: GameEvents) {
         when (e) {
             GameEvents.BOMB_ACTIVATE -> {
-                // TODO: 音乐
-                enemyListenerLists.flatten().forEach { item -> item.notify(e) }
+                this.musicStrategy.playExplode()
+                this.enemyListenerLists.flatten().forEach { item -> item.notify(e) }
+                this.enemyAircrafts.filter(AbstractFlyingObject::notValid).forEach { aircraft ->
+                    this.animations.add(aircraft.animation)
+                    this.score += aircraft.credits
+                }
             }
         }
     }
@@ -130,11 +140,11 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     open fun init() {
         this.images = ImageManager(context.applicationContext, width)
-        this.heroAircraft = HeroAircraft(game = this, maxHp = 1000, power = 30, shootNum = 1)
+        this.heroAircraft = HeroAircraft(game = this, maxHp = 1000, power = 50, shootNum = 1)
         this.heroList.add(this.heroAircraft)
         this.holder.addCallback(this)
         initHeroController()
-        // TODO: 音乐
+        this.musicStrategy.setBgm(BgmType.NORMAL)
     }
 
     private fun update() {
@@ -163,7 +173,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
                 this.boss = it
                 this.enemyAircrafts.add(it)
             }
-            // TODO: 音乐
+            this.musicStrategy.setBgm(BgmType.BOSS)
         }
         // 敌机生成
         if (this.generateStrategy.isTimeToGenerateEnemy()) {
@@ -175,11 +185,11 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         // 敌机射出子弹
         if (this.generateStrategy.isTimeForEnemyShoot()) {
             this.enemyAircrafts.forEach { enemy -> this.enemyBullets.addAll(enemy.shoot()) }
-            // TODO: 音乐
+            this.musicStrategy.playBulletShoot()
         }
         if (this.generateStrategy.isTimeForHeroShoot()) {
             this.heroBullets.addAll(heroAircraft.shoot())
-            // TODO: 音乐
+            this.musicStrategy.playBulletShoot()
         }
     }
 
@@ -192,7 +202,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         this.enemyBullets.filter(this.heroAircraft::crash).forEach { bullet ->
             this.heroAircraft.decreaseHp(bullet.power)
             bullet.vanish()
-            // TODO: 音乐
+            this.musicStrategy.playBulletHit()
         }
         // 英雄子弹攻击敌机
         this.heroBullets.filter(Bullets::isValid).forEach { bullet ->
@@ -205,7 +215,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
                         this.score += enemyAircraft.credits
                     }
                     bullet.vanish()
-                    // TODO: 音乐
+                    this.musicStrategy.playBulletHit()
                 }
         }
         // 敌机与英雄机相撞，均损毁
@@ -218,7 +228,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         this.props.filter(this.heroAircraft::crash).forEach { prop ->
             prop.activate()
             prop.vanish()
-            // todo: 音乐
+            this.musicStrategy.playSupplyGet()
         }
     }
 
@@ -227,19 +237,24 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         this.boss?.let {
             if (it.notValid()) {
                 this.boss = null
-                // TODO: 音乐
+                this.musicStrategy.setBgm(BgmType.NORMAL)
             }
         }
     }
 
     private fun gameOver() {
         this.isGameOver = true
-        gameStop()
+        this.isStopped = true
+        this.musicStrategy.setBgm(BgmType.NONE)
+        this.musicStrategy.playGameOver()
+        this.logicThread.interrupt()
     }
 
     private fun gameStop() {
         this.isStopped = true
         this.logicThread.interrupt()
+        this.musicStrategy.setBgm(BgmType.NONE)
+        this.musicStrategy.release()
     }
 
     private var backgroundTop = 0
@@ -269,7 +284,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         val BAR_TEXT_OFFSET = 15f
         val BAR_LENGTH = 50f
         val BAR_HEIGHT = 10f
-        this.lifebarElementLists.flatten().forEach {
+        this.lifeBarElementLists.flatten().forEach {
             val hp = it.hp
             val maxHp = it.maxHp
             val barStartX = it.x - BAR_LENGTH / 2
