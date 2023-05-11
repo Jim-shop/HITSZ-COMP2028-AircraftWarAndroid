@@ -17,7 +17,10 @@ abstract class AbstractFlyingObject(
     val width: Float by lazy { this.image.width.toFloat() }
     val height: Float by lazy { this.image.height.toFloat() }
     protected open val boundingHeight: Float by lazy { this.height }
-    private var isValid: Boolean = true
+    var isValid: Boolean = true
+        private set
+
+    fun notValid() = !this.isValid
 
     open fun forward(timeMs: Int) {
         this.x += this.speedX * timeMs
