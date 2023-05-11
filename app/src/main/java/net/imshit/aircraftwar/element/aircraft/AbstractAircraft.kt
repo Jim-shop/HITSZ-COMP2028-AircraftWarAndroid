@@ -17,7 +17,7 @@ abstract class AbstractAircraft(
     game = game, initialX = initialX, initialY = initialY, speedX = speedX, speedY = speedY
 ) {
 
-    override val boundingHeight = super.boundingHeight / 2
+    override val boundingHeight: Float by lazy { super.boundingHeight / 2 }
 
     var hp: Int = this.maxHp
         protected set
