@@ -1,7 +1,7 @@
 package net.imshit.aircraftwar.element.shoot.hero
 
 import net.imshit.aircraftwar.element.bullet.HeroBullet
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
 class HeroScatterShootStrategy(game: Games) : HeroShootStrategies(game = game) {
     override fun shoot(

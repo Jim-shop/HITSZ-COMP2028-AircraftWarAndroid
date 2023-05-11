@@ -9,7 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
 import net.imshit.aircraftwar.logic.Difficulty
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
 class GameActivity : AppCompatActivity() {
     companion object {

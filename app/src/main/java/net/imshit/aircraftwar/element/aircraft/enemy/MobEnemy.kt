@@ -1,6 +1,6 @@
 package net.imshit.aircraftwar.element.aircraft.enemy
 
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
 class MobEnemy(
     game: Games,

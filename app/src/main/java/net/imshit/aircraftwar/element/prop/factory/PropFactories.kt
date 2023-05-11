@@ -1,7 +1,7 @@
 package net.imshit.aircraftwar.element.prop.factory
 
 import net.imshit.aircraftwar.element.prop.Props
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
 abstract class PropFactories(val game: Games) {
     val speedX = 0f

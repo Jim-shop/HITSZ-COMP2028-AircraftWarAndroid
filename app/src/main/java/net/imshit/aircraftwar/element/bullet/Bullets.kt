@@ -1,7 +1,7 @@
 package net.imshit.aircraftwar.element.bullet
 
 import net.imshit.aircraftwar.element.AbstractFlyingObject
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
 sealed class Bullets(
     game: Games, initialX: Float, initialY: Float, speedX: Float, speedY: Float, val power: Int

@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.logic
+package net.imshit.aircraftwar.logic.game
 
 import android.content.Context
 import android.util.AttributeSet

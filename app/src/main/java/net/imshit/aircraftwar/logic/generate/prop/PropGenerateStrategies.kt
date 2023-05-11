@@ -5,7 +5,7 @@ import net.imshit.aircraftwar.element.prop.factory.BloodPropFactory
 import net.imshit.aircraftwar.element.prop.factory.BombPropFactory
 import net.imshit.aircraftwar.element.prop.factory.BulletPropFactory
 import net.imshit.aircraftwar.element.prop.factory.PropFactories
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 import java.lang.Math.random
 
 abstract class PropGenerateStrategies(game: Games) : PropFactories(game = game) {

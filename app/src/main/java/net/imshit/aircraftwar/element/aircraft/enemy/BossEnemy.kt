@@ -2,7 +2,7 @@ package net.imshit.aircraftwar.element.aircraft.enemy
 
 import net.imshit.aircraftwar.element.prop.Props
 import net.imshit.aircraftwar.logic.GameEvents
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 import net.imshit.aircraftwar.logic.generate.prop.PropGenerateStrategies
 
 class BossEnemy(
@@ -28,7 +28,7 @@ class BossEnemy(
 
     override fun forward(timeMs: Int) {
         this.x += this.speedX * timeMs
-        if (this.x < 0 || this.x >= game.screenWidth) {
+        if (this.x < 0 || this.x >= game.width) {
             this.speedX = -speedX
         }
     }

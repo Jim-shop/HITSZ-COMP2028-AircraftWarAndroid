@@ -1,7 +1,7 @@
 package net.imshit.aircraftwar.element
 
 import android.graphics.Bitmap
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 import kotlin.math.abs
 
 abstract class AbstractFlyingObject(
@@ -12,13 +12,11 @@ abstract class AbstractFlyingObject(
     protected val speedY: Float
 ) {
     var x: Float = initialX
-        protected set
     var y: Float = initialY
-        protected set
     abstract val image: Bitmap
     val width: Float by lazy { this.image.width.toFloat() }
     val height: Float by lazy { this.image.height.toFloat() }
-    protected val boundingHeight: Float by lazy { this.height }
+    protected open val boundingHeight: Float by lazy { this.height }
     private var isValid: Boolean = true
 
     open fun forward(timeMs: Int) {

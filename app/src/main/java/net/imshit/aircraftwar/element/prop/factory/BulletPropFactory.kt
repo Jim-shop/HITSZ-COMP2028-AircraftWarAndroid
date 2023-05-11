@@ -1,7 +1,7 @@
 package net.imshit.aircraftwar.element.prop.factory
 
 import net.imshit.aircraftwar.element.prop.BulletProp
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
 class BulletPropFactory(game: Games) : PropFactories(game = game) {
     override fun createProp(x: Float, y: Float) =

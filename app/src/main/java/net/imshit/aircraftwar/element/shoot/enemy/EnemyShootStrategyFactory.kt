@@ -1,7 +1,7 @@
 package net.imshit.aircraftwar.element.shoot.enemy
 
 import net.imshit.aircraftwar.element.shoot.ShootStrategyFactories
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
 class EnemyShootStrategyFactory(game: Games) : ShootStrategyFactories(game = game) {
     override fun getStrategy(shootNum: Int): EnemyShootStrategies {

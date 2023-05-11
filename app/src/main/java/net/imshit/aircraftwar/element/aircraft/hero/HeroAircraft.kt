@@ -2,17 +2,17 @@ package net.imshit.aircraftwar.element.aircraft.hero
 
 import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
 import net.imshit.aircraftwar.element.shoot.hero.HeroShootStrategyFactory
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
-class HeroAircraft private constructor(
+class HeroAircraft(
     game: Games,
     maxHp: Int,
     power: Int,
     shootNum: Int
 ) : AbstractAircraft(
     game = game,
-    initialX = game.screenWidth / 2f,
-    initialY = game.screenHeight / 2f,
+    initialX = game.width / 2f,
+    initialY = game.height / 2f,
     speedX = 0f,
     speedY = 0f,
     maxHp = maxHp,

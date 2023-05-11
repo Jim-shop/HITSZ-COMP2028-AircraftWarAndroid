@@ -1,9 +1,9 @@
-package net.imshit.aircraftwar.logic
+package net.imshit.aircraftwar.logic.game
 
 import android.content.Context
 import android.util.AttributeSet
 
-class MediumGame(context: Context, attrs: AttributeSet?, soundMode: Boolean) : Games(
+class EasyGame(context: Context, attrs: AttributeSet?, soundMode: Boolean) : Games(
     context = context, attrs = attrs, soundMode = soundMode
 ) {
     constructor(context: Context, soundMode: Boolean) : this(
@@ -15,6 +15,6 @@ class MediumGame(context: Context, attrs: AttributeSet?, soundMode: Boolean) : G
         context = context, attrs = attrs, soundMode = false
     )
 
-    override val background = images.backgroundMedium
-    //TODO
+    override val background = images.backgroundEasy
+    // TODO
 }

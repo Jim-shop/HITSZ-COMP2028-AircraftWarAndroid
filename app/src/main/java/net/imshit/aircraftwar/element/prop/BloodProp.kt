@@ -1,6 +1,6 @@
 package net.imshit.aircraftwar.element.prop
 
-import net.imshit.aircraftwar.logic.Games
+import net.imshit.aircraftwar.logic.game.Games
 
 class BloodProp(
     game: Games, initialX: Float, initialY: Float, speedX: Float, speedY: Float
