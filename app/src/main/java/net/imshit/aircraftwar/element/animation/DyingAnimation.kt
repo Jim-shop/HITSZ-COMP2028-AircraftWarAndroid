@@ -11,7 +11,7 @@ class DyingAnimation(
     game = aircraft.game, initialX = aircraft.x, initialY = aircraft.y, speedX = 0f, speedY = 0f
 ) {
 
-    val ALPHA = 0x80
+    val ALPHA = 0.8
     val LIVE_MS = 500
     val FLASH_MS = 100
 
@@ -23,9 +23,9 @@ class DyingAnimation(
         val lightPixels = pixels.map { color ->
             Color.argb(
                 Color.TRANSPARENT,
-                Color.red(color) * this.ALPHA,
-                Color.green(color) * this.ALPHA,
-                Color.blue(color) * this.ALPHA
+                (Color.red(color) * this.ALPHA).toInt(),
+                (Color.green(color) * this.ALPHA).toInt(),
+                (Color.blue(color) * this.ALPHA).toInt()
             )
         }.toIntArray()
         return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
