@@ -16,7 +16,10 @@ class EasyGame(context: Context, attrs: AttributeSet?, soundMode: Boolean) : Gam
         context = context, attrs = attrs, soundMode = false
     )
 
-    override val background = images.backgroundEasy
     override val generateStrategy = EasyEnemyGenerateStrategy(this)
-    // TODO
+
+    override fun init() {
+        super.init()
+        this.background = images.backgroundEasy
+    }
 }
