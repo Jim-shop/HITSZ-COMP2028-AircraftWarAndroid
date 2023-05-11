@@ -46,8 +46,8 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     lateinit var images: ImageManager
     private val logicThread = Thread {
         try {
-            while (!Thread.interrupted() && !this.isStopped) {
-                synchronized(holder) {
+            while (!this.isStopped) {
+                synchronized(this.holder) {
                     update()
                     draw()
                     Thread.sleep(this.refreshInterval.toLong())
@@ -313,7 +313,9 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         paintLife(canvas)
         // 绘制得分
         paintScore(canvas)
-        this.holder.unlockCanvasAndPost(canvas)
+        if (this.holder.surface.isValid) {
+            this.holder.unlockCanvasAndPost(canvas)
+        }
     }
 }
 
