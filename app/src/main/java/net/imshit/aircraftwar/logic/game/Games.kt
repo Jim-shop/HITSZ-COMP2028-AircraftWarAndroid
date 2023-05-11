@@ -44,11 +44,16 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     // utils
     lateinit var images: ImageManager
-    private val drawingThread = Thread {
-        while (!this.isStopped) {
-            update()
-            draw()
-            Thread.sleep(this.refreshInterval.toLong())
+    private val logicThread = Thread {
+        try {
+            while (!Thread.interrupted() && !this.isStopped) {
+                synchronized(holder) {
+                    update()
+                    draw()
+                    Thread.sleep(this.refreshInterval.toLong())
+                }
+            }
+        } catch (_: InterruptedException) {
         }
     }
 
@@ -84,6 +89,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     private val lifebarElementLists = listOf(heroList, enemyAircrafts)
 
     init {
+        // 等布局完成就开始获取图片等初始化工作
         viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -94,15 +100,14 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        this.drawingThread.start()
+        this.logicThread.start()
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        this.isStopped = true
-        this.drawingThread.interrupt()
+        gameStop()
     }
 
     fun notify(e: GameEvents) {
@@ -127,7 +132,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         this.images = ImageManager(context.applicationContext, width)
         this.heroAircraft = HeroAircraft(game = this, maxHp = 1000, power = 30, shootNum = 1)
         this.heroList.add(this.heroAircraft)
-        this.holder.addCallback(this@Games)
+        this.holder.addCallback(this)
         initHeroController()
         // TODO: 音乐
     }
@@ -229,7 +234,12 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     private fun gameOver() {
         this.isGameOver = true
+        gameStop()
+    }
+
+    private fun gameStop() {
         this.isStopped = true
+        this.logicThread.interrupt()
     }
 
     private var backgroundTop = 0
