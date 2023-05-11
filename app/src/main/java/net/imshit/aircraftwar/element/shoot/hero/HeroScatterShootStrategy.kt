@@ -19,7 +19,7 @@ class HeroScatterShootStrategy(game: Games) : HeroShootStrategies(game = game) {
                         this@HeroScatterShootStrategy.game,
                         x + (i * 2 - shootNum + 1) * 10,
                         bulletY,
-                        bulletCenterSpeedX + (i * 2 - shootNum + 1) * 0.01f,
+                        bulletCenterSpeedX + (i * 2 - shootNum + 1) * 0.03f,
                         bulletCenterSpeedY,
                         power
                     )
