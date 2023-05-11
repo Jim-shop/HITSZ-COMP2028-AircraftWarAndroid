@@ -13,7 +13,7 @@ class MediumEnemyGenerateStrategy(game: Games) : EnemyGenerateStrategies() {
     override val bossEnemyFactory = BossEnemyFactory(game, propStrategy)
     override val mobProbability = 0.7
     override val enemyMaxNumber = 8
-    override val bossScoreThreshold = 1000
+    override val bossScoreThreshold = 100
     override val enemySummonInterval = 600
     override val enemyShootInterval = 500
     override val heroShootInterval = 200
@@ -21,8 +21,8 @@ class MediumEnemyGenerateStrategy(game: Games) : EnemyGenerateStrategies() {
     override var powerIncreaseRate = 0.05
     override var speedIncreaseRate = 0.0005
     override var bossHpIncreaseRate = 0.0
-    override var mobBaseHp = 60
-    override var eliteBaseHp = 90
+    override var mobBaseHp = 45
+    override var eliteBaseHp = 75
     override var bossBaseHp = 200
     override var eliteBasePower = 30
     override var bossBasePower = 30
