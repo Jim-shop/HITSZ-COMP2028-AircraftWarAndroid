@@ -26,7 +26,7 @@ import net.imshit.aircraftwar.logic.ImageManager
 import net.imshit.aircraftwar.logic.generate.enemy.EnemyGenerateStrategies
 
 sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
-    SurfaceView(context, attrs), SurfaceHolder.Callback, Runnable {
+    SurfaceView(context, attrs), SurfaceHolder.Callback {
     companion object {
         fun getGames(context: Context, gameMode: Difficulty, soundMode: Boolean): Games {
             return when (gameMode) {
@@ -44,10 +44,17 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     // utils
     lateinit var images: ImageManager
+    private val drawingThread = Thread {
+        while (!this.isStopped) {
+            update()
+            draw()
+            Thread.sleep(this.refreshInterval.toLong())
+        }
+    }
 
     // configs
     lateinit var background: Bitmap
-    val refreshInterval = 10
+    private val refreshInterval = 10
 
     // strategies
     abstract val generateStrategy: EnemyGenerateStrategies
@@ -56,6 +63,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     var score = 0
     var time = 0
     var isGameOver = false
+    private var isStopped = false
 
     // variables
     lateinit var heroAircraft: HeroAircraft
@@ -86,24 +94,15 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        Thread(this).start()
+        this.drawingThread.start()
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        gameOver()
-    }
-
-    override fun run() {
-        while (!this.isGameOver) {
-            synchronized(this.holder) {
-                update()
-                draw()
-                Thread { Thread.sleep(this.refreshInterval.toLong()) }.start()
-            }
-        }
+        this.isStopped = true
+        this.drawingThread.interrupt()
     }
 
     fun notify(e: GameEvents) {
@@ -230,6 +229,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     private fun gameOver() {
         this.isGameOver = true
+        this.isStopped = true
     }
 
     private var backgroundTop = 0
@@ -255,7 +255,6 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     }
 
     private fun paintLife(canvas: Canvas) {
-        this.paint.textSize = 20f
         val BAR_OFFSET = 15f
         val BAR_TEXT_OFFSET = 15f
         val BAR_LENGTH = 50f
@@ -276,7 +275,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
             canvas.drawRect(barStartX, barTopY, barEndX, barButtomY, this.paint)
             this.paint.color = Color.RED
             canvas.drawRect(barStartX, barTopY, barCurrX, barButtomY, this.paint)
-            this.paint.textSize = 10f
+            this.paint.textSize = 20f
             canvas.drawText("$hp/$maxHp", barStartX, barTopY - BAR_TEXT_OFFSET, this.paint)
         }
     }
