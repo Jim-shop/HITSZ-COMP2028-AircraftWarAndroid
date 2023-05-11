@@ -21,18 +21,9 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    var width: Int = 0
-        private set
-    var height: Int = 0
-        private set
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 获取配置
-        with(windowManager.currentWindowMetrics.bounds) {
-            width = right - left
-            height = bottom - top
-        }
         val soundMode: Boolean
         val gameMode: Difficulty
         intent.apply {
