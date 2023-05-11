@@ -22,8 +22,8 @@ import net.imshit.aircraftwar.element.prop.Props
 import net.imshit.aircraftwar.logic.Difficulty
 import net.imshit.aircraftwar.logic.EnemyListener
 import net.imshit.aircraftwar.logic.GameEvents
-import net.imshit.aircraftwar.logic.ImageManager
 import net.imshit.aircraftwar.logic.generate.enemy.EnemyGenerateStrategies
+import net.imshit.aircraftwar.util.resource.ImageManager
 
 sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     SurfaceView(context, attrs), SurfaceHolder.Callback {
