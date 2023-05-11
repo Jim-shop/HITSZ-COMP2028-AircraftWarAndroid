@@ -1,8 +1,6 @@
 package net.imshit.aircraftwar.util.music
 
-import android.content.Context
-
-class MuteMusicStrategy(context: Context) : MusicStrategies(context = context) {
+class MuteMusicStrategy : MusicStrategies() {
     override fun setBgm(bgmType: BgmType) {
     }
 
@@ -19,5 +17,8 @@ class MuteMusicStrategy(context: Context) : MusicStrategies(context = context) {
     }
 
     override fun playSupplyGet() {
+    }
+
+    override fun release() {
     }
 }

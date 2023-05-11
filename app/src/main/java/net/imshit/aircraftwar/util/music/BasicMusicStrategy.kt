@@ -4,11 +4,11 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
-import net.imshit.aircraftwar.util.resource.AudioManager
+import net.imshit.aircraftwar.util.resource.MusicManager
 
-class BasicMusicStrategy(context: Context) : MusicStrategies(context = context) {
+class BasicMusicStrategy(context: Context) : MusicStrategies() {
 
-    private val audioManager = AudioManager(context)
+    private val audioManager = MusicManager(context)
     private val bgmPlayer = MediaPlayer()
     private val soundPool = SoundPool.Builder().setMaxStreams(100).setAudioAttributes(
         AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME)
@@ -28,20 +28,21 @@ class BasicMusicStrategy(context: Context) : MusicStrategies(context = context) 
     )
 
     override fun setBgm(bgmType: BgmType) {
-        when (bgmType) {
-            BgmType.NONE -> {
-                this.bgmPlayer.stop()
-                this.bgmPlayer.release()
-            }
+        with(this.bgmPlayer) {
+            reset()
+            when (bgmType) {
+                BgmType.NONE -> {}
+                BgmType.NORMAL -> {
+                    setDataSource(audioManager.bgmNormal)
+                    prepare()
+                    start()
+                }
 
-            BgmType.NORMAL -> {
-                this.bgmPlayer.setDataSource(this.audioManager.bgmNormal)
-                this.bgmPlayer.prepareAsync()
-            }
-
-            BgmType.BOSS -> {
-                this.bgmPlayer.setDataSource(this.audioManager.bgmBoss)
-                this.bgmPlayer.prepareAsync()
+                BgmType.BOSS -> {
+                    setDataSource(audioManager.bgmBoss)
+                    prepare()
+                    start()
+                }
             }
         }
     }
@@ -55,7 +56,7 @@ class BasicMusicStrategy(context: Context) : MusicStrategies(context = context) 
     }
 
     override fun playBulletShoot() {
-        play(Sound.BULLET_SHOOT)
+//        play(Sound.BULLET_SHOOT)
     }
 
     override fun playExplode() {
@@ -64,6 +65,11 @@ class BasicMusicStrategy(context: Context) : MusicStrategies(context = context) 
 
     override fun playSupplyGet() {
         play(Sound.SUPPLY_GET)
+    }
+
+    override fun release() {
+        bgmPlayer.release()
+        soundPool.release()
     }
 
     override fun playGameOver() {
