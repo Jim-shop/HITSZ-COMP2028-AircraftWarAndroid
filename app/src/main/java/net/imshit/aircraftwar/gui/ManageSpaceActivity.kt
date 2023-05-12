@@ -31,7 +31,7 @@ class ManageSpaceActivity : AppCompatActivity() {
                     Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD
                 ).forEach { gameMode ->
                     ScoreboardDaoSharedPreferences(this@ManageSpaceActivity, gameMode).apply {
-                        deleteAll()
+                        clear()
                         close()
                     }
                 }

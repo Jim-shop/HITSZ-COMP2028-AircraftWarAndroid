@@ -8,7 +8,7 @@ class ScoreboardDaoSharedPreferences(context: Context, gameMode: Difficulty) : S
     private val sharedPreferences =
         context.getSharedPreferences("record-${gameMode.name}", Context.MODE_PRIVATE)
 
-    private val buffer = mutableListOf<ScoreInfo>()
+    val buffer = mutableListOf<ScoreInfo>()
 
     init {
         val size = this.sharedPreferences.getInt("size", 0)
@@ -42,7 +42,7 @@ class ScoreboardDaoSharedPreferences(context: Context, gameMode: Difficulty) : S
         indices.sortedDescending().forEach(this.buffer::removeAt)
     }
 
-    override fun deleteAll() {
+    override fun clear() {
         this.buffer.clear()
     }
 

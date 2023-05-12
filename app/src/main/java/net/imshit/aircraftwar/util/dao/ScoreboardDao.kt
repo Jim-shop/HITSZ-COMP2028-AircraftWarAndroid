@@ -32,7 +32,7 @@ sealed interface ScoreboardDao : Closeable {
      */
     fun deleteItem(indices: IntArray)
 
-    fun deleteAll()
+    fun clear()
 
     /**
      * 关闭计分板数据模型（通常来说意味着缓存写回）
