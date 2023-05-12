@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
                 when (item.itemId) {
                     R.id.item_about ->
                         MaterialAlertDialogBuilder(this@MainActivity)
-                            .setTitle(R.string.item_about)
+                            .setTitle(R.string.item_about_long)
                             .setIcon(R.drawable.ic_about_24)
                             .setMessage(R.string.app_about)
                             .setPositiveButton(android.R.string.ok) { _, _ -> }
