@@ -13,9 +13,9 @@ abstract class PropGenerateStrategies(game: Games) : PropFactories(game = game) 
     protected abstract val bombProbability: Double
     protected abstract val bulletProbability: Double
 
-    protected val bloodPropFactory = BloodPropFactory(game)
-    protected val bombPropFactory = BombPropFactory(game)
-    protected val bulletPropFactory = BulletPropFactory(game)
+    private val bloodPropFactory = BloodPropFactory(game)
+    private val bombPropFactory = BombPropFactory(game)
+    private val bulletPropFactory = BulletPropFactory(game)
 
     override fun createProp(x: Float, y: Float): Props? {
         val rand = random()

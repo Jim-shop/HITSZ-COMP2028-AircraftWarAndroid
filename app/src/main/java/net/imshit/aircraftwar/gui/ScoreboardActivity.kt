@@ -27,7 +27,7 @@ class ScoreboardActivity : AppCompatActivity() {
             })
         }
 
-        class ScoreInfoAdapter(val scoreInfoList: MutableList<ScoreInfo>) :
+        class ScoreInfoAdapter(private val scoreInfoList: MutableList<ScoreInfo>) :
             RecyclerView.Adapter<ScoreInfoAdapter.ScoreInfoViewHolder>() {
             class ScoreInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 val view: CardView = itemView.findViewById(R.id.sbvi_card)

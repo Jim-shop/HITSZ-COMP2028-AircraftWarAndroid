@@ -41,6 +41,13 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
                 Difficulty.HARD -> HardGame(context, soundMode)
             }
         }
+
+        const val BAR_OFFSET = 15f
+        const val BAR_TEXT_OFFSET = 15f
+        const val BAR_LENGTH = 50f
+        const val BAR_HEIGHT = 10f
+        const val SCORE_X = 10f
+        const val SCORE_Y = 25f
     }
 
     /** used by design tool */
@@ -53,7 +60,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     // utils
     lateinit var images: ImageManager
     private val musicStrategy: MusicStrategies =
-        if (soundMode) BasicMusicStrategy(context) else MuteMusicStrategy()
+        if (soundMode) BasicMusicStrategy(context) else MuteMusicStrategy
     private val logicThread = Thread {
         try {
             while (!this.isStopped) {
@@ -75,9 +82,9 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     abstract val generateStrategy: EnemyGenerateStrategies
 
     // status
-    var score = 0
-    var time = 0
-    var isGameOver = false
+    private var score = 0
+    private var time = 0
+    private var isGameOver = false
     private var isStopped = false
 
     // variables
@@ -287,10 +294,6 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     }
 
     private fun paintLife(canvas: Canvas) {
-        val BAR_OFFSET = 15f
-        val BAR_TEXT_OFFSET = 15f
-        val BAR_LENGTH = 50f
-        val BAR_HEIGHT = 10f
         this.lifeBarElementLists.flatten().forEach {
             val hp = it.hp
             val maxHp = it.maxHp
@@ -298,23 +301,21 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
             val barEndX = barStartX + BAR_LENGTH
             val barCurrX = barStartX + BAR_LENGTH * hp / maxHp
             val barTopY = it.y - it.height / 2 - BAR_OFFSET
-            val barButtomY = barTopY + BAR_HEIGHT
+            val barBottomY = barTopY + BAR_HEIGHT
             this.paint.color = Color.BLACK
             this.paint.style = Paint.Style.STROKE
-            canvas.drawRect(barStartX, barTopY, barEndX, barButtomY, this.paint)
+            canvas.drawRect(barStartX, barTopY, barEndX, barBottomY, this.paint)
             this.paint.color = Color.WHITE
             this.paint.style = Paint.Style.FILL
-            canvas.drawRect(barStartX, barTopY, barEndX, barButtomY, this.paint)
+            canvas.drawRect(barStartX, barTopY, barEndX, barBottomY, this.paint)
             this.paint.color = Color.RED
-            canvas.drawRect(barStartX, barTopY, barCurrX, barButtomY, this.paint)
+            canvas.drawRect(barStartX, barTopY, barCurrX, barBottomY, this.paint)
             this.paint.textSize = 20f
             canvas.drawText("$hp/$maxHp", barStartX, barTopY - BAR_TEXT_OFFSET, this.paint)
         }
     }
 
     private fun paintScore(canvas: Canvas) {
-        val SCORE_X = 10f
-        val SCORE_Y = 25f
         this.paint.color = Color.YELLOW
         this.paint.textSize = 50f
         canvas.drawText(

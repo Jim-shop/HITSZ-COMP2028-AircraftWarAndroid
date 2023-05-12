@@ -12,7 +12,7 @@ class EliteEnemy(
     speedY: Float,
     maxHp: Int,
     power: Int,
-    val propGenerateStrategy: PropGenerateStrategies
+    private val propGenerateStrategy: PropGenerateStrategies
 ) : Enemies(
     game = game,
     initialX = initialX,

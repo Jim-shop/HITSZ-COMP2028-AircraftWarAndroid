@@ -11,11 +11,13 @@ class DyingAnimation(
     game = aircraft.game, initialX = aircraft.x, initialY = aircraft.y, speedX = 0f, speedY = 0f
 ) {
 
-    val ALPHA = 0.8
-    val LIVE_MS = 500
-    val FLASH_MS = 100
+    companion object {
+        const val ALPHA = 0.8
+        const val LIVE_MS = 500
+        const val FLASH_MS = 100
+    }
 
-    fun makeLightImage(image: Bitmap): Bitmap {
+    private fun makeLightImage(image: Bitmap): Bitmap {
         val width = image.width
         val height = image.height
         val pixels =
@@ -23,20 +25,20 @@ class DyingAnimation(
         val lightPixels = pixels.map { color ->
             Color.argb(
                 Color.TRANSPARENT,
-                (Color.red(color) * this.ALPHA).toInt(),
-                (Color.green(color) * this.ALPHA).toInt(),
-                (Color.blue(color) * this.ALPHA).toInt()
+                (Color.red(color) * ALPHA).toInt(),
+                (Color.green(color) * ALPHA).toInt(),
+                (Color.blue(color) * ALPHA).toInt()
             )
         }.toIntArray()
         return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             .apply { setPixels(lightPixels, 0, width, 0, 0, width, height) }
     }
 
-    val baseImage = aircraft.image
-    val lightImage = makeLightImage(this.baseImage)
+    private val baseImage = aircraft.image
+    private val lightImage = makeLightImage(this.baseImage)
     override var image = this.baseImage
 
-    var life = this.LIVE_MS
+    private var life = LIVE_MS
     override fun forward(timeMs: Int) {
         this.life -= timeMs
         if (this.life <= 0) {

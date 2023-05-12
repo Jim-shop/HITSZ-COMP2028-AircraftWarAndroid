@@ -35,13 +35,13 @@ sealed class EnemyGenerateStrategies {
     abstract val bossBaseSpeed: Float
 
 
-    var time = 0
-    var score = 0
+    private var time = 0
+    private var score = 0
 
-    var lastBossSummonScore = 0
-    var lastEnemySummonTime = 0
-    var lastEnemyShootTime = 0
-    var lastHeroShootTime = 0
+    private var lastBossSummonScore = 0
+    private var lastEnemySummonTime = 0
+    private var lastEnemyShootTime = 0
+    private var lastHeroShootTime = 0
 
     fun inform(time: Int, score: Int) {
         this.time = time

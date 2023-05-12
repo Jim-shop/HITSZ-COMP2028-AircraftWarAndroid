@@ -13,7 +13,7 @@ class BossEnemy(
     maxHp: Int,
     power: Int,
     shootNum: Int,
-    val propGenerateStrategy: PropGenerateStrategies
+    private val propGenerateStrategy: PropGenerateStrategies
 ) : Enemies(
     game = game,
     initialX = initialX,
