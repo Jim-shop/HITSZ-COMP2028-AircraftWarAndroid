@@ -11,7 +11,7 @@
             android:action="android.intent.action.VIEW"
             android:targetClass="net.imshit.aircraftwar.gui.ScoreboardActivity"
             android:targetPackage="net.imshit.aircraftwar" />
-        <categories android:name="android.shortcut.conve`rsation" />
+        <categories android:name="android.shortcut.conversation" />
         <capability-binding android:key="actions.intent.OPEN_APP_FEATURE" />
     </shortcut>
 </shortcuts>
