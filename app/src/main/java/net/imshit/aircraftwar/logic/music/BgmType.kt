@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.util.music
+package net.imshit.aircraftwar.logic.music
 
 enum class BgmType {
     NORMAL, BOSS, NONE

@@ -25,10 +25,10 @@ import net.imshit.aircraftwar.logic.data.Difficulty
 import net.imshit.aircraftwar.logic.data.EnemyListener
 import net.imshit.aircraftwar.logic.data.GameEvents
 import net.imshit.aircraftwar.logic.generate.enemy.EnemyGenerateStrategies
-import net.imshit.aircraftwar.util.music.BasicMusicStrategy
-import net.imshit.aircraftwar.util.music.BgmType
-import net.imshit.aircraftwar.util.music.MusicStrategies
-import net.imshit.aircraftwar.util.music.MuteMusicStrategy
+import net.imshit.aircraftwar.logic.music.BasicMusicStrategy
+import net.imshit.aircraftwar.logic.music.BgmType
+import net.imshit.aircraftwar.logic.music.MusicStrategies
+import net.imshit.aircraftwar.logic.music.MuteMusicStrategy
 import net.imshit.aircraftwar.util.resource.ImageManager
 
 sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :

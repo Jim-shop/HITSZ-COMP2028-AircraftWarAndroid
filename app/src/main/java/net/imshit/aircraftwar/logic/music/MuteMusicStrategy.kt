@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.util.music
+package net.imshit.aircraftwar.logic.music
 
 class MuteMusicStrategy : MusicStrategies() {
     override fun setBgm(bgmType: BgmType) {
