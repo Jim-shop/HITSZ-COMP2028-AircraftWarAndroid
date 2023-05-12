@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.ViewTreeObserver
@@ -42,12 +43,30 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
             }
         }
 
+        const val REFRESH_INTERVAL = 15
+
         const val BAR_OFFSET = 15f
         const val BAR_TEXT_OFFSET = 15f
         const val BAR_LENGTH = 50f
         const val BAR_HEIGHT = 10f
         const val SCORE_X = 10f
-        const val SCORE_Y = 25f
+        const val SCORE_Y = 50f
+
+        class LogicThread(val game: Games) : Thread() {
+            override fun run() {
+                super.run()
+                try {
+                    while (!game.isStopped) {
+                        game.update()
+                        game.draw()
+                        val elapseTime = System.currentTimeMillis() % REFRESH_INTERVAL
+                        Log.e(">>>", elapseTime.toString())
+                        sleep(REFRESH_INTERVAL - elapseTime)
+                    }
+                } catch (_: InterruptedException) {
+                }
+            }
+        }
     }
 
     /** used by design tool */
@@ -55,28 +74,15 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         context = context, attrs = attrs, soundMode = false
     )
 
-    var mainHandle: Handler? = null
-
     // utils
+    var mainHandle: Handler? = null
     lateinit var images: ImageManager
     private val musicStrategy: MusicStrategies =
         if (soundMode) BasicMusicStrategy(context) else MuteMusicStrategy
-    private val logicThread = Thread {
-        try {
-            while (!this.isStopped) {
-                synchronized(this.holder) {
-                    update()
-                    draw()
-                    Thread.sleep(this.refreshInterval.toLong())
-                }
-            }
-        } catch (_: InterruptedException) {
-        }
-    }
+    private var logicThread: LogicThread? = null
 
     // configs
     lateinit var background: Bitmap
-    private val refreshInterval = 10
 
     // strategies
     abstract val generateStrategy: EnemyGenerateStrategies
@@ -85,7 +91,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     private var score = 0
     private var time = 0
     private var isGameOver = false
-    private var isStopped = false
+    private var isStopped = true
 
     // variables
     lateinit var heroAircraft: HeroAircraft
@@ -117,14 +123,14 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        this.logicThread.start()
+        resume()
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        gameStop()
+        stop()
     }
 
     fun notify(e: GameEvents) {
@@ -158,8 +164,24 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         this.musicStrategy.setBgm(BgmType.NORMAL)
     }
 
+    private fun resume() {
+        if (!isGameOver) {
+            this.isStopped = false
+            this.musicStrategy.setBgm(BgmType.NORMAL)
+            this.logicThread?.interrupt()
+            this.logicThread = LogicThread(this@Games).apply { start() }
+        }
+    }
+
+    private fun stop() {
+        this.isStopped = true
+        this.logicThread?.interrupt()
+        this.logicThread = null
+        this.musicStrategy.setBgm(BgmType.NONE)
+    }
+
     private fun update() {
-        this.time += this.refreshInterval
+        this.time += REFRESH_INTERVAL
         this.generateStrategy.inform(this.time, this.score)
         // 产生新敌机
         this.generateEnemy()
@@ -205,7 +227,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     }
 
     private fun moveAction() {
-        this.autoElementLists.forEach { list -> list.forEach { it.forward(this.refreshInterval) } }
+        this.autoElementLists.forEach { list -> list.forEach { it.forward(REFRESH_INTERVAL) } }
     }
 
     private fun crashCheck() {
@@ -254,21 +276,12 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     }
 
     private fun gameOver() {
+        stop()
         this.isGameOver = true
-        this.isStopped = true
-        this.musicStrategy.setBgm(BgmType.NONE)
         this.musicStrategy.playGameOver()
-        this.logicThread.interrupt()
         this.mainHandle?.sendMessage(Message.obtain().apply {
             what = score
         })
-    }
-
-    private fun gameStop() {
-        this.isStopped = true
-        this.logicThread.interrupt()
-        this.musicStrategy.setBgm(BgmType.NONE)
-        this.musicStrategy.release()
     }
 
     private var backgroundTop = 0

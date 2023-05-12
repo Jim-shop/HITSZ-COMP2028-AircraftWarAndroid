@@ -72,6 +72,16 @@ class BasicMusicStrategy(context: Context) : MusicStrategies() {
         soundPool.release()
     }
 
+    override fun resume() {
+        bgmPlayer.start()
+        soundPool.autoResume()
+    }
+
+    override fun pause() {
+        bgmPlayer.pause()
+        soundPool.autoPause()
+    }
+
     override fun playGameOver() {
         this.soundPool.autoPause()
         play(Sound.GAME_OVER)

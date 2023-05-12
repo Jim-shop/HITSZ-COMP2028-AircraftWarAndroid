@@ -10,4 +10,6 @@ sealed class MusicStrategies {
     abstract fun playSupplyGet()
 
     abstract fun release()
+    abstract fun resume()
+    abstract fun pause()
 }

@@ -21,4 +21,10 @@ object MuteMusicStrategy : MusicStrategies() {
 
     override fun release() {
     }
+
+    override fun resume() {
+    }
+
+    override fun pause() {
+    }
 }
