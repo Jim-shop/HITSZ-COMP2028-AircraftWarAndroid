@@ -21,6 +21,9 @@ import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
 import net.imshit.aircraftwar.logic.data.Difficulty
 import net.imshit.aircraftwar.logic.game.Games
+import net.imshit.aircraftwar.util.dao.ScoreInfo
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class GameActivity : AppCompatActivity() {
     companion object {
@@ -73,13 +76,19 @@ class GameActivity : AppCompatActivity() {
                 inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             })
         }
-        val listener = DialogInterface.OnClickListener { dialog, which ->
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    // TODO: 添加记录
-                }
+        val listener = DialogInterface.OnClickListener { _, which ->
+            val scoreInfo: ScoreInfo? = when (which) {
+                DialogInterface.BUTTON_POSITIVE -> ScoreInfo(
+                    edit.editText?.text.toString(),
+                    score,
+                    LocalDateTime.now().format(
+                        DateTimeFormatter.ISO_DATE_TIME
+                    )
+                )
+
+                else -> null
             }
-            ScoreboardActivity.actionStart(this, gameMode)
+            ScoreboardActivity.actionStart(this, gameMode, scoreInfo)
             this@GameActivity.finish()
         }
         MaterialAlertDialogBuilder(this).setTitle(R.string.game_dialog_title)
