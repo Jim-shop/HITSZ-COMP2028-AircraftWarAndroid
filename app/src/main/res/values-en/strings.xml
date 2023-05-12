@@ -15,4 +15,7 @@
     <string name="item_about">About</string>
     <string name="main_subtitle">Select Difficulty</string>
     <string name="shortcut_scoreboard_disabled_message">Cannot open scoreboard temporarily</string>
+    <string name="item_delete">Delete</string>
+    <string name="item_about_long">About this application</string>
+    <string name="item_delete_long">Delete selected items.</string>
 </resources>
