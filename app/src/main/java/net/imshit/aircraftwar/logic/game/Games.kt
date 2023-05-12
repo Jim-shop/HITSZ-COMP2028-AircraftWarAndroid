@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Handler
+import android.os.Message
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -45,6 +47,8 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     constructor(context: Context, attrs: AttributeSet?) : this(
         context = context, attrs = attrs, soundMode = false
     )
+
+    var mainHandle: Handler? = null
 
     // utils
     lateinit var images: ImageManager
@@ -91,7 +95,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     private val enemyListenerLists = listOf<List<EnemyListener>>(enemyAircrafts, enemyBullets)
     private val heroList = mutableListOf<HeroAircraft>()
     private val drawingElementLists =
-        listOf(heroList, animations, props, enemyBullets, heroBullets, enemyAircrafts)
+        listOf(enemyBullets, heroBullets, enemyAircrafts, props, animations, heroList)
     private val lifeBarElementLists = listOf(heroList, enemyAircrafts)
 
     init {
@@ -248,6 +252,9 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         this.musicStrategy.setBgm(BgmType.NONE)
         this.musicStrategy.playGameOver()
         this.logicThread.interrupt()
+        this.mainHandle?.sendMessage(Message.obtain().apply {
+            what = score
+        })
     }
 
     private fun gameStop() {

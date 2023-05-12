@@ -1,12 +1,23 @@
 package net.imshit.aircraftwar.gui
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
+import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
+import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
 import net.imshit.aircraftwar.logic.Difficulty
 import net.imshit.aircraftwar.logic.game.Games
@@ -30,7 +41,14 @@ class GameActivity : AppCompatActivity() {
             gameMode = getSerializableExtra("gameMode", Difficulty::class.java) ?: Difficulty.EASY
             soundMode = getBooleanExtra("soundMode", true)
         }
-        val game: Games = Games.getGames(this, gameMode, soundMode)
+        val game: Games = Games.getGames(this, gameMode, soundMode).apply {
+            mainHandle = object : Handler(Looper.getMainLooper()) {
+                override fun handleMessage(msg: Message) {
+                    super.handleMessage(msg)
+                    onGameOver(gameMode, msg.what)
+                }
+            }
+        }
         with(ActivityGameBinding.inflate(layoutInflater)) {
             root.addView(game, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
             setContentView(root)
@@ -40,5 +58,33 @@ class GameActivity : AppCompatActivity() {
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             hide(WindowInsetsCompat.Type.systemBars())
         }
+    }
+
+    private fun onGameOver(gameMode: Difficulty, score: Int) {
+        val edit = TextInputLayout(this).apply {
+            setPadding(64, 64, 64, 0)
+            hint = getString(R.string.game_dialog_content)
+            startIconDrawable =
+                AppCompatResources.getDrawable(this@GameActivity, R.drawable.ic_account_circle_24)
+            endIconMode = END_ICON_CLEAR_TEXT
+            isCounterEnabled = true
+            counterMaxLength = 16
+            addView(TextInputEditText(context).apply {
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            })
+        }
+        val listener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    // TODO: 添加记录
+                }
+            }
+            ScoreboardActivity.actionStart(this, gameMode)
+            this@GameActivity.finish()
+        }
+        MaterialAlertDialogBuilder(this).setTitle(R.string.game_dialog_title)
+            .setIcon(R.drawable.ic_assignment_turned_in_24)
+            .setPositiveButton(android.R.string.ok, listener)
+            .setNegativeButton(android.R.string.cancel, listener).setView(edit).show()
     }
 }

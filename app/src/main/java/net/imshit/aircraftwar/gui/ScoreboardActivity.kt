@@ -9,10 +9,9 @@ import net.imshit.aircraftwar.logic.Difficulty
 
 class ScoreboardActivity : AppCompatActivity() {
     companion object {
-        fun actionStart(context: Context, gameMode: Difficulty, score: Int) {
+        fun actionStart(context: Context, gameMode: Difficulty) {
             context.startActivity(Intent(context, ScoreboardActivity::class.java).apply {
                 putExtra("gameMode", gameMode)
-                putExtra("score", score)
             })
         }
     }
