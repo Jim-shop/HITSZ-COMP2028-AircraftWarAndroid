@@ -42,6 +42,10 @@ class ScoreboardDaoSharedPreferences(context: Context, gameMode: Difficulty) : S
         indices.sortedDescending().forEach(this.buffer::removeAt)
     }
 
+    override fun deleteAll() {
+        this.buffer.clear()
+    }
+
     override fun close() {
         val editor = this.sharedPreferences.edit()
         val size = this.buffer.size

@@ -18,4 +18,6 @@
     <string name="item_delete">Delete</string>
     <string name="item_about_long">About this application</string>
     <string name="item_delete_long">Delete selected items.</string>
+    <string name="button_clear">Clear gaming records</string>
+    <string name="button_clear_ok">Done</string>
 </resources>
