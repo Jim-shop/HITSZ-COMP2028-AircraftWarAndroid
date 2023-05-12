@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
-import net.imshit.aircraftwar.logic.Difficulty
+import net.imshit.aircraftwar.logic.data.Difficulty
 import net.imshit.aircraftwar.logic.game.Games
 
 class GameActivity : AppCompatActivity() {

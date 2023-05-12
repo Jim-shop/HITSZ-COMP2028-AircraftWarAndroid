@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.logic
+package net.imshit.aircraftwar.logic.data
 
 interface EnemyListener {
     fun notify(e: GameEvents)

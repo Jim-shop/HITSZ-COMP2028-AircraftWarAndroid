@@ -21,9 +21,9 @@ import net.imshit.aircraftwar.element.bullet.Bullets
 import net.imshit.aircraftwar.element.bullet.EnemyBullet
 import net.imshit.aircraftwar.element.bullet.HeroBullet
 import net.imshit.aircraftwar.element.prop.Props
-import net.imshit.aircraftwar.logic.Difficulty
-import net.imshit.aircraftwar.logic.EnemyListener
-import net.imshit.aircraftwar.logic.GameEvents
+import net.imshit.aircraftwar.logic.data.Difficulty
+import net.imshit.aircraftwar.logic.data.EnemyListener
+import net.imshit.aircraftwar.logic.data.GameEvents
 import net.imshit.aircraftwar.logic.generate.enemy.EnemyGenerateStrategies
 import net.imshit.aircraftwar.util.music.BasicMusicStrategy
 import net.imshit.aircraftwar.util.music.BgmType

@@ -5,8 +5,8 @@ import net.imshit.aircraftwar.element.bullet.EnemyBullet
 import net.imshit.aircraftwar.element.prop.Props
 import net.imshit.aircraftwar.element.shoot.enemy.EnemyShootStrategies
 import net.imshit.aircraftwar.element.shoot.enemy.EnemyShootStrategyFactory
-import net.imshit.aircraftwar.logic.EnemyListener
-import net.imshit.aircraftwar.logic.GameEvents
+import net.imshit.aircraftwar.logic.data.EnemyListener
+import net.imshit.aircraftwar.logic.data.GameEvents
 import net.imshit.aircraftwar.logic.game.Games
 
 sealed class Enemies(
