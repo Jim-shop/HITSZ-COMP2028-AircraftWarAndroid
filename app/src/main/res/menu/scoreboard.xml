@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_delete"
+        android:contentDescription="@null"
+        android:enabled="true"
+        android:icon="@drawable/ic_delete_24"
+        android:menuCategory="secondary"
+        android:orderInCategory="0"
+        android:title="@string/item_delete"
+        android:titleCondensed="@string/item_delete"
+        android:tooltipText="@string/item_delete_long"
+        android:visible="true"
+        app:showAsAction="ifRoom|withText|collapseActionView" />
+    <item
+        android:id="@+id/item_about"
+        android:contentDescription="@null"
+        android:enabled="true"
+        android:icon="@drawable/ic_about_24"
+        android:menuCategory="secondary"
+        android:orderInCategory="0"
+        android:title="@string/item_about"
+        android:titleCondensed="@string/item_about"
+        android:tooltipText="@string/item_about_long"
+        android:visible="true"
+        app:showAsAction="ifRoom|withText|collapseActionView" />
+</menu>
