@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        with(ActivityMainBinding.inflate((layoutInflater))) {
+        with(ActivityMainBinding.inflate(layoutInflater)) {
             setContentView(root)
 
             amTb.setNavigationOnClickListener {
