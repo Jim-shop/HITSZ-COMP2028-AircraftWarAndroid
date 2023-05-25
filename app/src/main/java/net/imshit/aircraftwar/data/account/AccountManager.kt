@@ -57,24 +57,38 @@ object AccountManager {
     }
 
     private fun register(account: String, password: String, onSuccess: Runnable, onFail: Runnable) {
-        Thread {
-            // TODO
-            login(account, password, onSuccess, onFail)
-        }.start()
+        val requestBody =
+            FormBody.Builder().add("user", account).add("password", encodePassword(password))
+                .build()
+        val request = Request.Builder().url(REGISTER_URL).post(requestBody).build()
+        httpClient.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onFail.run()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    // TODO
+                    login(account, password, onSuccess, onFail)
+                } else {
+                    onFail.run()
+                }
+            }
+        })
     }
 
     fun showLoginDialog(context: Context, onSuccess: Runnable, onFail: Runnable) {
-        with(MaterialAlertDialogBuilder(context)) {
-            with(DialogLoginBinding.inflate(LayoutInflater.from(context), null, false)) {
-                val dialogListener = DialogInterface.OnClickListener { _, which ->
-                    val account = dlTietAc.text.toString()
-                    val password = dlTietPw.text.toString()
-                    when (which) {
-                        DialogInterface.BUTTON_POSITIVE -> ::login
-                        DialogInterface.BUTTON_NEUTRAL -> ::register
-                        else -> null
-                    }?.invoke(account, password, onSuccess, onFail)
-                }
+        with(DialogLoginBinding.inflate(LayoutInflater.from(context), null, false)) {
+            val dialogListener = DialogInterface.OnClickListener { _, which ->
+                val account = dlTietAc.text.toString()
+                val password = dlTietPw.text.toString()
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> ::login
+                    DialogInterface.BUTTON_NEUTRAL -> ::register
+                    else -> null
+                }?.invoke(account, password, onSuccess, onFail)
+            }
+            MaterialAlertDialogBuilder(context).run {
                 setView(root)
                 setTitle(R.string.dialog_login_title)
                 setIcon(R.drawable.ic_login_24)
@@ -83,6 +97,7 @@ object AccountManager {
                 setNegativeButton(android.R.string.cancel, dialogListener)
                 show()
             }
+
         }
     }
 }

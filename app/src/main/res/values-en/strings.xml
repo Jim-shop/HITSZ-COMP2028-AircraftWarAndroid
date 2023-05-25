@@ -31,4 +31,6 @@
         <item quantity="one">%d item selected.</item>
         <item quantity="other">%d items selected.</item>
     </plurals>
+    <string name="button_offline">Play offline</string>
+    <string name="button_online">Compete online</string>
 </resources>

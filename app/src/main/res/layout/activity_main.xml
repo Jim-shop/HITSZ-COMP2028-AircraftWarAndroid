@@ -17,10 +17,10 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:menu="@menu/main"
-            app:subtitle="@string/main_subtitle"
-            app:subtitleCentered="true"
             app:navigationContentDescription="@string/main_account"
             app:navigationIcon="@drawable/ic_account_circle_24"
+            app:subtitle="@string/main_subtitle"
+            app:subtitleCentered="true"
             app:title="@string/main_label"
             app:titleCentered="true" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -29,52 +29,84 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/am_ll_buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/am_btn_easy"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/button_easy"
-                app:icon="@drawable/ic_brightness_low_24" />
-
-            <Button
-                android:id="@+id/am_btn_medium"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/button_medium"
-                app:icon="@drawable/ic_brightness_medium_24" />
-
-            <Button
-                android:id="@+id/am_btn_hard"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/button_hard"
-                app:icon="@drawable/ic_brightness_high_24" />
-        </LinearLayout>
-
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/am_sw_sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/checkbox_sound"
+            app:layout_constraintBottom_toTopOf="@id/am_mbtg_mode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:thumbIcon="@drawable/ic_music_note_24" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/am_mbtg_mode"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:checkedButton="@id/am_btn_easy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/am_ll_buttons"
-            app:thumbIcon="@drawable/ic_music_note_24" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <Button
+                android:id="@+id/am_btn_easy"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_easy"
+                app:icon="@drawable/ic_brightness_low_24" />
+
+            <Button
+                android:id="@+id/am_btn_medium"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_medium"
+                app:icon="@drawable/ic_brightness_medium_24" />
+
+            <Button
+                android:id="@+id/am_btn_hard"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_hard"
+                app:icon="@drawable/ic_brightness_high_24" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/am_mbtg_mode">
+
+            <Button
+                android:id="@+id/am_btn_offline"
+                style="@style/Widget.Material3.Button.TextButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/button_offline"
+                app:icon="@drawable/ic_public_off_24" />
+
+            <Button
+                android:id="@+id/am_btn_online"
+                style="@style/Widget.Material3.Button.TonalButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/button_online"
+                app:icon="@drawable/ic_public_24" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

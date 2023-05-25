@@ -8,6 +8,9 @@ import net.imshit.aircraftwar.databinding.ActivityMainBinding
 import net.imshit.aircraftwar.logic.game.Difficulty
 
 class MainActivity : AppCompatActivity() {
+
+    var gameMode = Difficulty.EASY
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,15 +28,19 @@ class MainActivity : AppCompatActivity() {
                 return@setOnMenuItemClickListener true
             }
 
-            // setup listener
-            amBtnEasy.setOnClickListener {
-                GameActivity.actionStart(this@MainActivity, Difficulty.EASY, amSwSound.isChecked)
+            amMbtgMode.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
+                if (isChecked) {
+                    gameMode = when (checkedId) {
+                        R.id.am_btn_easy -> Difficulty.EASY
+                        R.id.am_btn_medium -> Difficulty.MEDIUM
+                        R.id.am_btn_hard -> Difficulty.HARD
+                        else -> Difficulty.EASY
+                    }
+                }
             }
-            amBtnMedium.setOnClickListener {
-                GameActivity.actionStart(this@MainActivity, Difficulty.MEDIUM, amSwSound.isChecked)
-            }
-            amBtnHard.setOnClickListener {
-                GameActivity.actionStart(this@MainActivity, Difficulty.HARD, amSwSound.isChecked)
+
+            amBtnOffline.setOnClickListener {
+                GameActivity.actionStart(this@MainActivity, gameMode, amSwSound.isChecked)
             }
         }
     }
