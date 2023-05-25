@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:menu="@menu/scoreboard"
+            app:menu="@menu/main"
             app:navigationContentDescription="@string/navback"
             app:navigationIcon="@drawable/ic_arrow_back_24"
             app:title="@string/scoreboard_label"

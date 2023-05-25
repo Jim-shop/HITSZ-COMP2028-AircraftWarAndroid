@@ -8,7 +8,6 @@ import android.graphics.Paint
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
-import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.ViewTreeObserver
@@ -59,7 +58,6 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
                         game.update()
                         game.draw()
                         val elapseTime = System.currentTimeMillis() % REFRESH_INTERVAL
-                        Log.e(">>>", elapseTime.toString())
                         sleep(REFRESH_INTERVAL - elapseTime)
                     }
                 } catch (_: InterruptedException) {
