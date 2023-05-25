@@ -12,10 +12,10 @@ import net.imshit.aircraftwar.databinding.ActivityAccountBinding
 class AccountActivity : AppCompatActivity() {
     companion object {
         fun actionStart(context: Context) {
-            AccountManager.showLoginDialog(context) {
+            AccountManager.showLoginDialog(context, onSuccess = {
                 context.startActivity(Intent(context, AccountActivity::class.java).apply {
                 })
-            }
+            }, onFail = {})
         }
     }
 
