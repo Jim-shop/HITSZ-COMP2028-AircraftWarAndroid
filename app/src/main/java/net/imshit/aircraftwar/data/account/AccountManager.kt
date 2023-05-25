@@ -35,7 +35,7 @@ object AccountManager {
         return sha512.joinToString(separator = "") { "%02x".format(it) }
     }
 
-    fun login(account: String, password: String, onSuccess: Runnable, onFail: Runnable) {
+    private fun login(account: String, password: String, onSuccess: Runnable, onFail: Runnable) {
         val requestBody =
             FormBody.Builder().add("user", account).add("password", encodePassword(password))
                 .build()
@@ -56,7 +56,7 @@ object AccountManager {
         })
     }
 
-    fun register(account: String, password: String, onSuccess: Runnable, onFail: Runnable) {
+    private fun register(account: String, password: String, onSuccess: Runnable, onFail: Runnable) {
         Thread {
             // TODO
             login(account, password, onSuccess, onFail)

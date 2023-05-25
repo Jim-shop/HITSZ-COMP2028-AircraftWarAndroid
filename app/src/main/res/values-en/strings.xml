@@ -27,5 +27,8 @@
     <string name="dialog_login_button_register">Register</string>
     <string name="account_label">User Info</string>
     <string name="navback">Return</string>
-    <string name="scoreboard_action_title">%d item(s) selected.</string>
+    <plurals name="scoreboard_action_title">
+        <item quantity="one">%d item selected.</item>
+        <item quantity="other">%d items selected.</item>
+    </plurals>
 </resources>

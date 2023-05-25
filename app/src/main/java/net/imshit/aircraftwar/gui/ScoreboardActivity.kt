@@ -101,8 +101,9 @@ class ScoreboardActivity : AppCompatActivity() {
                 if (selected.isEmpty()) {
                     actionMode?.finish()
                 } else {
-                    actionMode?.title =
-                        activity.getString(R.string.scoreboard_action_title, selected.size)
+                    actionMode?.title = activity.resources.getQuantityString(
+                        R.plurals.scoreboard_action_title, selected.size, selected.size
+                    )
                 }
             }
 
