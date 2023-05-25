@@ -7,7 +7,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.ActivityManageSpaceBinding
 import net.imshit.aircraftwar.logic.data.Difficulty
-import net.imshit.aircraftwar.util.dao.ScoreboardDaoSharedPreferences
+import net.imshit.aircraftwar.logic.scoreboard.ScoreboardDaoSharedPreferences
 
 class ManageSpaceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

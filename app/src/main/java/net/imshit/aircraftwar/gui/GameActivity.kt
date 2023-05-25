@@ -21,7 +21,7 @@ import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
 import net.imshit.aircraftwar.logic.data.Difficulty
 import net.imshit.aircraftwar.logic.game.Games
-import net.imshit.aircraftwar.util.dao.ScoreInfo
+import net.imshit.aircraftwar.logic.scoreboard.ScoreInfo
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

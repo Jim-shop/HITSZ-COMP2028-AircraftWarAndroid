@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.util.dao
+package net.imshit.aircraftwar.logic.scoreboard
 
 import android.content.Context
 import net.imshit.aircraftwar.logic.data.Difficulty

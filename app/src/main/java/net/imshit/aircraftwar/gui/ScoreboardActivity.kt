@@ -15,8 +15,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.ActivityScoreboardBinding
 import net.imshit.aircraftwar.logic.data.Difficulty
-import net.imshit.aircraftwar.util.dao.ScoreInfo
-import net.imshit.aircraftwar.util.dao.ScoreboardDaoSharedPreferences
+import net.imshit.aircraftwar.logic.scoreboard.ScoreInfo
+import net.imshit.aircraftwar.logic.scoreboard.ScoreboardDaoSharedPreferences
 
 class ScoreboardActivity : AppCompatActivity() {
     companion object {
