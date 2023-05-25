@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.logic.scoreboard
+package net.imshit.aircraftwar.data.scoreboard
 
 import java.io.Closeable
 

@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.logic.generate.prop
+package net.imshit.aircraftwar.element.generate.prop
 
 import net.imshit.aircraftwar.element.prop.Props
 import net.imshit.aircraftwar.element.prop.factory.BloodPropFactory

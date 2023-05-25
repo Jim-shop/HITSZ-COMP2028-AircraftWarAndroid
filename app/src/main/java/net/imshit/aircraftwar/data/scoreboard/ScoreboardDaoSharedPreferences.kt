@@ -1,7 +1,7 @@
-package net.imshit.aircraftwar.logic.scoreboard
+package net.imshit.aircraftwar.data.scoreboard
 
 import android.content.Context
-import net.imshit.aircraftwar.logic.data.Difficulty
+import net.imshit.aircraftwar.logic.game.Difficulty
 
 
 class ScoreboardDaoSharedPreferences(context: Context, gameMode: Difficulty) : ScoreboardDao {

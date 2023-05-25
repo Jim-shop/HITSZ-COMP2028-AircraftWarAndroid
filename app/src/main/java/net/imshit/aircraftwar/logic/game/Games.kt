@@ -13,6 +13,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.ViewTreeObserver
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.resource.ImageManager
 import net.imshit.aircraftwar.element.AbstractFlyingObject
 import net.imshit.aircraftwar.element.aircraft.enemy.BossEnemy
 import net.imshit.aircraftwar.element.aircraft.enemy.Enemies
@@ -21,16 +22,14 @@ import net.imshit.aircraftwar.element.animation.DyingAnimation
 import net.imshit.aircraftwar.element.bullet.Bullets
 import net.imshit.aircraftwar.element.bullet.EnemyBullet
 import net.imshit.aircraftwar.element.bullet.HeroBullet
+import net.imshit.aircraftwar.element.event.EnemyListener
+import net.imshit.aircraftwar.element.event.GameEvents
+import net.imshit.aircraftwar.element.generate.enemy.EnemyGenerateStrategies
 import net.imshit.aircraftwar.element.prop.Props
-import net.imshit.aircraftwar.logic.data.Difficulty
-import net.imshit.aircraftwar.logic.data.EnemyListener
-import net.imshit.aircraftwar.logic.data.GameEvents
-import net.imshit.aircraftwar.logic.generate.enemy.EnemyGenerateStrategies
 import net.imshit.aircraftwar.logic.music.BasicMusicStrategy
 import net.imshit.aircraftwar.logic.music.BgmType
 import net.imshit.aircraftwar.logic.music.MusicStrategies
 import net.imshit.aircraftwar.logic.music.MuteMusicStrategy
-import net.imshit.aircraftwar.util.resource.ImageManager
 
 sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     SurfaceView(context, attrs), SurfaceHolder.Callback {

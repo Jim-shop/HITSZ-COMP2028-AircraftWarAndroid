@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.util.resource
+package net.imshit.aircraftwar.data.resource
 
 import android.content.Context
 import android.content.res.AssetFileDescriptor

@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
-import net.imshit.aircraftwar.util.resource.MusicManager
+import net.imshit.aircraftwar.data.resource.MusicManager
 
 class BasicMusicStrategy(context: Context) : MusicStrategies() {
 

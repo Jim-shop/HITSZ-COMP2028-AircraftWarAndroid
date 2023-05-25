@@ -2,11 +2,11 @@ package net.imshit.aircraftwar.element.aircraft.enemy
 
 import net.imshit.aircraftwar.element.aircraft.AbstractAircraft
 import net.imshit.aircraftwar.element.bullet.EnemyBullet
+import net.imshit.aircraftwar.element.event.EnemyListener
+import net.imshit.aircraftwar.element.event.GameEvents
 import net.imshit.aircraftwar.element.prop.Props
 import net.imshit.aircraftwar.element.shoot.enemy.EnemyShootStrategies
 import net.imshit.aircraftwar.element.shoot.enemy.EnemyShootStrategyFactory
-import net.imshit.aircraftwar.logic.data.EnemyListener
-import net.imshit.aircraftwar.logic.data.GameEvents
 import net.imshit.aircraftwar.logic.game.Games
 
 sealed class Enemies(

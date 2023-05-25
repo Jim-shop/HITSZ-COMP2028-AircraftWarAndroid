@@ -1,6 +1,6 @@
 package net.imshit.aircraftwar.element.prop
 
-import net.imshit.aircraftwar.logic.data.GameEvents
+import net.imshit.aircraftwar.element.event.GameEvents
 import net.imshit.aircraftwar.logic.game.Games
 
 class BombProp(

@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.logic.generate.enemy
+package net.imshit.aircraftwar.element.generate.enemy
 
 import net.imshit.aircraftwar.element.aircraft.enemy.BossEnemy
 import net.imshit.aircraftwar.element.aircraft.enemy.Enemies

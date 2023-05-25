@@ -1,8 +1,8 @@
 package net.imshit.aircraftwar.element.aircraft.enemy
 
+import net.imshit.aircraftwar.element.generate.prop.PropGenerateStrategies
 import net.imshit.aircraftwar.element.prop.Props
 import net.imshit.aircraftwar.logic.game.Games
-import net.imshit.aircraftwar.logic.generate.prop.PropGenerateStrategies
 
 class EliteEnemy(
     game: Games,

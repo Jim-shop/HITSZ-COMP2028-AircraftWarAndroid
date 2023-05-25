@@ -1,10 +1,10 @@
-package net.imshit.aircraftwar.logic.generate.enemy
+package net.imshit.aircraftwar.element.generate.enemy
 
 import net.imshit.aircraftwar.element.aircraft.enemy.factory.BossEnemyFactory
 import net.imshit.aircraftwar.element.aircraft.enemy.factory.EliteEnemyFactory
 import net.imshit.aircraftwar.element.aircraft.enemy.factory.MobEnemyFactory
+import net.imshit.aircraftwar.element.generate.prop.MediumPropGenerateStrategy
 import net.imshit.aircraftwar.logic.game.Games
-import net.imshit.aircraftwar.logic.generate.prop.MediumPropGenerateStrategy
 
 class MediumEnemyGenerateStrategy(game: Games) : EnemyGenerateStrategies() {
     private val propStrategy = MediumPropGenerateStrategy(game)

@@ -18,10 +18,10 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.scoreboard.ScoreInfo
 import net.imshit.aircraftwar.databinding.ActivityGameBinding
-import net.imshit.aircraftwar.logic.data.Difficulty
+import net.imshit.aircraftwar.logic.game.Difficulty
 import net.imshit.aircraftwar.logic.game.Games
-import net.imshit.aircraftwar.logic.scoreboard.ScoreInfo
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

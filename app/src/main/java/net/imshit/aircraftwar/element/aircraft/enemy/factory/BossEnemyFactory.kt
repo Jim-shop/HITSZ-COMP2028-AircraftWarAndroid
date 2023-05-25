@@ -1,8 +1,8 @@
 package net.imshit.aircraftwar.element.aircraft.enemy.factory
 
 import net.imshit.aircraftwar.element.aircraft.enemy.BossEnemy
+import net.imshit.aircraftwar.element.generate.prop.PropGenerateStrategies
 import net.imshit.aircraftwar.logic.game.Games
-import net.imshit.aircraftwar.logic.generate.prop.PropGenerateStrategies
 
 class BossEnemyFactory(game: Games, private val propGenerateStrategy: PropGenerateStrategies) :
     EnemyFactories(game = game) {

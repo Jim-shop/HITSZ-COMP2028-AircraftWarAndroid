@@ -2,7 +2,7 @@ package net.imshit.aircraftwar.logic.game
 
 import android.content.Context
 import android.util.AttributeSet
-import net.imshit.aircraftwar.logic.generate.enemy.MediumEnemyGenerateStrategy
+import net.imshit.aircraftwar.element.generate.enemy.MediumEnemyGenerateStrategy
 
 class MediumGame(context: Context, attrs: AttributeSet?, soundMode: Boolean) : Games(
     context = context, attrs = attrs, soundMode = soundMode

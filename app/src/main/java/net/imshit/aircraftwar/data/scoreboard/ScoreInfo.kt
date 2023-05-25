@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.logic.scoreboard
+package net.imshit.aircraftwar.data.scoreboard
 
 import android.os.Parcel
 import android.os.Parcelable

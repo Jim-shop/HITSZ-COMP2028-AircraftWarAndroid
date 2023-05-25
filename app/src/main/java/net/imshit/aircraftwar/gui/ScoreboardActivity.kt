@@ -13,10 +13,10 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.scoreboard.ScoreInfo
+import net.imshit.aircraftwar.data.scoreboard.ScoreboardDaoSharedPreferences
 import net.imshit.aircraftwar.databinding.ActivityScoreboardBinding
-import net.imshit.aircraftwar.logic.data.Difficulty
-import net.imshit.aircraftwar.logic.scoreboard.ScoreInfo
-import net.imshit.aircraftwar.logic.scoreboard.ScoreboardDaoSharedPreferences
+import net.imshit.aircraftwar.logic.game.Difficulty
 
 class ScoreboardActivity : AppCompatActivity() {
     companion object {
