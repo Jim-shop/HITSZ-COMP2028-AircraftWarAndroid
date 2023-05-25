@@ -24,4 +24,9 @@
     <string name="item_delete_long">删除所选项</string>
     <string name="button_clear">清理游戏记录</string>
     <string name="button_clear_ok">清理完成</string>
+    <string name="dialog_login_input_account">账号</string>
+    <string name="dialog_login_input_password">密码</string>
+    <string name="main_account">账号</string>
+    <string name="dialog_login_title">登录</string>
+    <string name="dialog_login_button_register">注册</string>
 </resources>

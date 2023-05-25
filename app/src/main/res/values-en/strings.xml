@@ -20,4 +20,8 @@
     <string name="item_delete_long">Delete selected items.</string>
     <string name="button_clear">Clear gaming records</string>
     <string name="button_clear_ok">Done</string>
+    <string name="dialog_login_input_account">Account</string>
+    <string name="dialog_login_input_password">Password</string>
+    <string name="main_account">Account</string>
+    <string name="dialog_login_title">Login</string>
 </resources>
