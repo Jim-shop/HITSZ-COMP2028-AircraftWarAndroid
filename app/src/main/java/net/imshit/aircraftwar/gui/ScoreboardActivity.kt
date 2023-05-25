@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.app.AppInfo
 import net.imshit.aircraftwar.data.scoreboard.ScoreInfo
 import net.imshit.aircraftwar.data.scoreboard.ScoreboardDaoSharedPreferences
 import net.imshit.aircraftwar.databinding.ActivityScoreboardBinding
@@ -81,12 +81,13 @@ class ScoreboardActivity : AppCompatActivity() {
         with(ActivityScoreboardBinding.inflate(layoutInflater)) {
             setContentView(root)
 
+            asTb.setNavigationOnClickListener {
+                this@ScoreboardActivity.finish()
+            }
+
             asTb.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.item_about -> MaterialAlertDialogBuilder(this@ScoreboardActivity).setTitle(
-                        R.string.item_about_long
-                    ).setIcon(R.drawable.ic_about_24).setMessage(R.string.app_about)
-                        .setPositiveButton(android.R.string.ok) { _, _ -> }.show()
+                    R.id.item_about -> AppInfo.showAboutDialog(this@ScoreboardActivity)
 
                     R.id.item_delete -> Toast.makeText(
                         this@ScoreboardActivity, "长按删除", Toast.LENGTH_SHORT

@@ -25,4 +25,6 @@
     <string name="main_account">账号</string>
     <string name="dialog_login_title">登录</string>
     <string name="dialog_login_button_register">注册</string>
+    <string name="account_label">用户信息</string>
+    <string name="navback">返回</string>
 </resources>

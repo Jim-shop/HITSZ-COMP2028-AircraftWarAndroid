@@ -6,28 +6,22 @@
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/as_abl"
+        android:id="@+id/aa_abl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/as_tb"
+            android:id="@+id/aa_tb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:menu="@menu/scoreboard"
+            app:menu="@menu/main"
             app:navigationContentDescription="@string/navback"
             app:navigationIcon="@drawable/ic_arrow_back_24"
-            app:title="@string/scoreboard_label"
+            app:title="@string/account_label"
             app:titleCentered="true" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/as_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

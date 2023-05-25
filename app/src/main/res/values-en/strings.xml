@@ -25,4 +25,6 @@
     <string name="main_account">Account</string>
     <string name="dialog_login_title">Login</string>
     <string name="dialog_login_button_register">Register</string>
+    <string name="account_label">User Info</string>
+    <string name="navback">Return</string>
 </resources>
