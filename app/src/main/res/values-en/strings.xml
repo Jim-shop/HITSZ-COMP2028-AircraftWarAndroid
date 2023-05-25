@@ -24,4 +24,5 @@
     <string name="dialog_login_input_password">Password</string>
     <string name="main_account">Account</string>
     <string name="dialog_login_title">Login</string>
+    <string name="dialog_login_button_register">Register</string>
 </resources>
