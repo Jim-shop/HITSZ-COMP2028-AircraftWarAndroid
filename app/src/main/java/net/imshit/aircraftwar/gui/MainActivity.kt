@@ -1,5 +1,6 @@
 package net.imshit.aircraftwar.gui
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -13,6 +14,23 @@ class MainActivity : AppCompatActivity() {
 
         with(ActivityMainBinding.inflate((layoutInflater))) {
             setContentView(root)
+
+            val listener = DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> TODO()
+                    DialogInterface.BUTTON_NEGATIVE -> TODO()
+                    DialogInterface.BUTTON_NEUTRAL -> TODO()
+                }
+            }
+            amTb.setNavigationOnClickListener {
+                MaterialAlertDialogBuilder(this@MainActivity)
+                    .setTitle(R.string.dialog_login_title)
+                    .setIcon(R.drawable.ic_login_24)
+                    .setPositiveButton(android.R.string.ok, listener)
+                    .setNeutralButton(R.string.dialog_login_button_register, listener)
+                    .setNegativeButton(android.R.string.cancel, listener)
+                    .setView(R.layout.dialog_login).show()
+            }
 
             amTb.setOnMenuItemClickListener { item ->
                 when (item.itemId) {

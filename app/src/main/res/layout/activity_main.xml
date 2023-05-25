@@ -19,6 +19,8 @@
             app:menu="@menu/main"
             app:subtitle="@string/main_subtitle"
             app:subtitleCentered="true"
+            app:navigationContentDescription="@string/main_account"
+            app:navigationIcon="@drawable/ic_account_circle_24"
             app:title="@string/main_label"
             app:titleCentered="true" />
     </com.google.android.material.appbar.AppBarLayout>
