@@ -5,6 +5,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
@@ -29,6 +33,8 @@ import net.imshit.aircraftwar.logic.music.BasicMusicStrategy
 import net.imshit.aircraftwar.logic.music.BgmType
 import net.imshit.aircraftwar.logic.music.MusicStrategies
 import net.imshit.aircraftwar.logic.music.MuteMusicStrategy
+import kotlin.math.max
+import kotlin.math.min
 
 sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     SurfaceView(context, attrs), SurfaceHolder.Callback {
@@ -64,6 +70,18 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
                 }
             }
         }
+
+        class AccelerateSensorListener(val callback: (Float, Float, Float) -> Unit) :
+            SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent?) {
+                val ax = event?.values?.get(0) ?: 0.0f
+                val ay = event?.values?.get(1) ?: 0.0f
+                val az = event?.values?.get(2) ?: 0.0f
+                callback(ax, ay, az)
+            }
+
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+        }
     }
 
     /** used by design tool */
@@ -72,6 +90,9 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     )
 
     // utils
+    private lateinit var sensorManager: SensorManager
+    private var accelerateSensor: Sensor? = null
+    private lateinit var accelerateSensorListener: AccelerateSensorListener
     var mainHandle: Handler? = null
     lateinit var images: ImageManager
     private val musicStrategy: MusicStrategies =
@@ -150,6 +171,15 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
             this.heroAircraft.y = motionEvent.y
             true
         }
+        sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        with(sensorManager) {
+            accelerateSensor =
+                getDefaultSensor(Sensor.TYPE_GRAVITY) ?: getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        }
+        accelerateSensorListener = AccelerateSensorListener { ax, ay, _ ->
+            this.heroAircraft.x = min(max(0f, this.heroAircraft.x - ax), this.width.toFloat())
+            this.heroAircraft.y = min(max(0f, this.heroAircraft.y + ay), this.height.toFloat())
+        }
     }
 
     open fun init() {
@@ -165,6 +195,13 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         if (!isGameOver) {
             this.isStopped = false
             this.musicStrategy.setBgm(BgmType.NORMAL)
+            accelerateSensor?.let {
+                sensorManager.registerListener(
+                    accelerateSensorListener,
+                    it,
+                    SensorManager.SENSOR_DELAY_NORMAL
+                )
+            }
             this.logicThread?.interrupt()
             this.logicThread = LogicThread(this@Games).apply { start() }
         }
@@ -172,9 +209,12 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     private fun stop() {
         this.isStopped = true
+        this.musicStrategy.setBgm(BgmType.NONE)
+        accelerateSensor?.let {
+            sensorManager.unregisterListener(accelerateSensorListener)
+        }
         this.logicThread?.interrupt()
         this.logicThread = null
-        this.musicStrategy.setBgm(BgmType.NONE)
     }
 
     private fun update() {
@@ -340,12 +380,12 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         val canvas = this.holder.lockCanvas() ?: return
         // 循环绘制背景
         paintBackground(canvas)
+        // 绘制得分
+        paintScore(canvas)
         // 绘制物件
         paintObject(canvas)
         // 绘制血条
         paintLife(canvas)
-        // 绘制得分
-        paintScore(canvas)
         if (this.holder.surface.isValid) {
             this.holder.unlockCanvasAndPost(canvas)
         }

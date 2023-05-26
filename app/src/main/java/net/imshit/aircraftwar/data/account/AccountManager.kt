@@ -3,7 +3,9 @@ package net.imshit.aircraftwar.data.account
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
+import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.DialogLoginBinding
 import okhttp3.Call
@@ -35,7 +37,13 @@ object AccountManager {
         return sha512.joinToString(separator = "") { "%02x".format(it) }
     }
 
-    private fun login(account: String, password: String, onSuccess: Runnable, onFail: Runnable) {
+    private fun login(
+        account: String,
+        password: String,
+        onSuccess: Runnable,
+        onFail: Runnable,
+        onFinish: Runnable
+    ) {
         val requestBody =
             FormBody.Builder().add("user", account).add("password", encodePassword(password))
                 .build()
@@ -43,6 +51,7 @@ object AccountManager {
         httpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onFail.run()
+                onFinish.run()
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -52,11 +61,18 @@ object AccountManager {
                 } else {
                     onFail.run()
                 }
+                onFinish.run()
             }
         })
     }
 
-    private fun register(account: String, password: String, onSuccess: Runnable, onFail: Runnable) {
+    private fun register(
+        account: String,
+        password: String,
+        onSuccess: Runnable,
+        onFail: Runnable,
+        onFinish: Runnable
+    ) {
         val requestBody =
             FormBody.Builder().add("user", account).add("password", encodePassword(password))
                 .build()
@@ -64,15 +80,17 @@ object AccountManager {
         httpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onFail.run()
+                onFinish.run()
             }
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     // TODO
-                    login(account, password, onSuccess, onFail)
+                    login(account, password, onSuccess, onFail, onFinish)
                 } else {
                     onFail.run()
                 }
+                onFinish.run()
             }
         })
     }
@@ -82,11 +100,16 @@ object AccountManager {
             val dialogListener = DialogInterface.OnClickListener { _, which ->
                 val account = dlTietAc.text.toString()
                 val password = dlTietPw.text.toString()
+                val progress =
+                    LinearProgressIndicator(context, null, android.R.attr.progressBarStyleLarge)
+                // TODO
                 when (which) {
                     DialogInterface.BUTTON_POSITIVE -> ::login
                     DialogInterface.BUTTON_NEUTRAL -> ::register
                     else -> null
-                }?.invoke(account, password, onSuccess, onFail)
+                }?.invoke(account, password, onSuccess, onFail) {
+                    progress.visibility = View.INVISIBLE
+                }
             }
             MaterialAlertDialogBuilder(context).run {
                 setView(root)

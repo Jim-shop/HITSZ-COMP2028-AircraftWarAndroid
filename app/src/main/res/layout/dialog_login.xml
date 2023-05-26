@@ -20,10 +20,10 @@
         app:startIconDrawable="@drawable/ic_account_circle_24">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dl_tiet_ac"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text|textPersonName"
-            android:id="@+id/dl_tiet_ac"
             tools:text="NAME" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -41,10 +41,10 @@
         app:startIconDrawable="@drawable/ic_password_24">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dl_tiet_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:id="@+id/dl_tiet_pw"
             tools:text="PASSWORD" />
 
     </com.google.android.material.textfield.TextInputLayout>
