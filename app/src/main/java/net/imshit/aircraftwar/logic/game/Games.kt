@@ -66,18 +66,18 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         const val SCORE_SIZE = 128f
         const val SCORE_X = 10f
         const val SCORE_Y = SCORE_SIZE + 10f
+    }
 
-        class AccelerateSensorListener(val callback: (Float, Float, Float) -> Unit) :
-            SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent?) {
-                val ax = event?.values?.get(0) ?: 0.0f
-                val ay = event?.values?.get(1) ?: 0.0f
-                val az = event?.values?.get(2) ?: 0.0f
-                callback(ax, ay, az)
-            }
-
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    class AccelerateSensorListener(val callback: (Float, Float, Float) -> Unit) :
+        SensorEventListener {
+        override fun onSensorChanged(event: SensorEvent?) {
+            val ax = event?.values?.get(0) ?: 0.0f
+            val ay = event?.values?.get(1) ?: 0.0f
+            val az = event?.values?.get(2) ?: 0.0f
+            callback(ax, ay, az)
         }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
     }
 
     /** used by design tool */
@@ -91,8 +91,6 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     private lateinit var gravitySensorListener: AccelerateSensorListener
     var mainHandle: Handler? = null
     lateinit var images: ImageManager
-    private val musicStrategy: MusicStrategies =
-        if (soundMode) BasicMusicStrategy(context) else MuteMusicStrategy
     private var logicJob: Job? = null
 
     // configs
@@ -100,6 +98,8 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     // strategies
     abstract val generateStrategy: EnemyGenerateStrategies
+    private val musicStrategy: MusicStrategies =
+        if (soundMode) BasicMusicStrategy(context) else MuteMusicStrategy
 
     // status
     private var score = 0
@@ -161,12 +161,14 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
     }
 
     private fun initHeroController() {
+        // 触摸屏
         setOnTouchListener { view, motionEvent ->
             view.performClick()
             this.heroAircraft.x = motionEvent.x
             this.heroAircraft.y = motionEvent.y
             true
         }
+        // 重力感应
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         with(sensorManager) {
             gravitySensor =
