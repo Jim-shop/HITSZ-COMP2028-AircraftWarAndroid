@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -15,6 +16,12 @@ import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.ViewTreeObserver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.data.resource.ImageManager
 import net.imshit.aircraftwar.element.AbstractFlyingObject
@@ -37,7 +44,9 @@ import kotlin.math.max
 import kotlin.math.min
 
 sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
-    SurfaceView(context, attrs), SurfaceHolder.Callback {
+    SurfaceView(context, attrs), SurfaceHolder.Callback, CoroutineScope by CoroutineScope(
+    Dispatchers.Default
+) {
     companion object {
         fun getGames(context: Context, gameMode: Difficulty, soundMode: Boolean): Games {
             return when (gameMode) {
@@ -53,23 +62,10 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         const val BAR_TEXT_OFFSET = 15f
         const val BAR_LENGTH = 50f
         const val BAR_HEIGHT = 10f
-        const val SCORE_X = 10f
-        const val SCORE_Y = 50f
 
-        class LogicThread(val game: Games) : Thread() {
-            override fun run() {
-                super.run()
-                try {
-                    while (!game.isStopped) {
-                        game.update()
-                        game.draw()
-                        val elapseTime = System.currentTimeMillis() % REFRESH_INTERVAL
-                        sleep(REFRESH_INTERVAL - elapseTime)
-                    }
-                } catch (_: InterruptedException) {
-                }
-            }
-        }
+        const val SCORE_SIZE = 128f
+        const val SCORE_X = 10f
+        const val SCORE_Y = SCORE_SIZE + 10f
 
         class AccelerateSensorListener(val callback: (Float, Float, Float) -> Unit) :
             SensorEventListener {
@@ -91,13 +87,13 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
 
     // utils
     private lateinit var sensorManager: SensorManager
-    private var accelerateSensor: Sensor? = null
-    private lateinit var accelerateSensorListener: AccelerateSensorListener
+    private var gravitySensor: Sensor? = null
+    private lateinit var gravitySensorListener: AccelerateSensorListener
     var mainHandle: Handler? = null
     lateinit var images: ImageManager
     private val musicStrategy: MusicStrategies =
         if (soundMode) BasicMusicStrategy(context) else MuteMusicStrategy
-    private var logicThread: LogicThread? = null
+    private var logicJob: Job? = null
 
     // configs
     lateinit var background: Bitmap
@@ -173,10 +169,10 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         }
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         with(sensorManager) {
-            accelerateSensor =
+            gravitySensor =
                 getDefaultSensor(Sensor.TYPE_GRAVITY) ?: getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         }
-        accelerateSensorListener = AccelerateSensorListener { ax, ay, _ ->
+        gravitySensorListener = AccelerateSensorListener { ax, ay, _ ->
             this.heroAircraft.x = min(max(0f, this.heroAircraft.x - ax), this.width.toFloat())
             this.heroAircraft.y = min(max(0f, this.heroAircraft.y + ay), this.height.toFloat())
         }
@@ -195,26 +191,32 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         if (!isGameOver) {
             this.isStopped = false
             this.musicStrategy.setBgm(BgmType.NORMAL)
-            accelerateSensor?.let {
+            gravitySensor?.let {
                 sensorManager.registerListener(
-                    accelerateSensorListener,
-                    it,
-                    SensorManager.SENSOR_DELAY_NORMAL
+                    gravitySensorListener, it, SensorManager.SENSOR_DELAY_NORMAL
                 )
             }
-            this.logicThread?.interrupt()
-            this.logicThread = LogicThread(this@Games).apply { start() }
+            this.logicJob?.cancel()
+            this.logicJob = launch {
+                while (!isStopped) {
+                    runBlocking {
+                        launch { update() }
+                        launch { draw() }
+                        delay(REFRESH_INTERVAL.toLong())
+                    }
+                }
+            }
         }
     }
 
     private fun stop() {
         this.isStopped = true
         this.musicStrategy.setBgm(BgmType.NONE)
-        accelerateSensor?.let {
-            sensorManager.unregisterListener(accelerateSensorListener)
+        if (gravitySensor != null) {
+            sensorManager.unregisterListener(gravitySensorListener)
         }
-        this.logicThread?.interrupt()
-        this.logicThread = null
+        this.logicJob?.cancel()
+        this.logicJob = null
     }
 
     private fun update() {
@@ -361,13 +363,15 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
             this.paint.color = Color.RED
             canvas.drawRect(barStartX, barTopY, barCurrX, barBottomY, this.paint)
             this.paint.textSize = 20f
+            this.paint.typeface = Typeface.DEFAULT
             canvas.drawText("$hp/$maxHp", barStartX, barTopY - BAR_TEXT_OFFSET, this.paint)
         }
     }
 
     private fun paintScore(canvas: Canvas) {
         this.paint.color = Color.YELLOW
-        this.paint.textSize = 50f
+        this.paint.textSize = SCORE_SIZE
+        this.paint.typeface = Typeface.DEFAULT_BOLD
         canvas.drawText(
             context.getString(R.string.game_canvas_text_score, this.score),
             SCORE_X,
