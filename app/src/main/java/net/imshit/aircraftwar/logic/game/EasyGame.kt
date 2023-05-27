@@ -1,20 +1,14 @@
 package net.imshit.aircraftwar.logic.game
 
 import android.content.Context
+import android.os.Handler
 import android.util.AttributeSet
 import net.imshit.aircraftwar.element.generate.enemy.EasyEnemyGenerateStrategy
 
-class EasyGame(context: Context, attrs: AttributeSet?, soundMode: Boolean) : Games(
-    context = context, attrs = attrs, soundMode = soundMode
-) {
-    constructor(context: Context, soundMode: Boolean) : this(
-        context = context, attrs = null, soundMode = soundMode
-    )
-
-    /** used by design tool */
-    constructor(context: Context, attrs: AttributeSet?) : this(
-        context = context, attrs = attrs, soundMode = false
-    )
+class EasyGame(context: Context, attrs: AttributeSet?, soundMode: Boolean, handler: Handler) :
+    Games(
+        context = context, attrs = attrs, soundMode = soundMode, handler = handler
+    ) {
 
     override val generateStrategy = EasyEnemyGenerateStrategy(this)
 

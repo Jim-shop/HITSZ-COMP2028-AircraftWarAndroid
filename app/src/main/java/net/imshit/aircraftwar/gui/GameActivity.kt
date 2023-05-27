@@ -52,14 +52,13 @@ class GameActivity : AppCompatActivity() {
             gameMode = getSerializableExtra("gameMode", Difficulty::class.java) ?: Difficulty.EASY
             soundMode = getBooleanExtra("soundMode", true)
         }
-        val game: Games = Games.getGames(this, gameMode, soundMode).apply {
-            mainHandle = object : Handler(Looper.getMainLooper()) {
+        val game: Games =
+            Games.getGames(this, gameMode, soundMode, object : Handler(Looper.getMainLooper()) {
                 override fun handleMessage(msg: Message) {
                     super.handleMessage(msg)
                     onGameOver(gameMode, msg.what)
                 }
-            }
-        }
+            })
         with(ActivityGameBinding.inflate(layoutInflater)) {
             root.addView(game, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
             setContentView(root)

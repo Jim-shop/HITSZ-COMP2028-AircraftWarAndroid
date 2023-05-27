@@ -43,16 +43,19 @@ import net.imshit.aircraftwar.logic.music.MuteMusicStrategy
 import kotlin.math.max
 import kotlin.math.min
 
-sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
-    SurfaceView(context, attrs), SurfaceHolder.Callback, CoroutineScope by CoroutineScope(
+sealed class Games(
+    context: Context, attrs: AttributeSet?, soundMode: Boolean, private val handler: Handler?
+) : SurfaceView(context, attrs), SurfaceHolder.Callback, CoroutineScope by CoroutineScope(
     Dispatchers.Default
 ) {
     companion object {
-        fun getGames(context: Context, gameMode: Difficulty, soundMode: Boolean): Games {
+        fun getGames(
+            context: Context, gameMode: Difficulty, soundMode: Boolean, handler: Handler
+        ): Games {
             return when (gameMode) {
-                Difficulty.EASY -> EasyGame(context, soundMode)
-                Difficulty.MEDIUM -> MediumGame(context, soundMode)
-                Difficulty.HARD -> HardGame(context, soundMode)
+                Difficulty.EASY -> EasyGame(context, null, soundMode, handler)
+                Difficulty.MEDIUM -> MediumGame(context, null, soundMode, handler)
+                Difficulty.HARD -> HardGame(context, null, soundMode, handler)
             }
         }
 
@@ -80,16 +83,10 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
     }
 
-    /** used by design tool */
-    constructor(context: Context, attrs: AttributeSet?) : this(
-        context = context, attrs = attrs, soundMode = false
-    )
-
     // utils
     private lateinit var sensorManager: SensorManager
     private var gravitySensor: Sensor? = null
     private lateinit var gravitySensorListener: AccelerateSensorListener
-    var mainHandle: Handler? = null
     lateinit var images: ImageManager
     private var logicJob: Job? = null
 
@@ -320,7 +317,7 @@ sealed class Games(context: Context, attrs: AttributeSet?, soundMode: Boolean) :
         stop()
         this.isGameOver = true
         this.musicStrategy.playGameOver()
-        this.mainHandle?.sendMessage(Message.obtain().apply {
+        this.handler?.sendMessage(Message.obtain().apply {
             what = score
         })
     }
