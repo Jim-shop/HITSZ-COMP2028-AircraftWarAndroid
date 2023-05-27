@@ -40,6 +40,7 @@ class GameActivity : AppCompatActivity() {
         WindowInsetsControllerCompat(this, this.decorView).apply {
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             hide(WindowInsetsCompat.Type.systemBars())
+            setDecorFitsSystemWindows(false)
         }
     }
 
@@ -95,7 +96,10 @@ class GameActivity : AppCompatActivity() {
         MaterialAlertDialogBuilder(this).setTitle(R.string.game_dialog_title)
             .setIcon(R.drawable.ic_assignment_turned_in_24)
             .setPositiveButton(android.R.string.ok, listener)
-            .setNegativeButton(android.R.string.cancel, listener).setView(edit).create().apply {
+            .setNegativeButton(android.R.string.cancel, listener).setView(edit)
+            .setOnDismissListener {
+                this@GameActivity.finish()
+            }.create().apply {
                 window?.makeFullScreen()
             }.show()
     }
