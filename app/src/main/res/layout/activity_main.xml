@@ -35,10 +35,10 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/checkbox_sound"
-            app:layout_constraintBottom_toTopOf="@id/am_mbtg_mode"
+            app:layout_constraintBottom_toTopOf="@+id/am_ll_network"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/am_mbtg_mode"
             app:thumbIcon="@drawable/ic_music_note_24" />
 
         <com.google.android.material.button.MaterialButtonToggleGroup
@@ -80,6 +80,7 @@
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <LinearLayout
+            android:id="@+id/am_ll_network"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
