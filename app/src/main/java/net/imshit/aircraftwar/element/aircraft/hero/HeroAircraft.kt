@@ -7,10 +7,7 @@ import net.imshit.aircraftwar.element.shoot.hero.HeroShootStrategyFactory
 import net.imshit.aircraftwar.logic.game.Games
 
 class HeroAircraft(
-    game: Games,
-    maxHp: Int,
-    power: Int,
-    shootNum: Int
+    game: Games, maxHp: Int, power: Int, shootNum: Int, private val controller: HeroController
 ) : AbstractAircraft(
     game = game,
     initialX = game.width / 2f,
@@ -22,7 +19,9 @@ class HeroAircraft(
 ) {
     override val image = game.images.aircraftHero
     override fun forward(timeMs: Int) {
-        // 英雄机由触控控制，不通过forward函数移动
+        this.controller.calcForward(timeMs)
+        this.x = this.controller.x
+        this.y = this.controller.y
     }
 
     private val shootStrategyFactory = HeroShootStrategyFactory(game)
@@ -38,6 +37,11 @@ class HeroAircraft(
 
     override fun shoot(): List<HeroBullet> {
         return this.shootStrategy.shoot(this.x, this.y, this.speedY, this.power)
+    }
+
+    override fun decreaseHp(decrease: Int) {
+        super.decreaseHp(decrease)
+        this.controller.onHit()
     }
 
     fun increaseHp(increment: Int) {

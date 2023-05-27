@@ -6,10 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
@@ -28,6 +24,7 @@ import net.imshit.aircraftwar.element.AbstractFlyingObject
 import net.imshit.aircraftwar.element.aircraft.enemy.BossEnemy
 import net.imshit.aircraftwar.element.aircraft.enemy.Enemies
 import net.imshit.aircraftwar.element.aircraft.hero.HeroAircraft
+import net.imshit.aircraftwar.element.aircraft.hero.HeroController
 import net.imshit.aircraftwar.element.animation.DyingAnimation
 import net.imshit.aircraftwar.element.bullet.Bullets
 import net.imshit.aircraftwar.element.bullet.EnemyBullet
@@ -40,8 +37,6 @@ import net.imshit.aircraftwar.logic.music.BasicMusicStrategy
 import net.imshit.aircraftwar.logic.music.BgmType
 import net.imshit.aircraftwar.logic.music.MusicStrategies
 import net.imshit.aircraftwar.logic.music.MuteMusicStrategy
-import kotlin.math.max
-import kotlin.math.min
 
 sealed class Games(
     context: Context, attrs: AttributeSet?, soundMode: Boolean, private val handler: Handler?
@@ -71,22 +66,8 @@ sealed class Games(
         const val SCORE_Y = SCORE_SIZE + 10f
     }
 
-    class AccelerateSensorListener(val callback: (Float, Float, Float) -> Unit) :
-        SensorEventListener {
-        override fun onSensorChanged(event: SensorEvent?) {
-            val ax = event?.values?.get(0) ?: 0.0f
-            val ay = event?.values?.get(1) ?: 0.0f
-            val az = event?.values?.get(2) ?: 0.0f
-            callback(ax, ay, az)
-        }
-
-        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
-    }
-
     // utils
-    private lateinit var sensorManager: SensorManager
-    private var gravitySensor: Sensor? = null
-    private lateinit var gravitySensorListener: AccelerateSensorListener
+    private val heroController = HeroController(context)
     lateinit var images: ImageManager
     private var logicJob: Job? = null
 
@@ -114,10 +95,10 @@ sealed class Games(
     private var boss: BossEnemy? = null
 
     // bundle of variables
-    private val autoElementLists =
-        listOf(animations, props, enemyBullets, heroBullets, enemyAircrafts)
-    private val enemyListenerLists = listOf<List<EnemyListener>>(enemyAircrafts, enemyBullets)
     private val heroList = mutableListOf<HeroAircraft>()
+    private val autoElementLists =
+        listOf(animations, props, enemyBullets, heroBullets, enemyAircrafts, heroList)
+    private val enemyListenerLists = listOf<List<EnemyListener>>(enemyAircrafts, enemyBullets)
     private val drawingElementLists =
         listOf(enemyBullets, heroBullets, enemyAircrafts, props, animations, heroList)
     private val lifeBarElementLists = listOf(heroList, enemyAircrafts)
@@ -157,32 +138,14 @@ sealed class Games(
         }
     }
 
-    private fun initHeroController() {
-        // 触摸屏
-        setOnTouchListener { view, motionEvent ->
-            view.performClick()
-            this.heroAircraft.x = motionEvent.x
-            this.heroAircraft.y = motionEvent.y
-            true
-        }
-        // 重力感应
-        sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        with(sensorManager) {
-            gravitySensor =
-                getDefaultSensor(Sensor.TYPE_GRAVITY) ?: getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        }
-        gravitySensorListener = AccelerateSensorListener { ax, ay, _ ->
-            this.heroAircraft.x = min(max(0f, this.heroAircraft.x - ax), this.width.toFloat())
-            this.heroAircraft.y = min(max(0f, this.heroAircraft.y + ay), this.height.toFloat())
-        }
-    }
-
     open fun init() {
         this.images = ImageManager(context.applicationContext, width)
-        this.heroAircraft = HeroAircraft(game = this, maxHp = 1000, power = 50, shootNum = 1)
+        this.heroAircraft = HeroAircraft(
+            game = this, maxHp = 1000, power = 50, shootNum = 1, controller = this.heroController
+        )
         this.heroList.add(this.heroAircraft)
         this.holder.addCallback(this)
-        initHeroController()
+        this.heroController.init(this)
         this.musicStrategy.setBgm(BgmType.NORMAL)
     }
 
@@ -190,11 +153,7 @@ sealed class Games(
         if (!isGameOver) {
             this.isStopped = false
             this.musicStrategy.setBgm(BgmType.NORMAL)
-            gravitySensor?.let {
-                sensorManager.registerListener(
-                    gravitySensorListener, it, SensorManager.SENSOR_DELAY_NORMAL
-                )
-            }
+            this.heroController.start()
             this.logicJob?.cancel()
             this.logicJob = launch {
                 while (!isStopped) {
@@ -211,9 +170,7 @@ sealed class Games(
     private fun stop() {
         this.isStopped = true
         this.musicStrategy.setBgm(BgmType.NONE)
-        if (gravitySensor != null) {
-            sensorManager.unregisterListener(gravitySensorListener)
-        }
+        this.heroController.stop()
         this.logicJob?.cancel()
         this.logicJob = null
     }

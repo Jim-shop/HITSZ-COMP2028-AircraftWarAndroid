@@ -24,7 +24,7 @@ abstract class AbstractAircraft(
 
     abstract fun setShootNum(shootNum: Int)
 
-    fun decreaseHp(decrease: Int) {
+    open fun decreaseHp(decrease: Int) {
         if (decrease > 0) {
             this.hp -= decrease
             if (this.hp <= 0) {
