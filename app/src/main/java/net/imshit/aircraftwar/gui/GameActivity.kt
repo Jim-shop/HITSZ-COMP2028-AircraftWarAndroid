@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.text.InputType
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
@@ -35,6 +36,13 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    private fun Window.makeFullScreen() {
+        WindowInsetsControllerCompat(this, this.decorView).apply {
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            hide(WindowInsetsCompat.Type.systemBars())
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 获取配置
@@ -56,11 +64,7 @@ class GameActivity : AppCompatActivity() {
             root.addView(game, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
             setContentView(root)
         }
-        // 隐藏任务栏、导航栏
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            hide(WindowInsetsCompat.Type.systemBars())
-        }
+        window.makeFullScreen()
     }
 
     private fun onGameOver(gameMode: Difficulty, score: Int) {
@@ -79,9 +83,7 @@ class GameActivity : AppCompatActivity() {
         val listener = DialogInterface.OnClickListener { _, which ->
             val scoreInfo: ScoreInfo? = when (which) {
                 DialogInterface.BUTTON_POSITIVE -> ScoreInfo(
-                    edit.editText?.text.toString(),
-                    score,
-                    LocalDateTime.now().format(
+                    edit.editText?.text.toString(), score, LocalDateTime.now().format(
                         DateTimeFormatter.ISO_DATE_TIME
                     )
                 )
@@ -91,17 +93,11 @@ class GameActivity : AppCompatActivity() {
             ScoreboardActivity.actionStart(this, gameMode, scoreInfo)
             this@GameActivity.finish()
         }
-        val dialog = MaterialAlertDialogBuilder(this).setTitle(R.string.game_dialog_title)
+        MaterialAlertDialogBuilder(this).setTitle(R.string.game_dialog_title)
             .setIcon(R.drawable.ic_assignment_turned_in_24)
             .setPositiveButton(android.R.string.ok, listener)
-            .setNegativeButton(android.R.string.cancel, listener).setView(edit).create()
-        dialog.window?.let {
-            WindowInsetsControllerCompat(it, it.decorView).apply {
-                systemBarsBehavior =
-                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-                hide(WindowInsetsCompat.Type.systemBars())
-            }
-        }
-        dialog.show()
+            .setNegativeButton(android.R.string.cancel, listener).setView(edit).create().apply {
+                window?.makeFullScreen()
+            }.show()
     }
 }
