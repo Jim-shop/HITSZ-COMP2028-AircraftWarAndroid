@@ -37,10 +37,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun Window.makeFullScreen() {
+        setDecorFitsSystemWindows(false)
         WindowInsetsControllerCompat(this, this.decorView).apply {
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             hide(WindowInsetsCompat.Type.systemBars())
-            setDecorFitsSystemWindows(false)
         }
     }
 

@@ -96,7 +96,7 @@ class ScoreboardActivity : AppCompatActivity() {
 
             private fun updateActionMode() {
                 if (actionMode == null) {
-                    actionMode = activity.startActionMode(callback)
+                    actionMode = activity.startActionMode(callback, ActionMode.TYPE_PRIMARY)
                 }
                 if (selected.isEmpty()) {
                     actionMode?.finish()
@@ -171,7 +171,6 @@ class ScoreboardActivity : AppCompatActivity() {
             }
 
             asRv.adapter = ScoreInfoAdapter(this@ScoreboardActivity, dao.buffer)
-
         }
     }
 
