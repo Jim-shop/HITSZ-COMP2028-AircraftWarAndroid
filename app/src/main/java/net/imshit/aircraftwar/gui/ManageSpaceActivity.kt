@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import net.imshit.aircraftwar.R
-import net.imshit.aircraftwar.data.app.AppInfo
 import net.imshit.aircraftwar.data.scoreboard.ScoreboardDaoSharedPreferences
 import net.imshit.aircraftwar.databinding.ActivityManageSpaceBinding
 import net.imshit.aircraftwar.logic.game.Difficulty
@@ -17,7 +16,7 @@ class ManageSpaceActivity : AppCompatActivity() {
 
             amsTb.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.item_about -> AppInfo.showAboutDialog(this@ManageSpaceActivity)
+                    R.id.item_about -> AppInfoDialog().show(supportFragmentManager, "about")
                 }
                 return@setOnMenuItemClickListener true
             }

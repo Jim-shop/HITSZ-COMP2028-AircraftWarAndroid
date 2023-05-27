@@ -6,16 +6,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.data.account.AccountManager
-import net.imshit.aircraftwar.data.app.AppInfo
 import net.imshit.aircraftwar.databinding.ActivityAccountBinding
 
 class AccountActivity : AppCompatActivity() {
-    companion object {
+    companion object Api {
         fun actionStart(context: Context) {
-            AccountManager.showLoginDialog(context, onSuccess = {
+            if (AccountManager.requireLogin(context)) {
                 context.startActivity(Intent(context, AccountActivity::class.java).apply {
                 })
-            }, onFail = {})
+            }
         }
     }
 
@@ -31,7 +30,7 @@ class AccountActivity : AppCompatActivity() {
 
             aaTb.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.item_about -> AppInfo.showAboutDialog(this@AccountActivity)
+                    R.id.item_about -> AppInfoDialog().show(supportFragmentManager, "about")
                 }
                 return@setOnMenuItemClickListener true
             }

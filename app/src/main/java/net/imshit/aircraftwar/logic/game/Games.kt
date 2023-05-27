@@ -56,14 +56,14 @@ sealed class Games(
 
         const val REFRESH_INTERVAL = 15
 
-        const val BAR_OFFSET = 15f
-        const val BAR_TEXT_OFFSET = 15f
-        const val BAR_LENGTH = 50f
-        const val BAR_HEIGHT = 10f
+        private const val BAR_OFFSET = 15f
+        private const val BAR_TEXT_OFFSET = 15f
+        private const val BAR_LENGTH = 50f
+        private const val BAR_HEIGHT = 10f
 
-        const val SCORE_SIZE = 128f
-        const val SCORE_X = 10f
-        const val SCORE_Y = SCORE_SIZE + 10f
+        private const val SCORE_SIZE = 128f
+        private const val SCORE_X = 10f
+        private const val SCORE_Y = SCORE_SIZE + 10f
     }
 
     // utils

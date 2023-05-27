@@ -1,13 +1,9 @@
 package net.imshit.aircraftwar.data.account
 
 import android.content.Context
-import android.content.DialogInterface
-import android.view.LayoutInflater
-import android.view.View
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.progressindicator.LinearProgressIndicator
-import net.imshit.aircraftwar.R
-import net.imshit.aircraftwar.databinding.DialogLoginBinding
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import net.imshit.aircraftwar.gui.LoginDialog
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -20,6 +16,10 @@ import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
 
 object AccountManager {
+    var isLogin: Boolean
+        get() = false
+        set(value) = TODO()
+
     private const val SALT = "HITsz520"
     private val LOGIN_URL = URL("https://haxiaoshen.top/login")
     private val REGISTER_URL = URL("https://haxiaoshen.top/register")
@@ -95,32 +95,18 @@ object AccountManager {
         })
     }
 
-    fun showLoginDialog(context: Context, onSuccess: Runnable, onFail: Runnable) {
-        with(DialogLoginBinding.inflate(LayoutInflater.from(context), null, false)) {
-            val dialogListener = DialogInterface.OnClickListener { _, which ->
-                val account = dlTietAc.text.toString()
-                val password = dlTietPw.text.toString()
-                val progress =
-                    LinearProgressIndicator(context, null, android.R.attr.progressBarStyleLarge)
-                // TODO
-                when (which) {
-                    DialogInterface.BUTTON_POSITIVE -> ::login
-                    DialogInterface.BUTTON_NEUTRAL -> ::register
-                    else -> null
-                }?.invoke(account, password, onSuccess, onFail) {
-                    progress.visibility = View.INVISIBLE
-                }
+    fun requireLogin(context: Context): Boolean {
+        return if (isLogin) {
+            true
+        } else if (context is AppCompatActivity) {
+            LoginDialog().apply {
+                show(context.supportFragmentManager, "login")
+                Log.e("FFFFF", view.toString())
             }
-            MaterialAlertDialogBuilder(context).run {
-                setView(root)
-                setTitle(R.string.dialog_login_title)
-                setIcon(R.drawable.ic_login_24)
-                setPositiveButton(android.R.string.ok, dialogListener)
-                setNeutralButton(R.string.dialog_login_button_register, dialogListener)
-                setNegativeButton(android.R.string.cancel, dialogListener)
-                show()
-            }
-
+//            TODO()
+            false
+        } else {
+            false
         }
     }
 }

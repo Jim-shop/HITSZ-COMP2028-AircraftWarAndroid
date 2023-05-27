@@ -10,8 +10,8 @@ class BulletProp(
 ) : Props(
     game = game, initialX = initialX, initialY = initialY, speedX = speedX, speedY = speedY
 ) {
-    companion object {
-        private val usedCount = AtomicInteger(0)
+    private companion object Static {
+        val usedCount = AtomicInteger(0)
     }
 
     override val image = game.images.propBullet

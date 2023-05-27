@@ -27,7 +27,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class GameActivity : AppCompatActivity() {
-    companion object {
+    companion object Api {
         fun actionStart(context: Context, gameMode: Difficulty, soundMode: Boolean) {
             context.startActivity(Intent(context, GameActivity::class.java).apply {
                 putExtra("gameMode", gameMode)

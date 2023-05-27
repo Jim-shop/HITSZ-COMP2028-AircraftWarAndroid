@@ -11,7 +11,7 @@ class DyingAnimation(
     game = aircraft.game, initialX = aircraft.x, initialY = aircraft.y, speedX = 0f, speedY = 0f
 ) {
 
-    companion object {
+    private companion object Conf {
         const val ALPHA = 0.8
         const val LIVE_MS = 500
         const val FLASH_MS = 100

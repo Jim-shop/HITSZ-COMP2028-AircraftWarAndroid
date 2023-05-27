@@ -3,7 +3,6 @@ package net.imshit.aircraftwar.gui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import net.imshit.aircraftwar.R
-import net.imshit.aircraftwar.data.app.AppInfo
 import net.imshit.aircraftwar.databinding.ActivityMainBinding
 import net.imshit.aircraftwar.logic.game.Difficulty
 
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
             amTb.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.item_about -> AppInfo.showAboutDialog(this@MainActivity)
+                    R.id.item_about -> AppInfoDialog().show(supportFragmentManager, "about")
                 }
                 return@setOnMenuItemClickListener true
             }
