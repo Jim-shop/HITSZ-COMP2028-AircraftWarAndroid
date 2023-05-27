@@ -91,9 +91,17 @@ class GameActivity : AppCompatActivity() {
             ScoreboardActivity.actionStart(this, gameMode, scoreInfo)
             this@GameActivity.finish()
         }
-        MaterialAlertDialogBuilder(this).setTitle(R.string.game_dialog_title)
+        val dialog = MaterialAlertDialogBuilder(this).setTitle(R.string.game_dialog_title)
             .setIcon(R.drawable.ic_assignment_turned_in_24)
             .setPositiveButton(android.R.string.ok, listener)
-            .setNegativeButton(android.R.string.cancel, listener).setView(edit).show()
+            .setNegativeButton(android.R.string.cancel, listener).setView(edit).create()
+        dialog.window?.let {
+            WindowInsetsControllerCompat(it, it.decorView).apply {
+                systemBarsBehavior =
+                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                hide(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+        dialog.show()
     }
 }
