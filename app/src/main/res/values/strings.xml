@@ -35,6 +35,8 @@
     <string name="button_online">在线对战</string>
     <string name="dialog_login_input_account_error">账号可能有误</string>
     <string name="dialog_login_input_password_error">密码可能有误</string>
+    <string name="button_logout">登出</string>
+    <string name="avatar">头像</string>
     <plurals name="scoreboard_action_title">
         <item quantity="other">已选中 %d 项</item>
     </plurals>

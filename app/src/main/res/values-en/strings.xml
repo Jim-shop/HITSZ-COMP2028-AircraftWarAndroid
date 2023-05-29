@@ -35,4 +35,6 @@
     <string name="button_online">Compete online</string>
     <string name="dialog_login_input_account_error">Account may be wrong.</string>
     <string name="dialog_login_input_password_error">Password may be wrong.</string>
+    <string name="button_logout">Logout</string>
+    <string name="avatar">Avatar</string>
 </resources>

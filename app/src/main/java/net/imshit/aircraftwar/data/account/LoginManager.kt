@@ -81,6 +81,7 @@ class LoginManager(context: Context) {
 
     suspend fun requireLogin(context: Context): Boolean {
         if (!isLogin && context is AppCompatActivity) {
+            // 唤起登录
             val semaphore = Semaphore(1, 1)
             LoginDialog(this).apply {
                 onDismissCallback = Runnable {

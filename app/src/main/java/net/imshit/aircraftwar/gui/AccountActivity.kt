@@ -8,6 +8,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.account.AccountDao
+import net.imshit.aircraftwar.data.account.AccountDaoSharedPreferences
 import net.imshit.aircraftwar.data.account.LoginManager
 import net.imshit.aircraftwar.data.app.AppInfoDialog
 import net.imshit.aircraftwar.databinding.ActivityAccountBinding
@@ -24,8 +26,11 @@ class AccountActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var dao: AccountDao
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.dao = AccountDaoSharedPreferences(this)
 
         with(ActivityAccountBinding.inflate((layoutInflater))) {
             setContentView(root)
@@ -39,6 +44,13 @@ class AccountActivity : AppCompatActivity() {
                     R.id.item_about -> AppInfoDialog().show(supportFragmentManager, "about")
                 }
                 return@setOnMenuItemClickListener true
+            }
+
+            aaTvName.text = dao.load()?.account
+
+            aaBtnLogout.setOnClickListener {
+                dao.clear()
+                this@AccountActivity.finish()
             }
         }
     }
