@@ -3,6 +3,7 @@ package net.imshit.aircraftwar.gui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.app.AppInfoDialog
 import net.imshit.aircraftwar.databinding.ActivityMainBinding
 import net.imshit.aircraftwar.logic.game.Difficulty
 
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
                 return@setOnMenuItemClickListener true
             }
 
-            amMbtgMode.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
+            amMbtgMode.addOnButtonCheckedListener { _, checkedId, isChecked ->
                 if (isChecked) {
                     gameMode = when (checkedId) {
                         R.id.am_btn_easy -> Difficulty.EASY

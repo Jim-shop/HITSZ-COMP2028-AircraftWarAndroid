@@ -1,4 +1,4 @@
-package net.imshit.aircraftwar.gui
+package net.imshit.aircraftwar.data.app
 
 import android.app.Dialog
 import android.os.Bundle

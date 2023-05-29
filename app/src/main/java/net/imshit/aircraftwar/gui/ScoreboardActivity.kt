@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.app.AppInfoDialog
 import net.imshit.aircraftwar.data.scoreboard.ScoreInfo
 import net.imshit.aircraftwar.data.scoreboard.ScoreboardDaoSharedPreferences
 import net.imshit.aircraftwar.databinding.ActivityScoreboardBinding
@@ -80,16 +81,18 @@ class ScoreboardActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreInfoViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.scoreboard_view_item, parent, false) as MaterialCardView
+                .inflate(R.layout.scoreboard_view_item, parent, false)
             val holder = ScoreInfoViewHolder(view)
             view.setOnLongClickListener {
-                isMultiSelect = true
-                updateSelection(holder.adapterPosition, view)
+                it as MaterialCardView
+                this.isMultiSelect = true
+                updateSelection(holder.adapterPosition, it)
                 return@setOnLongClickListener true
             }
             view.setOnClickListener {
-                if (isMultiSelect) {
-                    updateSelection(holder.adapterPosition, view)
+                it as MaterialCardView
+                if (this.isMultiSelect) {
+                    updateSelection(holder.adapterPosition, it)
                 }
             }
             return holder

@@ -2,8 +2,9 @@ package net.imshit.aircraftwar.gui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
+import com.google.android.material.button.MaterialButton
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.app.AppInfoDialog
 import net.imshit.aircraftwar.data.scoreboard.ScoreboardDaoSharedPreferences
 import net.imshit.aircraftwar.databinding.ActivityManageSpaceBinding
 import net.imshit.aircraftwar.logic.game.Difficulty
@@ -22,7 +23,8 @@ class ManageSpaceActivity : AppCompatActivity() {
             }
 
             amsBtnClear.setOnClickListener {
-                amsBtnClear.isEnabled = false
+                it as MaterialButton
+                it.isEnabled = false
                 listOf(
                     Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD
                 ).forEach { gameMode ->
@@ -31,9 +33,8 @@ class ManageSpaceActivity : AppCompatActivity() {
                         close()
                     }
                 }
-                amsBtnClear.icon =
-                    AppCompatResources.getDrawable(this@ManageSpaceActivity, R.drawable.ic_check_24)
-                amsBtnClear.text = getString(R.string.button_clear_ok)
+                it.setIconResource(R.drawable.ic_check_24)
+                it.text = getString(R.string.button_clear_ok)
             }
         }
     }

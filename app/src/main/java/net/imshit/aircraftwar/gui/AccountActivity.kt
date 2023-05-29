@@ -4,16 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.data.account.AccountManager
+import net.imshit.aircraftwar.data.app.AppInfoDialog
 import net.imshit.aircraftwar.databinding.ActivityAccountBinding
 
 class AccountActivity : AppCompatActivity() {
     companion object Api {
         fun actionStart(context: Context) {
-            if (AccountManager.requireLogin(context)) {
-                context.startActivity(Intent(context, AccountActivity::class.java).apply {
-                })
+            CoroutineScope(Dispatchers.Default).launch {
+                if (AccountManager.requireLogin(context)) {
+                    context.startActivity(Intent(context, AccountActivity::class.java).apply {
+                    })
+                }
             }
         }
     }
