@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.imshit.aircraftwar.R
-import net.imshit.aircraftwar.data.account.AccountManager
+import net.imshit.aircraftwar.data.account.LoginManager
 import net.imshit.aircraftwar.data.app.AppInfoDialog
 import net.imshit.aircraftwar.databinding.ActivityAccountBinding
 
@@ -16,7 +16,7 @@ class AccountActivity : AppCompatActivity() {
     companion object Api {
         fun actionStart(context: Context) {
             CoroutineScope(Dispatchers.Default).launch {
-                if (AccountManager.requireLogin(context)) {
+                if (LoginManager(context).requireLogin(context)) {
                     context.startActivity(Intent(context, AccountActivity::class.java).apply {
                     })
                 }

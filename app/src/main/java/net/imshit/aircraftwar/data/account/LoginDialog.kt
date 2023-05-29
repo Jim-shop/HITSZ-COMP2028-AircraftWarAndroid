@@ -17,22 +17,13 @@ import com.google.android.material.progressindicator.IndeterminateDrawable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.databinding.DialogLoginBinding
 
-class LoginDialog : AppCompatDialogFragment() {
+class LoginDialog(private val loginManager: LoginManager) : AppCompatDialogFragment() {
     private var dialogView: View? = null
-
-    private suspend fun login(account: String, password: String): Boolean {
-        TODO()
-    }
-
-    private suspend fun register(account: String, password: String): Boolean {
-        TODO()
-    }
 
     var onDismissCallback: Runnable? = null
 
@@ -88,9 +79,9 @@ class LoginDialog : AppCompatDialogFragment() {
                     val password = dlTietPw.text.toString()
                     jobs += CoroutineScope(Dispatchers.Default).launch {
                         val isSuccess = when (it) {
-                            loginButton -> login(account, password)
-                            registerButton -> register(account, password)
-                            else -> true
+                            loginButton -> loginManager.login(account, password)
+                            registerButton -> loginManager.register(account, password)
+                            else -> false
                         }
                         if (isSuccess) {
                             dismiss()
@@ -118,11 +109,11 @@ class LoginDialog : AppCompatDialogFragment() {
                     }
                 }
                 dlTietAc.doOnTextChanged { text, _, _, _ ->
-                    isAccountValid = (text?.length in 6..16)
+                    isAccountValid = (text?.length in 2..16)
                     onChange()
                 }
                 dlTietPw.doOnTextChanged { text, _, _, _ ->
-                    isPasswordValid = (text?.length in 6..16)
+                    isPasswordValid = (text?.length in 2..16)
                     onChange()
                 }
 
