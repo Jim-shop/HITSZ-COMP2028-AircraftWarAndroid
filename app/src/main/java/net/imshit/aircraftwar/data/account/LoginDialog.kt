@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.core.widget.doOnTextChanged
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
@@ -26,13 +27,11 @@ class LoginDialog : AppCompatDialogFragment() {
     private var dialogView: View? = null
 
     private suspend fun login(account: String, password: String): Boolean {
-        delay(1000)
-        return false
+        TODO()
     }
 
     private suspend fun register(account: String, password: String): Boolean {
-        delay(1000)
-        return true
+        TODO()
     }
 
     var onDismissCallback: Runnable? = null
@@ -75,7 +74,7 @@ class LoginDialog : AppCompatDialogFragment() {
                 val registerButton = getButton(Dialog.BUTTON_NEUTRAL)
                 val cancelButton = getButton(Dialog.BUTTON_NEGATIVE)
 
-                val interactiveComponents = listOf(loginButton, registerButton, dlTietAc, dlTietPw)
+                val interactiveComponents = listOf(loginButton, registerButton, dlTilAc, dlTilPw)
                 val jobs = mutableListOf<Job>()
 
                 val progress = IndeterminateDrawable.createCircularDrawable(
@@ -99,18 +98,40 @@ class LoginDialog : AppCompatDialogFragment() {
                             withContext(Dispatchers.Main) {
                                 interactiveComponents.forEach { c -> c.isEnabled = true }
                                 it.icon = null
-                                dlTietAc.error = "是否账号有误？"
-                                dlTietPw.error = "是否账号密码？"
+                                dlTilAc.error = getString(R.string.dialog_login_input_account_error)
+                                dlTilPw.error =
+                                    getString(R.string.dialog_login_input_password_error)
                             }
                         }
                     }
                 }
-                loginButton.setOnClickListener(onSubmit)
-                registerButton.setOnClickListener(onSubmit)
+                val submitButtons = listOf(loginButton, registerButton)
+                submitButtons.forEach { button -> button.setOnClickListener(onSubmit) }
+
+                var isAccountValid = false
+                var isPasswordValid = false
+                val onChange = {
+                    submitButtons.forEach { button ->
+                        dlTilAc.error = null
+                        dlTilPw.error = null
+                        button.isEnabled = isAccountValid && isPasswordValid
+                    }
+                }
+                dlTietAc.doOnTextChanged { text, _, _, _ ->
+                    isAccountValid = (text?.length in 6..16)
+                    onChange()
+                }
+                dlTietPw.doOnTextChanged { text, _, _, _ ->
+                    isPasswordValid = (text?.length in 6..16)
+                    onChange()
+                }
+
                 cancelButton.setOnClickListener {
                     jobs.forEach(Job::cancel)
                     dismiss()
                 }
+
+                onChange()
             }
         }
     }

@@ -33,4 +33,6 @@
     </plurals>
     <string name="button_offline">Play offline</string>
     <string name="button_online">Compete online</string>
+    <string name="dialog_login_input_account_error">Account may be wrong.</string>
+    <string name="dialog_login_input_password_error">Password may be wrong.</string>
 </resources>
