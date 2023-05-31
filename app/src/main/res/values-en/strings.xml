@@ -10,8 +10,8 @@
     <string name="button_medium">Medium Mode</string>
     <string name="button_hard">Hard Mode</string>
     <string name="checkbox_sound">Sound</string>
-    <string name="game_dialog_title">New record!</string>
-    <string name="game_dialog_content">Your name</string>
+    <string name="dialog_save_score_title">New record!</string>
+    <string name="dialog_save_score_content">Your name</string>
     <string name="scoreboard_label">Scoreboard</string>
     <string name="manage_space_label">Manage Space</string>
     <string name="item_about">About</string>

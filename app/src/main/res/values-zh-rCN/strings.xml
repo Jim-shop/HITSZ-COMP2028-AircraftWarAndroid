@@ -10,8 +10,8 @@
     <string name="game_canvas_text_score">得分：%d</string>
     <string name="game_canvas_text_other_info">对方得分：%d 对方生命：%d</string>
     <string name="game_canvas_text_other_offline">对方已下线</string>
-    <string name="game_dialog_title">新的游戏记录！</string>
-    <string name="game_dialog_content">你的名字</string>
+    <string name="dialog_save_score_title">新的游戏记录！</string>
+    <string name="dialog_save_score_content">你的名字</string>
     <string name="scoreboard_label">排行榜</string>
     <string name="item_about">关于</string>
     <string name="manage_space_label">管理空间</string>

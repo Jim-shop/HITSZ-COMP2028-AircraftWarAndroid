@@ -16,24 +16,26 @@ import com.google.android.material.card.MaterialCardView
 import net.imshit.aircraftwar.R
 import net.imshit.aircraftwar.data.app.AppInfoDialog
 import net.imshit.aircraftwar.data.scoreboard.ScoreInfo
-import net.imshit.aircraftwar.data.scoreboard.ScoreboardDaoSharedPreferences
+import net.imshit.aircraftwar.data.scoreboard.ScoreboardAgent
 import net.imshit.aircraftwar.databinding.ActivityScoreboardBinding
 import net.imshit.aircraftwar.logic.game.Difficulty
-import java.util.TreeMap
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 class ScoreboardActivity : AppCompatActivity() {
     companion object Api {
-        fun actionStart(context: Context, gameMode: Difficulty, scoreInfo: ScoreInfo?) {
+        fun actionStart(context: Context, gameMode: Difficulty, onlineMode: Boolean) {
             context.startActivity(Intent(context, ScoreboardActivity::class.java).apply {
                 putExtra("gameMode", gameMode)
-                putExtra("scoreInfo", scoreInfo)
+                putExtra("onlineMode", onlineMode)
             })
         }
 
     }
 
     class ScoreInfoAdapter(
-        private val activity: AppCompatActivity, private val scoreInfoList: MutableList<ScoreInfo>
+        private val activity: AppCompatActivity, private val agent: ScoreboardAgent
     ) : RecyclerView.Adapter<ScoreInfoAdapter.ScoreInfoViewHolder>() {
         class ScoreInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val nameView: TextView = itemView.findViewById(R.id.sbvi_name)
@@ -42,7 +44,13 @@ class ScoreboardActivity : AppCompatActivity() {
             fun bind(scoreInfo: ScoreInfo) {
                 this.nameView.text = scoreInfo.name
                 this.scoreView.text = scoreInfo.score.toString()
-                this.timeView.text = scoreInfo.time
+                this.timeView.text =
+                    SimpleDateFormat(
+                        "yyyy-MM-dd HH:mm:ss",
+                        Locale.getDefault()
+                    ).apply {
+                        timeZone = TimeZone.getDefault()
+                    }.format(scoreInfo.time)
             }
         }
 
@@ -75,8 +83,10 @@ class ScoreboardActivity : AppCompatActivity() {
 
         private val callback = ActionModeCallback()
         private var isMultiSelect = false
-        private val selected: MutableMap<Int, MaterialCardView> = TreeMap()
+        private val selected = mutableMapOf<Int, MaterialCardView>()
         private var actionMode: ActionMode? = null
+
+        private var items = agent.getAll()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreInfoViewHolder {
             val view = LayoutInflater.from(parent.context)
@@ -111,27 +121,29 @@ class ScoreboardActivity : AppCompatActivity() {
         }
 
         private fun updateSelection(index: Int, view: MaterialCardView) {
+            val id = items[index].id
             if (view.isChecked) {
-                selected.remove(index)
+                selected.remove(id)
                 view.isChecked = false
             } else {
-                selected[index] = view
+                selected[id] = view
                 view.isChecked = true
             }
             updateActionMode()
         }
 
-        override fun getItemCount(): Int = scoreInfoList.size
+        override fun getItemCount(): Int = items.size
 
         override fun onBindViewHolder(holder: ScoreInfoViewHolder, position: Int) {
-            holder.bind(scoreInfoList[position])
+            holder.bind(items[position])
         }
 
         fun removeSelected() {
-            selected.keys.sortedDescending().forEach {
-                scoreInfoList.removeAt(it)
-                notifyItemRemoved(it)
+            selected.keys.forEach { id ->
+                agent.deleteItem(id)
             }
+            items = agent.getAll()
+            notifyDataSetChanged()
         }
 
         fun onExitActionMode() {
@@ -144,19 +156,18 @@ class ScoreboardActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var dao: ScoreboardDaoSharedPreferences
+    private lateinit var agent: ScoreboardAgent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // read info
         val gameMode: Difficulty
-        val scoreInfo: ScoreInfo?
+        val onlineMode: Boolean
         intent.apply {
             gameMode = getSerializableExtra("gameMode", Difficulty::class.java) ?: Difficulty.EASY
-            scoreInfo = getParcelableExtra("scoreInfo", ScoreInfo::class.java)
+            onlineMode = getBooleanExtra("onlineMode", false)
         }
-        this.dao = ScoreboardDaoSharedPreferences(this, gameMode)
-        scoreInfo?.let(this.dao::addItem)
+        this.agent = ScoreboardAgent(this, onlineMode, gameMode)
         // draw
         with(ActivityScoreboardBinding.inflate(layoutInflater)) {
             setContentView(root)
@@ -171,12 +182,7 @@ class ScoreboardActivity : AppCompatActivity() {
                 return@setOnMenuItemClickListener true
             }
 
-            asRv.adapter = ScoreInfoAdapter(this@ScoreboardActivity, dao.buffer)
+            asRv.adapter = ScoreInfoAdapter(this@ScoreboardActivity, this@ScoreboardActivity.agent)
         }
-    }
-
-    override fun onDestroy() {
-        this.dao.close()
-        super.onDestroy()
     }
 }

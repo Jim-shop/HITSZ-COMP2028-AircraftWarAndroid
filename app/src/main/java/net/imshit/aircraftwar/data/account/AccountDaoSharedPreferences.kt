@@ -18,7 +18,7 @@ class AccountDaoSharedPreferences(context: Context) : AccountDao {
         editor.putString("account", accountInfo.account)
         editor.putString("token", accountInfo.token)
         editor.putString(
-            "loginTime", accountInfo.loginTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            "loginTime", accountInfo.loginTime.format(DateTimeFormatter.ISO_DATE_TIME)
         )
         editor.apply()
     }
@@ -33,7 +33,7 @@ class AccountDaoSharedPreferences(context: Context) : AccountDao {
             AccountInfo(
                 account,
                 token,
-                LocalDateTime.parse(loginTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                LocalDateTime.parse(loginTime, DateTimeFormatter.ISO_DATE_TIME)
             )
         }
     }

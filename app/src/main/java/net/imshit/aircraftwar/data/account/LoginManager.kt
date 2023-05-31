@@ -1,7 +1,6 @@
 package net.imshit.aircraftwar.data.account
 
 import android.content.Context
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.sync.Semaphore
 import java.security.MessageDigest
@@ -42,7 +41,6 @@ class LoginManager(private val context: Context) {
                 dao.clear()
             } else {
                 dao.store(value)
-                Log.e("FFFFF", "store.")
             }
         }
 
@@ -51,6 +49,9 @@ class LoginManager(private val context: Context) {
 
     val token: String?
         get() = accountInfo?.token
+
+    val name: String?
+        get() = accountInfo?.account
 
     suspend fun login(account: String, password: String): Boolean {
         return try {

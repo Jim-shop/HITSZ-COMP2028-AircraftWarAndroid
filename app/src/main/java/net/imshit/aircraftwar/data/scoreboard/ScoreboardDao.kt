@@ -1,8 +1,6 @@
 package net.imshit.aircraftwar.data.scoreboard
 
-import java.io.Closeable
-
-sealed interface ScoreboardDao : Closeable {
+interface ScoreboardDao {
     /**
      * 返回最好的k条记录
      *
@@ -10,6 +8,7 @@ sealed interface ScoreboardDao : Closeable {
      * @return 返回记录列表
      */
     fun getTopK(topK: Int = -1): List<ScoreInfo>
+    fun getAll() = getTopK(-1)
 
     /**
      * 向计分板添加项目（去重）
@@ -21,21 +20,7 @@ sealed interface ScoreboardDao : Closeable {
     /**
      * 从计分板删除项目
      *
-     * @param item 项目
+     * @param id 内部序号
      */
-    fun deleteItem(item: ScoreInfo)
-
-    /**
-     * 从计分板删除项目
-     *
-     * @param indices 内部序号
-     */
-    fun deleteItem(indices: IntArray)
-
-    fun clear()
-
-    /**
-     * 关闭计分板数据模型（通常来说意味着缓存写回）
-     */
-    override fun close()
+    fun deleteItem(id: Int): Boolean
 }

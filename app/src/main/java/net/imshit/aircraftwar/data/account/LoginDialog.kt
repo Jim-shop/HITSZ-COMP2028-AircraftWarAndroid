@@ -44,7 +44,8 @@ class LoginDialog(private val loginManager: LoginManager) : AppCompatDialogFragm
                 this.dialogView = view
                 MaterialAlertDialogBuilder(activity).apply {
                     setView(view)
-                    setTitle(R.string.dialog_login_title).setIcon(R.drawable.ic_login_24)
+                    setTitle(R.string.dialog_login_title)
+                    setIcon(R.drawable.ic_login_24)
                     setPositiveButton(android.R.string.ok, null)
                     setNeutralButton(R.string.dialog_login_button_register, null)
                     setNegativeButton(android.R.string.cancel, null)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/dialog_save_score_content"
+    android:paddingHorizontal="32dp"
+    android:paddingTop="32dp"
+    app:counterEnabled="true"
+    app:counterMaxLength="16"
+    app:endIconMode="clear_text"
+    app:errorEnabled="true"
+    app:layout_constraintTop_toTopOf="parent"
+    app:startIconDrawable="@drawable/ic_account_circle_24">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/dss_tiet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text|textPersonName"
+        tools:text="NAME" />
+
+</com.google.android.material.textfield.TextInputLayout>
