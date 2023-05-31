@@ -138,6 +138,25 @@
             android:supportsPictureInPicture="true"
             android:windowSoftInputMode="stateUnspecified|adjustUnspecified" />
         <activity
+            android:name=".gui.PairingActivity"
+            android:allowEmbedded="true"
+            android:autoRemoveFromRecents="true"
+            android:colorMode="wideColorGamut"
+            android:documentLaunchMode="none"
+            android:finishOnTaskLaunch="false"
+            android:immersive="true"
+            android:label="@string/pairing_label"
+            android:launchMode="standard"
+            android:lockTaskMode="normal"
+            android:noHistory="false"
+            android:parentActivityName=".gui.MainActivity"
+            android:permission=""
+            android:screenOrientation="unspecified"
+            android:showForAllUsers="false"
+            android:stateNotNeeded="true"
+            android:supportsPictureInPicture="true"
+            android:windowSoftInputMode="stateUnspecified|adjustUnspecified" />
+        <activity
             android:name=".gui.ManageSpaceActivity"
             android:allowEmbedded="true"
             android:autoRemoveFromRecents="true"

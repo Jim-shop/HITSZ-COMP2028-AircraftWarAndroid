@@ -28,10 +28,18 @@ import java.time.format.DateTimeFormatter
 
 class GameActivity : AppCompatActivity() {
     companion object Api {
-        fun actionStart(context: Context, gameMode: Difficulty, soundMode: Boolean) {
+        fun actionStart(
+            context: Context,
+            gameMode: Difficulty,
+            soundMode: Boolean,
+            onlineMode: Boolean,
+            roomId: Int = 0
+        ) {
             context.startActivity(Intent(context, GameActivity::class.java).apply {
                 putExtra("gameMode", gameMode)
                 putExtra("soundMode", soundMode)
+                putExtra("onlineMode", onlineMode)
+                putExtra("roomId", roomId)
             })
         }
     }
@@ -49,12 +57,20 @@ class GameActivity : AppCompatActivity() {
         // 获取配置
         val soundMode: Boolean
         val gameMode: Difficulty
+        val onlineMode: Boolean
+        val roomId: Int
         intent.apply {
             gameMode = getSerializableExtra("gameMode", Difficulty::class.java) ?: Difficulty.EASY
             soundMode = getBooleanExtra("soundMode", true)
+            onlineMode = getBooleanExtra("onlineMode", true)
+            roomId = getIntExtra("roomId", 0)
         }
-        val game: Games =
-            Games.getGames(this, gameMode, soundMode, object : Handler(Looper.getMainLooper()) {
+        val game: Games = Games.getGames(this,
+            gameMode,
+            soundMode,
+            onlineMode,
+            roomId,
+            object : Handler(Looper.getMainLooper()) {
                 override fun handleMessage(msg: Message) {
                     super.handleMessage(msg)
                     onGameOver(gameMode, msg.what)

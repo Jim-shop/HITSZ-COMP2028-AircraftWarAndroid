@@ -19,6 +19,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.imshit.aircraftwar.R
+import net.imshit.aircraftwar.data.fighting.CommunicateInfo
+import net.imshit.aircraftwar.data.fighting.FightingClient
 import net.imshit.aircraftwar.data.resource.ImageManager
 import net.imshit.aircraftwar.element.AbstractFlyingObject
 import net.imshit.aircraftwar.element.aircraft.enemy.BossEnemy
@@ -39,18 +41,31 @@ import net.imshit.aircraftwar.logic.music.MusicStrategies
 import net.imshit.aircraftwar.logic.music.MuteMusicStrategy
 
 sealed class Games(
-    context: Context, attrs: AttributeSet?, soundMode: Boolean, private val handler: Handler?
+    context: Context,
+    attrs: AttributeSet?,
+    soundMode: Boolean,
+    private val onlineMode: Boolean,
+    roomId: Int,
+    private val handler: Handler?
 ) : SurfaceView(context, attrs), SurfaceHolder.Callback, CoroutineScope by CoroutineScope(
     Dispatchers.Default
 ) {
     companion object {
         fun getGames(
-            context: Context, gameMode: Difficulty, soundMode: Boolean, handler: Handler
+            context: Context,
+            gameMode: Difficulty,
+            soundMode: Boolean,
+            onlineMode: Boolean,
+            roomId: Int,
+            handler: Handler
         ): Games {
             return when (gameMode) {
-                Difficulty.EASY -> EasyGame(context, null, soundMode, handler)
-                Difficulty.MEDIUM -> MediumGame(context, null, soundMode, handler)
-                Difficulty.HARD -> HardGame(context, null, soundMode, handler)
+                Difficulty.EASY -> EasyGame(context, null, soundMode, onlineMode, roomId, handler)
+                Difficulty.MEDIUM -> MediumGame(
+                    context, null, soundMode, onlineMode, roomId, handler
+                )
+
+                Difficulty.HARD -> HardGame(context, null, soundMode, onlineMode, roomId, handler)
             }
         }
 
@@ -64,12 +79,17 @@ sealed class Games(
         private const val SCORE_SIZE = 128f
         private const val SCORE_X = 10f
         private const val SCORE_Y = SCORE_SIZE + 10f
+
+        private const val REMOTE_SIZE = 64f
+        private const val REMOTE_X = SCORE_X
+        private const val REMOTE_Y = SCORE_Y + REMOTE_SIZE + 10f
     }
 
     // utils
     private val heroController = HeroController(context)
     lateinit var images: ImageManager
     private var logicJob: Job? = null
+    private var client = if (onlineMode) FightingClient(context, roomId) else null
 
     // configs
     lateinit var background: Bitmap
@@ -84,6 +104,7 @@ sealed class Games(
     private var time = 0
     private var isGameOver = false
     private var isStopped = true
+    private var remoteInfo: CommunicateInfo? = CommunicateInfo(0, 0, 0)
 
     // variables
     lateinit var heroAircraft: HeroAircraft
@@ -104,6 +125,13 @@ sealed class Games(
     private val lifeBarElementLists = listOf(heroList, enemyAircrafts)
 
     init {
+        client?.run()
+        client?.onData = {
+            this.remoteInfo = it
+        }
+        client?.onQuit = {
+            this.remoteInfo = null
+        }
         // 等布局完成就开始获取图片等初始化工作
         viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
@@ -188,6 +216,8 @@ sealed class Games(
         this.crashCheck()
         // 清理已损毁的飞行物
         this.cleanInvalid()
+        // 发送得分
+        this.sendRemote()
         // 检查游戏结束
         if (this.heroAircraft.hp <= 0) {
             this.gameOver()
@@ -270,6 +300,10 @@ sealed class Games(
         }
     }
 
+    private fun sendRemote() {
+        client?.send(CommunicateInfo(0, score, heroAircraft.hp))
+    }
+
     private fun gameOver() {
         stop()
         this.isGameOver = true
@@ -336,12 +370,42 @@ sealed class Games(
         )
     }
 
+    private fun paintRemote(canvas: Canvas) {
+        if (onlineMode) {
+            this.paint.color = Color.WHITE
+            this.paint.textSize = REMOTE_SIZE
+            this.paint.typeface = Typeface.DEFAULT
+            if (remoteInfo != null) {
+                canvas.drawText(
+                    context.getString(
+                        R.string.game_canvas_text_other_info,
+                        remoteInfo?.score,
+                        remoteInfo?.life
+                    ),
+                    REMOTE_X,
+                    REMOTE_Y,
+                    this.paint
+                )
+            } else {
+                canvas.drawText(
+                    context.getString(R.string.game_canvas_text_other_offline),
+                    REMOTE_X,
+                    REMOTE_Y,
+                    this.paint
+                )
+            }
+
+        }
+    }
+
     private fun draw() {
         val canvas = this.holder.lockCanvas() ?: return
         // 循环绘制背景
         paintBackground(canvas)
         // 绘制得分
         paintScore(canvas)
+        // 绘制远程得分
+        paintRemote(canvas)
         // 绘制物件
         paintObject(canvas)
         // 绘制血条

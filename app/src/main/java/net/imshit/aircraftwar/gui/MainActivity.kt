@@ -40,7 +40,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             amBtnOffline.setOnClickListener {
-                GameActivity.actionStart(this@MainActivity, gameMode, amSwSound.isChecked)
+                GameActivity.actionStart(this@MainActivity, gameMode, amSwSound.isChecked, false)
+            }
+
+            amBtnOnline.setOnClickListener {
+                PairingActivity.actionStart(this@MainActivity, gameMode, amSwSound.isChecked)
             }
         }
     }

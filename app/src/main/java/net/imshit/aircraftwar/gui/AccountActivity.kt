@@ -18,8 +18,9 @@ class AccountActivity : AppCompatActivity() {
     companion object Api {
         fun actionStart(context: Context) {
             CoroutineScope(Dispatchers.Default).launch {
-                if (LoginManager(context).requireLogin(context)) {
+                if (LoginManager(context).requireLogin()) {
                     context.startActivity(Intent(context, AccountActivity::class.java).apply {
+
                     })
                 }
             }

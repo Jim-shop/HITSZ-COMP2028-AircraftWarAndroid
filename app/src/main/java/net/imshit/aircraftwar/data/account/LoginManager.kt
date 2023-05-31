@@ -8,7 +8,7 @@ import java.security.MessageDigest
 import java.time.Duration
 import java.time.LocalDateTime
 
-class LoginManager(context: Context) {
+class LoginManager(private val context: Context) {
 
     companion object Conf {
         private const val SALT = "HITsz-Crazy-COMP2028"
@@ -49,6 +49,9 @@ class LoginManager(context: Context) {
     val isLogin: Boolean
         get() = accountInfo != null
 
+    val token: String?
+        get() = accountInfo?.token
+
     suspend fun login(account: String, password: String): Boolean {
         return try {
             val result = LoginApi.api.login(account, encodePassword(password))
@@ -79,7 +82,7 @@ class LoginManager(context: Context) {
         }
     }
 
-    suspend fun requireLogin(context: Context): Boolean {
+    suspend fun requireLogin(): Boolean {
         if (!isLogin && context is AppCompatActivity) {
             // 唤起登录
             val semaphore = Semaphore(1, 1)

@@ -4,6 +4,8 @@
     <string name="app_description">HITSZ COMP2028 experiment.</string>
     <string name="game_label">Gaming</string>
     <string name="game_canvas_text_score">Score: %d</string>
+    <string name="game_canvas_text_other_info">Other score: %d Other life: %d</string>
+    <string name="game_canvas_text_other_offline">The other has quit.</string>
     <string name="button_easy">Easy Mode</string>
     <string name="button_medium">Medium Mode</string>
     <string name="button_hard">Hard Mode</string>
@@ -37,4 +39,7 @@
     <string name="dialog_login_input_password_error">Password may be wrong.</string>
     <string name="button_logout">Logout</string>
     <string name="avatar">Avatar</string>
+    <string name="pairing_label">Pairing</string>
+    <string name="button_pairing">Ask pairing</string>
+    <string name="button_pairing_sent">Request has been sent.</string>
 </resources>

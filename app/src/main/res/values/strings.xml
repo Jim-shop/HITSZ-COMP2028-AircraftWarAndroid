@@ -6,6 +6,8 @@
     <string name="main_label" translatable="false">@string/app_name</string>
     <string name="game_label">游戏界面</string>
     <string name="game_canvas_text_score">得分：%d</string>
+    <string name="game_canvas_text_other_info">对方得分：%d 对方生命：%d</string>
+    <string name="game_canvas_text_other_offline">对方已下线</string>
     <string name="game_dialog_title">新的游戏记录！</string>
     <string name="game_dialog_content">你的名字</string>
     <string name="scoreboard_label">排行榜</string>
@@ -37,6 +39,9 @@
     <string name="dialog_login_input_password_error">密码可能有误</string>
     <string name="button_logout">登出</string>
     <string name="avatar">头像</string>
+    <string name="pairing_label">匹配对手</string>
+    <string name="button_pairing">请求匹配</string>
+    <string name="button_pairing_sent">请求已发送</string>
     <plurals name="scoreboard_action_title">
         <item quantity="other">已选中 %d 项</item>
     </plurals>
