@@ -37,8 +37,8 @@ android {
             signingConfig = signingConfigs["debug"]
         }
         getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
+//            isMinifyEnabled = true // 因为Okhttp打包有bug，就不开了
+//            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
@@ -64,7 +64,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation("com.google.android.material:material:1.9.0")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.moshi:moshi-adapters:1.15.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
