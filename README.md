@@ -5,3 +5,7 @@
 ## 打开方式
 
 使用 Android Studio Flamingo 2022.2.1 打开本工程文件夹即可。
+
+## 系统要求
+
+Android 13+
