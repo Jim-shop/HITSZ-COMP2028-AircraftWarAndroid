@@ -33,8 +33,7 @@ class ScoreboardActivity : AppCompatActivity() {
     }
 
     class ScoreInfoAdapter(
-        private val activity: AppCompatActivity,
-        private val scoreInfoList: MutableList<ScoreInfo>
+        private val activity: AppCompatActivity, private val scoreInfoList: MutableList<ScoreInfo>
     ) : RecyclerView.Adapter<ScoreInfoAdapter.ScoreInfoViewHolder>() {
         class ScoreInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val nameView: TextView = itemView.findViewById(R.id.sbvi_name)
