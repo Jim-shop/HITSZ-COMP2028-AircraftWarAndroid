@@ -9,3 +9,7 @@
 ## 系统要求
 
 Android 13+
+
+## 开源许可证
+
+[木兰公共许可证，第2版](https://license.coscl.org.cn/MulanPubL-2.0)
